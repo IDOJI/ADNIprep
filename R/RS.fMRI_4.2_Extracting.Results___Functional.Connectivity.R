@@ -5,7 +5,7 @@ RS.fMRI_4.2_Extracting.Results___Functional.Connectivity = function(Excluding_Li
     # x= Each_Folders_Path[2]
     ind = which(Each_Folders_Path == x)
     path_ROI = paste0(x, "/", "Results/ROISignals_FunImgARCWSF")
-    FisherZ_txt_files = filter_by(list.files(path_ROI, pattern = "FisherZ_"), "txt", Excluding_List_with_Path.list[[ind]]) # Exclude bad subjects
+    FisherZ_txt_files = filter_by(list.files(path_ROI, pattern = "FisherZ_"), including.words = "txt", excluding.words = Excluding_List_with_Path.list[[ind]]) # Exclude bad subjects
     Data.list = RS.fMRI_4.2_Extracting.Results___Functional.Connectivity___Loading.Data(path_ROI, FisherZ_txt_files)
     return(Data.list)
   })

@@ -4,7 +4,7 @@ RS.fMRI_4.2_Extracting.Results___ROI.Signals = function(Excluding_List_with_Path
   Signals_of_Each_Folders.list = lapply(Each_Folders_Path, FUN=function(x, ...){
     ind = which(Each_Folders_Path == x)
     path_ROI = paste0(x, "/", "Results/ROISignals_FunImgARCWSF")
-    Signals_txt_files = filter_by(list.files(path_ROI, pattern = "ROISignals_"), "txt", Excluding_List_with_Path.list[[ind]]) # Exclude bad subjects
+    Signals_txt_files = filter_by(list.files(path_ROI, pattern = "ROISignals_"), including.words = "txt", excluding.words = Excluding_List_with_Path.list[[ind]]) # Exclude bad subjects
     Data.list = RS.fMRI_4.2_Extracting.Results___ROI.Signals___Loading.Data(path_ROI, Signals_txt_files)
     return(Data.list)
   })
