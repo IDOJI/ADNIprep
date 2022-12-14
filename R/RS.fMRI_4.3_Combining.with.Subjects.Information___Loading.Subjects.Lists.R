@@ -10,10 +10,8 @@ RS.fMRI_4.3_Combining.with.Subjects.Information___Loading.Subjects.Lists = funct
   subjects.list = lapply(path_folders_in_subjects, FUN=function(path_ith_folder){
     # path_ith_folder = path_folders_in_subjects[1]
     ith_subjects_list = list.files(path_ith_folder, pattern = "EPB", full.names = T) %>% read.csv
-    ith_subjects_list %>% dplyr::select("PHASE_SQ","PHASE_NFQ","RESEARCH.GROUP", "RID","SUBJECT.ID","IMAGE_ID", "AGE","SEX","WEIGHT","VISCODE","VISCODE2","STUDY.DATE","MANUFACTURER","SERIES_DESCRIPTION","NFQ")
+    ith_subjects_list %>% dplyr::select("PHASE_SQ","PHASE_NFQ","RESEARCH.GROUP", "RID","SUBJECT.ID","IMAGE_ID", "AGE","SEX","WEIGHT","VISCODE","VISCODE2","STUDY.DATE","MANUFACTURER","SERIES_DESCRIPTION", "SERIES_BAND.TYPE","NFQ")
   })
-
-
 
   ### adding `Sub`
   subjects_with_sub.list = lapply(subjects.list, FUN=function(ith_list){
