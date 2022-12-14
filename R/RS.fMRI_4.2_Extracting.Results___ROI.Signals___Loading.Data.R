@@ -11,7 +11,10 @@ RS.fMRI_4.2_Extracting.Results___ROI.Signals___Loading.Data = function(path_ROI,
       which_na = which(apply(kth_data, 2, is.na) %>% colSums() > 0)
       return(kth_data[,-which_na])
     })
+
     names(Data.list) = substr(Signals_txt_files, 12, 18)
+
+
     return(Data.list)
   }
 }

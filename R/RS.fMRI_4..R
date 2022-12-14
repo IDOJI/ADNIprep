@@ -40,6 +40,7 @@ RS.fMRI_4. = function(path_ADNI, exclude.list, save.path=NULL){
   #==================================================================================================
   Combined_by_RID.list = RS.fMRI_4.3_Combining.with.Subjects.Information(Extracted_Data.list, path_ADNI)
   cat("\n", crayon::red("Step 4.3."), crayon::yellow("Combining subjects information"), crayon::blue("is done !!") ,"\n")
+  saving_data(rda.name = "ADNI___RS.fMRI___Group_All", rda = Combined_by_RID.list, path = save.path)
 
 
 
