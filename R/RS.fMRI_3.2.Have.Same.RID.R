@@ -1,4 +1,4 @@
-RS.fMRI_3.1.Have.Same.RID = function(Fun_path, MT1_path){
+RS.fMRI_3.2.Have.Same.RID = function(Fun_path, MT1_path){
   Fun_path = path_tail_slash(Fun_path)
   MT1_path = path_tail_slash(MT1_path)
 
