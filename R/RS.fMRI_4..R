@@ -1,4 +1,4 @@
-RS.fMRI_4. = function(path_ADNI, save.path=NULL){
+RS.fMRI_4. = function(path_ADNI, save.path=NULL, exclude.list){
   #==================================================================================================
   # 0) path
   #==================================================================================================
@@ -16,7 +16,7 @@ RS.fMRI_4. = function(path_ADNI, save.path=NULL){
 
 
 
-  RS.fMRI_4.1_Extracting.Each.Folders.Path = function(path_ADNI_RS.fMRI, exclude.list){
+  RS.fMRI_4.1_Extracting.Each.Folders.Path = function(path_ADNI_RS.fMRI){
     ### adding Sub
     exclude_added_sub.list = lapply(exclude.list, FUN=function(x){
       # x = exclude.list[[2]]
