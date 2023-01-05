@@ -1,4 +1,4 @@
-RS.fMRI_3.2.Check.NIFTI.Converting___Excludinig.Folders = function(manu_path, ex_sub_folders){
+RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Excludinig.Folders = function(manu_path, ex_sub_folders){
   # manu_path
   manu_path = manu_path %>% path_tail_slash()
   # EPB_csv = list.files(manu_path, "EPB", full.names = T)[2]
@@ -38,3 +38,4 @@ RS.fMRI_3.2.Check.NIFTI.Converting___Excludinig.Folders = function(manu_path, ex
     })
   }
 }
+

@@ -1,4 +1,4 @@
-RS.fMRI_3.2.Check.NIFTI.Converting___Moving.Redownloaded.NIFTI = function(manu_path, manu_redownloaed_path){
+RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Moving.Redownloaded.NIFTI = function(manu_path, manu_redownloaed_path){
   ### loading lists
   EPB.df = read.csv(list.files(manu_path, pattern = "EPB", full.names=T)[2])[-1]
   MT1.df = read.csv(list.files(manu_path, pattern = "MT1", full.names=T)[2])[-1]
@@ -41,4 +41,5 @@ RS.fMRI_3.2.Check.NIFTI.Converting___Moving.Redownloaded.NIFTI = function(manu_p
   cat("\n", crayon::blue("Moving all the "), crayon::red("MT1 NIFTI"), crayon::blue("files are done !"),"\n")
 
 }
+
 

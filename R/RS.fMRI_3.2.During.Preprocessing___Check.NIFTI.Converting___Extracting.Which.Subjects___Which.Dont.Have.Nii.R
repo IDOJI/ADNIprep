@@ -1,4 +1,4 @@
-RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii = function(path, folders){
+RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii = function(path, folders){
   which_sub_dont_have_nii = sapply(folders, FUN=function(x,...){
     # x = FunImg_folders[1]
     ith_files = list.files(paste0(path, x))

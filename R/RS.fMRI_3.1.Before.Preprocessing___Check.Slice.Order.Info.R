@@ -1,4 +1,5 @@
-RS.fMRI_3.1.Check.Slice.Order.Info = function(Manu_path){
+### 현재 존재하는 slice order 정보가 맞게 입력되었는지 확인 : legacy
+RS.fMRI_3.1.Before.Preprocessing___Check.Slice.Order.Info = function(Manu_path){
   Manu_path = path_tail_slash(Manu_path)
   Sub___Slice.Order.Info = read.csv(paste0(Manu_path, "SliceOrderInfo.tsv"))[,1] %>% substr(start = 1, stop = 7)
   Sub___FunRaw = list.files(paste0(Manu_path, "FunRaw"))

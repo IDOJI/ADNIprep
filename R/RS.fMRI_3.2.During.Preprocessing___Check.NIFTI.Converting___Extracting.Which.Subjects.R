@@ -1,4 +1,4 @@
-RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects = function(manu_path, path_Subjects){
+RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Extracting.Which.Subjects = function(manu_path, path_Subjects){
   # manu_path = "D:/ADNI/ADNI_RS.fMRI/1.SIEMENS_MB/"
   #===========================================================================
   # folder list and its path
@@ -16,8 +16,8 @@ RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects = function(manu_p
   #===========================================================================
   # No nii files on Fun/MT1
   #===========================================================================
-  which_Fun_sub_dont_have_nii = RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii(FunImg_path, FunImg_folders)
-  which_MT1_sub_dont_have_nii = RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii(MT1Img_path, MT1Img_folders)
+  which_Fun_sub_dont_have_nii = RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii(FunImg_path, FunImg_folders)
+  which_MT1_sub_dont_have_nii = RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Extracting.Which.Subjects___Which.Dont.Have.Nii(MT1Img_path, MT1Img_folders)
 
 
 
@@ -57,6 +57,6 @@ RS.fMRI_3.2.Check.NIFTI.Converting___Extracting.Which.Subjects = function(manu_p
   #                       LONI_SERIES = MT1_ImageIDs$LONI_SERIES)
   #   write.csv(x = MT1.df, file = paste0(manu_path,"[MT1] ImageIDs with Subfolders.csv"))
   # }
-  return(union(which_Fun_sub_dont_have_nii, which_MT1_sub_dont_have_nii))
   cat("\n", crayon::red("ImageIDs having trouble on converting to NIFTI is exported. Download this as NIFTI files."),"\n")
+  return(union(which_Fun_sub_dont_have_nii, which_MT1_sub_dont_have_nii))
 }
