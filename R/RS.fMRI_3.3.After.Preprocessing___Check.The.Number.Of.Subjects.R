@@ -1,4 +1,4 @@
-RS.fMRI_3.3.After.Preprocessing___Check.The.Number.Of.Completed.Subjects = function(path_completed.folder){
+RS.fMRI_3.3.After.Preprocessing___Check.The.Number.Of.Subjects = function(path_completed.folder){
   # path_completed.folder =
   path_completed.folder = path_completed.folder %>% path_tail_slash()
 

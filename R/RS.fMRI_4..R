@@ -1,8 +1,8 @@
-RS.fMRI_4. = function(path_ADNI, save.path=NULL, exclude.list){
+RS.fMRI_4. = function(path_completed.preprocessing, save.path=NULL, exclude.list=NULL){
   #==================================================================================================
   # 0) path
   #==================================================================================================
-  path_ADNI_RS.fMRI = paste0(path_ADNI, "/", "ADNI_RS.fMRI")
+  path_completed.preprocessing = path_completed.preprocessing %>% path_tail_slash()
 
 
 
