@@ -1,22 +1,23 @@
-RS.fMRI_4.2_Extracting.Results___ROI.Signals = function(Excluding_List_with_Path.list, save.path=NULL){
-  Each_Folders_Path = names(Excluding_List_with_Path.list)
+RS.fMRI_4.2_Extracting.Results___ROI.Signals = function(path_ROISignals){
+  folders = names(path_ROISignals)
+  index = 1:length(path_ROISignals) %>% as.character
 
-  Signals_of_Each_Folders.list = lapply(Each_Folders_Path, FUN=function(x, ...){
-    ind = which(Each_Folders_Path == x)
-    path_ROI = paste0(x, "/", "Results/ROISignals_FunImgARCWSF")
-    Signals_txt_files = filter_by(list.files(path_ROI, pattern = "ROISignals_"), including.words = "txt", excluding.words = Excluding_List_with_Path.list[[ind]]) # Exclude bad subjects
-    Data.list = RS.fMRI_4.2_Extracting.Results___ROI.Signals___Loading.Data(path_ROI, Signals_txt_files)
-    return(Data.list)
+
+  ROISignals.list = lapply(index, FUN=function(ith_index, ...){
+    # ith_index = index[1]
+    ith_results_folder = path_ROISignals[[as.numeric(ith_index)]]
+    ith_ROISignals_files = filter_by(list.files(ith_results_folder), including.words = c("ROISignals_Sub", "\\.txt"))
+    ith_ROISignals_path = paste0(ith_results_folder, ith_ROISignals_files)
+
+    ith_ROISignals.list = lapply(ith_ROISignals_path, FUN=function(kth_ROISignals_path, ...){
+      # kth_ROISignals_path = ith_ROISignals_path[1]
+      kth_ROISignals = read.table(kth_ROISignals_path)
+      names(kth_ROISignals) = paste0("ROI_", fit_length(1:ncol(kth_ROISignals), 3))
+      return(kth_ROISignals)
+    })
+    names(ith_ROISignals.list) = RS.fMRI_4.2_Extracting.Results___Extract.Sub.Names(ith_ROISignals_files)
+    return(ith_ROISignals.list)
   })
-  names(Signals_of_Each_Folders.list) = RS.fMRI_4.0_SUB___Folders.Path.Extractor(Each_Folders_Path)
-  ADNI___RS.fMRI___ROI.Signals = RS.fMRI_4.0_SUB___Combining.by.Scanner.Manufacturer(Signals_of_Each_Folders.list)
-
-
-  if(!is.null(save.path)){
-    setwd(save.path)
-    usethis::use_data(ADNI___RS.fMRI___ROI.Signals, overwrite = T)
-    cat("\n", crayon::yellow("ROI Signals"), crayon::blue("are saved !"), "\n")
-  }
-
-  return(ADNI___RS.fMRI___ROI.Signals)
+  names(ROISignals.list) = folders
+  return(ROISignals.list)
 }

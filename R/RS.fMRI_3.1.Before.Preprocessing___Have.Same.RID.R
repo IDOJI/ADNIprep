@@ -28,7 +28,32 @@ RS.fMRI_3.1.Before.Preprocessing___Have.Same.RID = function(manu_path){
   ##############################################################################
   # Check the number of sub_folders of each folder pair
   ##############################################################################
+  Folders
 
+  all_combination = function(x, unique=T){
+    comb = tidyr::crossing(x, x)
+
+    if(unique){
+      comb_unique = comb[comb[,1]!=comb[,2] %>% unlist,]
+      ?crossing
+    }
+
+
+  }
+
+
+  fruits <- tibble(
+    type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
+    year   = c(2010, 2010, 2012, 2010, 2011, 2012),
+    size  =  factor(
+      c("XS", "S",  "M", "S", "S", "M"),
+      levels = c("XS", "S", "M", "L")
+    ),
+    weights = rnorm(6, as.numeric(size) + 2)
+  )
+  fruits %>% expand(nesting(type))
+  fruits %>% expand(nesting(type, size))
+  fruits %>% expand(nesting(type, size, year))
 
 
   SB_Fun = list.files(Fun_path)

@@ -1,72 +1,34 @@
 RS.fMRI_4. = function(path_completed.preprocessing, save.path=NULL, exclude.list=NULL){
+  # path_completed.preprocessing = "D:/ADNI/ADNI_RS.fMRI/@완료_New_Template_unified_segmentation"
   #==================================================================================================
-  # 0) path
+  # 1) Results path
   #==================================================================================================
-  path_completed.preprocessing = path_completed.preprocessing %>% path_tail_slash()
-
-
-
-  #==================================================================================================
-  # 1) Extracting each folders path
-  #==================================================================================================
-  # Extracting Folders Path
-  Excluding_List_with_Path.list = RS.fMRI_4.1_Extracting.Each.Folders.Path(path_ADNI_RS.fMRI)
-  cat("\n", crayon::red("Step 4.1"), crayon::yellow("Extracting each folders' path"), crayon::blue("is done !!") ,"\n")
-
-
-
-
-  RS.fMRI_4.1_Extracting.Each.Folders.Path = function(path_ADNI_RS.fMRI){
-    ### adding Sub
-    exclude_added_sub.list = lapply(exclude.list, FUN=function(x){
-      # x = exclude.list[[2]]
-      if(!is.null(x)){
-        return(paste0("Sub_", fit_length(x, 3)))
-      }else{
-        return(NULL)
-      }
-    })
-
-    #############################################################################
-    ### fMRI data path
-    path_ADNI_RS.fMRI = path_ADNI_RS.fMRI %>% path_tail_slash()
-
-    ### folders
-    folders_list = gsub("list_", "", names(exclude.list))
-    new_folders_list = paste0("[Prep_SelectEx]", folders_list)
-
-    ### folders' path
-    new_folders_path_list = paste0(path_ADNI_RS.fMRI, new_folders_list)
-
-
-    ### change exclude.list names by each path
-    names(exclude_added_sub.list) = new_folders_path_list
-
-    return(exclude_added_sub.list)
-  }
-
+  path_Results = RS.fMRI_4.1_Extract.Rusults.Path(path_completed.preprocessing)
+  cat("\n", crayon::red("Step 4.1"), crayon::yellow("Extracting"),  crayon::red("'Results'"),crayon::yellow("path of each folder"), crayon::blue("is done !!") ,"\n")
 
 
   #==================================================================================================
   # 2) Extracting Results
   #==================================================================================================
-  Extracted_Data.list = list()
-  # 2-1) ROI Signals
-  Extracted_Data.list[[1]] = ROI_Signals.list = RS.fMRI_4.2_Extracting.Results___ROI.Signals(Excluding_List_with_Path.list, save.path = "C:/Users/IDO/Dropbox/Github/Rpkgs/Papers/data")
-  names(Extracted_Data.list)[1] = "ROI.Signals"
-  cat("\n", crayon::red("Step 4.2.1."), crayon::yellow("Extracting ROI Signals"), crayon::blue("is done !!") ,"\n")
-  # 2-2) Functional Connectivity
-  Extracted_Data.list[[2]] = Functional_Connectivity.list = RS.fMRI_4.2_Extracting.Results___Functional.Connectivity(Excluding_List_with_Path.list, save.path = "C:/Users/IDO/Dropbox/Github/Rpkgs/Papers/data")
-  names(Extracted_Data.list)[2] = "Functional.Connectivity"
-  cat("\n", crayon::red("Step 4.2.2."), crayon::yellow("Extracting Functional Connectivity"), crayon::blue("is done !!") ,"\n")
-  # 2-3) Extracating VMHC
-  cat("\n", crayon::red("Step 4.2.3."), crayon::yellow("Extracting VMHC"), crayon::blue("is done !!") ,"\n")
+  Extracted_Results.list = RS.fMRI_4.2_Extracting.Results(path_Results)
 
 
 
   #==================================================================================================
-  # 3) Combining Results
+  # 3) Combining Results by Manufacturer
   #==================================================================================================
+  RS.fMRI_4.3_Combine.Results.By.Manufacturer = function(Extracted_Results.list){
+    folders = Extracted_Results.list[[1]] %>% names
+  }
+
+
+
+
+
+
+
+
+
   Combined_by_RID.list = RS.fMRI_4.3_Combining.with.Subjects.Information(Extracted_Data.list, path_ADNI)
   cat("\n", crayon::red("Step 4.3."), crayon::yellow("Combining subjects information"), crayon::blue("is done !!") ,"\n")
   saving_data(rda.name = "ADNI___RS.fMRI___Group_All", rda = Combined_by_RID.list, path = save.path)
