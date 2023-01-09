@@ -18,7 +18,8 @@ RS.fMRI_3.2.During.Preprocessing___Check.NIFTI.Converting___Excludinig.Folders =
 
   if(!is.null(ex_sub_folders)){
     ### creating path to move to
-    path_ex = paste0(manu_path, "_excluded_sub_folders")
+    splitted_path = strsplit(x = manu_path, split = "/")[[1]]
+    path_ex = paste0(manu_path, splitted_path[length(splitted_path)], "_excluded_sub_folders") # 확인해야 함
     dir.create(path_ex, showWarnings = F)
 
 

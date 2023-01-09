@@ -1,4 +1,4 @@
-RS.fMRI_4.1_Pre.Steps___Extracting.Each.Folders.Path = function(path_completed.preprocessing, exclude.list, ){
+RS.fMRI_4.1_Pre.Steps___Extracting.Each.Folders.Path = function(path_completed.preprocessing, exclude.list){
   ### adding Sub
   exclude_added_sub.list = lapply(exclude.list, FUN=function(x){
     # x = exclude.list[[2]]

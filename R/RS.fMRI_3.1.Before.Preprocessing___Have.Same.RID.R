@@ -1,6 +1,35 @@
-RS.fMRI_3.1.Before.Preprocessing___Have.Same.RID = function(Fun_path, MT1_path){
-  Fun_path = path_tail_slash(Fun_path)
-  MT1_path = path_tail_slash(MT1_path)
+RS.fMRI_3.1.Before.Preprocessing___Have.Same.RID = function(manu_path){
+  ##############################################################################
+  # path
+  ##############################################################################
+  manu_path = manu_path %>% path_tail_slash
+  path_Fun_Folders = list.files(manu_path, "Fun", full.names = T)
+  path_MT1_Folders = list.files(manu_path, "T1", full.names = T)
+  path_Folders = c(path_Fun_Folders, path_MT1_Folders)
+
+  ##############################################################################
+  # Folders
+  ##############################################################################
+  Fun_Folders = list.files(manu_path, "Fun")
+  MT1_Folders = list.files(manu_path, "T1")
+  Folders = c(Fun_Folders, MT1_Folders)
+
+
+  ##############################################################################
+  # The number of Sub folders
+  ##############################################################################
+  Each_Sub_Folders.list = lapply(path_Folders, FUN=function(ith_folder_path){
+    list.files(ith_folder_path)
+  })
+  names(Each_Sub_Folders.list) = Folders
+
+
+
+  ##############################################################################
+  # Check the number of sub_folders of each folder pair
+  ##############################################################################
+
+
 
   SB_Fun = list.files(Fun_path)
   RID_Fun = sapply(SB_Fun, FUN=function(x,...){
