@@ -11,14 +11,86 @@ RS.fMRI_4. = function(path_completed.preprocessing, save.path=NULL, exclude.list
   # 2) Extracting Results
   #==================================================================================================
   Extracted_Results.list = RS.fMRI_4.2_Extracting.Results(path_Results)
-
+  cat("\n", crayon::red("Step 4.1"), crayon::yellow("Extracting"),  crayon::red("'Results'"), crayon::blue("is done !!") ,"\n")
 
 
   #==================================================================================================
   # 3) Combining Results by Manufacturer
   #==================================================================================================
   RS.fMRI_4.3_Combine.Results.By.Manufacturer = function(Extracted_Results.list){
-    folders = Extracted_Results.list[[1]] %>% names
+    #==========================================================================
+    # Manufacturer
+    #==========================================================================
+    manufacturer = c("SIEMENS", "GE.MEDICAL.SYSTEMS", "Philips")
+    manu_BT = lapply(manufacturer, FUN=function(ith_manu){
+      return(c(paste0(ith_manu, "_SB"), paste0(ith_manu, "_MB")))
+    }) %>% unlist
+
+
+
+
+    #==========================================================================
+    # find folders
+    #==========================================================================
+    which_folders.list = lapply(manu_BT, FUN=function(ith_manu_BT, ...){
+      # ith_manu_BT = manu_BT[1]
+      grep(ith_manu_BT, Extracted_Results.list[[1]] %>% names)
+    })
+    names(which_folders.list) = manu_BT
+
+
+
+    #==========================================================================
+    # combining results
+    #==========================================================================
+    Combined_Results.list = rep(NA, length(Extracted_Results.list)) %>% as.list
+    names(Combined_Results.list) = names(Extracted_Results.list)
+    for(i in 1:length(which_folders.list)){
+      ith_folder = which_folders.list[[i]]
+      for(j in 1:length(ith_folder)){
+
+
+
+      }
+
+
+    }
+
+
+
+    for(i in 1:length(manu_BT)){
+      ith_manu_BT = manu_BT[i]
+      lapply(, FUN=function(kth_results, ...){
+        # kth_results = Extracted_Results.list[[1]]
+        selected_folders = grep(ith_manu_BT, names(kth_results))
+        for(i in)
+      })
+    }
+
+
+
+
+
+
+    for(i in 1:length(manu_BT)){
+      test = Extracted_Results.list[[]]
+      grep(manu_BT[i], folders)
+
+
+      lapply(ith_manu, FUN=function(kth){
+        Extracted_Results.list[[kth]]
+      })
+
+
+
+
+
+    }
+
+
+
+
+
   }
 
 
