@@ -1,28 +1,43 @@
 RS.fMRI_4.0_SUB___Combining.by.Scanner.Manufacturer = function(data.list){
-  ### Each Scanner
+  ##############################################################################
+  # Each Scanner list
+  ##############################################################################
   scanners = c("SIEMENS", "Philips", "GE.MEDICAL.SYSTEMS")
   scanners_band.type = sapply(scanners, FUN=function(ith){
     c(paste0(ith, "_", "MB"), paste0(ith, "_", "SB")) %>% return
   })
 
 
-  ### Find having same scanner_band.type
-  list_names = names(data.list)
-  which_scanner_is_selected = c()
-  combined_by_scanner_type.list = lapply(scanners_band.type, FUN=function(jth_scanner_band.type, ...){
-    which_ind = filter_by(list_names, jth_scanner_band.type, ignore.case = F, as.ind = T)
 
-    if(length(which_ind)>0){
-      which_scanner_is_selected <<- c(which_scanner_is_selected, jth_scanner_band.type)
-      kth.list = c()
-      for(k in 1:length(which_ind)){
-        kth.list = c(kth.list, data.list[[which_ind[k]]])
-      }
-      return(kth.list)
-    }else{
-      return(NULL)
+  ##############################################################################
+  # create a list to save results
+  ##############################################################################
+  selected.list = rep(NA, length(scanners_band.type)) %>% as.list
+  names(selected.list) = scanners_band.type
+
+
+
+  ##############################################################################
+  # Each Scanner list
+  ##############################################################################
+  preprocessed.folders = names(data.list)
+  for(i in 1:length(scanners_band.type)){
+    which_selected_folders = grep(pattern = scanners_band.type[i], preprocessed.folders)
+    if(length(which_selected_folders)>0){
+      selected.list[[i]] = combine_lists_as_list(data.list[which_selected_folders])
     }
-  }) %>% rm_list_null
-  names(combined_by_scanner_type.list) = which_scanner_is_selected
-  return(combined_by_scanner_type.list)
+  }
+
+
+
+  ##############################################################################
+  # Remove NA
+  ##############################################################################
+  selected.list = selected.list[!is.na(selected.list)]
+
+  return(selected.list)
 }
+
+
+
+

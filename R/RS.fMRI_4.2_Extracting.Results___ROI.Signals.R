@@ -1,23 +1,58 @@
-RS.fMRI_4.2_Extracting.Results___ROI.Signals = function(path_ROISignals){
-  folders = names(path_ROISignals)
-  index = 1:length(path_ROISignals) %>% as.character
-
-
-  ROISignals.list = lapply(index, FUN=function(ith_index, ...){
-    # ith_index = index[1]
-    ith_results_folder = path_ROISignals[[as.numeric(ith_index)]]
-    ith_ROISignals_files = filter_by(list.files(ith_results_folder), including.words = c("ROISignals_Sub", "\\.txt"))
-    ith_ROISignals_path = paste0(ith_results_folder, ith_ROISignals_files)
-
-    ith_ROISignals.list = lapply(ith_ROISignals_path, FUN=function(kth_ROISignals_path, ...){
-      # kth_ROISignals_path = ith_ROISignals_path[1]
-      kth_ROISignals = read.table(kth_ROISignals_path)
-      names(kth_ROISignals) = paste0("ROI_", fit_length(1:ncol(kth_ROISignals), 3))
-      return(kth_ROISignals)
-    })
-    names(ith_ROISignals.list) = RS.fMRI_4.2_Extracting.Results___Extract.Sub.Names(ith_ROISignals_files)
-    return(ith_ROISignals.list)
+RS.fMRI_4.2_Extracting.Results___ROI.Signals = function(path_Results.ROISignals, files_Norm.Pictures){
+  ##############################################################################
+  ### Files' list
+  ##############################################################################
+  path_ROISignals.list = lapply(path_Results.ROISignals, FUN=function(ith_path_Results.ROISignals){
+    list.files(ith_path_Results.ROISignals, pattern=glob2rx("*ROISignals_Sub*txt*"), full.names = T)
   })
-  names(ROISignals.list) = folders
-  return(ROISignals.list)
+
+  ##############################################################################
+  ### Files' list
+  ##############################################################################
+  ROISignals.list = lapply(path_ROISignals.list, FUN=function(path_ith_ROISignals){
+    # path_ith_ROISignals = path_ROISignals.list[[1]]
+    ith_Loaded.ROISignals = RS.fMRI_4.2_Extracting.Results___ROI.Signals___Loading.Files(path_ith_ROISignals)
+  })
+
+  ##############################################################################
+  ### Adding Sub names
+  ##############################################################################
+  for(i in 1:length(ROISignals.list)){
+    names(ROISignals.list[[i]]) = files_Norm.Pictures[[i]]
+  }
+
+
+  ##############################################################################
+  ### Combining by each manufacture
+  ##############################################################################
+  combined_ROISignals.list = RS.fMRI_4.0_SUB___Combining.by.Scanner.Manufacturer(ROISignals.list)
+
+
+  ##############################################################################
+  ### Ordering by "Sub"
+  ##############################################################################
+  Ordered_by_Sub.list = lapply(combined_ROISignals.list, FUN=function(ith_manu.list){
+    ith_manu.list[order(names(ith_manu.list))]
+  })
+
+
+  return(Ordered_by_Sub.list)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
