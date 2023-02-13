@@ -10,14 +10,13 @@ RS.fMRI_4. = function(path_completed.preprocessing, path_save=NULL, atals= "AAL1
 
 
 
-
   #==================================================================================================
   # 2) Extracting Results
   #==================================================================================================
   Extracted_Results.list = RS.fMRI_4.2_Extracting.Results(path_Results, path_Norm.Pictures, atals)
   cat("\n", crayon::red("Step 4.2"), crayon::yellow("Extracting"),  crayon::red("'Results'"), crayon::blue("is done !!") ,"\n")
 
-
+  Extracted_Results.list %>% length
 
   #==================================================================================================
   # 3) Extracting Subjects' information

@@ -44,8 +44,8 @@ RS.fMRI_4.5_Split.by.Research.Groups = function(New_Combined_Subjects_Info.list,
   # Combine functional connectivity as a data.frame
   ##############################################################################
   for(g in 1:length(Grouped_data.list)){
-    Grouped_data.list[[g]]$Pearson_Correlation_UpperTriangle = do.call(rbind, Grouped_data.list[[g]]$Pearson_Correlation_UpperTriangle)
-    Grouped_data.list[[g]]$FisherZ_Pearson_Correlation_UpperTriangle = do.call(rbind, Grouped_data.list[[g]]$FisherZ_Pearson_Correlation_UpperTriangle)
+    Grouped_data.list[[g]]$Pearson_Correlation_UpperTriangle = do.call(rbind, Grouped_data.list[[g]]$Pearson_Correlation_UpperTriangle) %>% as.data.frame
+    Grouped_data.list[[g]]$FisherZ_Pearson_Correlation_UpperTriangle = do.call(rbind, Grouped_data.list[[g]]$FisherZ_Pearson_Correlation_UpperTriangle) %>% as.data.frame
   # 변수명추가?
   }
   return(Grouped_data.list)
