@@ -35,6 +35,9 @@ RS.fMRI_4.0_SUB___Combining.by.Scanner.Manufacturer = function(data.list){
   ##############################################################################
   selected.list = selected.list[!is.na(selected.list)]
 
+  selected.list[[3]] %>% names
+
+
   return(selected.list)
 }
 
