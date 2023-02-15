@@ -2,8 +2,8 @@ RS.fMRI_4.3_Combining.with.Subjects.Information___Loading.Subjects.Lists = funct
   ##############################################################################
   # path
   ##############################################################################
-  folders_selected = filter_by(list.files(path_Subjects), folders, any=T)
-  path_folders_selected = filter_by(list.files(path_Subjects, full.names = T), folders, any=T)
+  folders_selected = filter_by(x=list.files(path_Subjects), including.words = folders, any_including.words = T)
+  path_folders_selected = filter_by(list.files(path_Subjects, full.names = T), including.words = folders, any_including.words = T)
 
 
 

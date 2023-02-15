@@ -5,13 +5,13 @@ RS.fMRI_4.3_Combining.with.Subjects.Information = function(Extracted_Results.lis
   folders = names(Extracted_Results.list[[1]])
   Subjects.list = RS.fMRI_4.3_Combining.with.Subjects.Information___Loading.Subjects.Lists(path_Subjects, folders)
 
-
+  
 
   ##############################################################################
   ### Subset Subjects list
   ##############################################################################
   Selected_Subjects_Lists.list = RS.fMRI_4.3_Combining.with.Subjects.Information___Subset.Subjects.List(Subjects.list, Extracted_Results.list)
-
+  
 
 
   # ### combining results
@@ -32,6 +32,6 @@ RS.fMRI_4.3_Combining.with.Subjects.Information = function(Extracted_Results.lis
   ##############################################################################
   combined.list = c(list(Selected_Subjects_Lists.list), Extracted_Results.list)
   names(combined.list)[1] = "Subjects_Information"
-
+  
   return(combined.list)
 }

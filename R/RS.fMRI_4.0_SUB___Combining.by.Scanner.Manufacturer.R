@@ -34,11 +34,18 @@ RS.fMRI_4.0_SUB___Combining.by.Scanner.Manufacturer = function(data.list){
   # Remove NA
   ##############################################################################
   selected.list = selected.list[!is.na(selected.list)]
-
-  selected.list[[3]] %>% names
-
-
-  return(selected.list)
+  
+  
+  
+  
+  ##############################################################################
+  ### Ordering by "Sub"
+  ##############################################################################
+  Ordered_by_Sub.list = lapply(selected.list, FUN=function(ith_manu.list){
+    ith_manu.list[order(names(ith_manu.list))]
+  })
+  
+  return(Ordered_by_Sub.list)
 }
 
 

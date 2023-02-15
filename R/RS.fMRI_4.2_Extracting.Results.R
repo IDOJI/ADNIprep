@@ -1,10 +1,14 @@
-RS.fMRI_4.2_Extracting.Results = function(path_Results, path_Norm.Pictures, atlas="AAL116"){
+RS.fMRI_4.2_Extracting.Results = function(path_Results, path_Norm.Pictures, atlas=NULL){
   ##############################################################################
   # path & save list
   ##############################################################################
   Extracted_Data.list = list()
-  path_Results.ROISignals = lapply(path_Results, FUN=function(ith_path_Results){
-    list.files(ith_path_Results, pattern = glob2rx(paste0("*", "ROISignals", "*", atlas, "*")), full.names = T)
+  path_Results.ROISignals = lapply(path_Results, FUN=function(ith_path_Results, ...){
+    if(is.null(atlas)){
+      list.files(ith_path_Results, pattern = glob2rx(paste0("*", "ROISignals", "*")), full.names = T)
+    }else{
+      list.files(ith_path_Results, pattern = glob2rx(paste0("*", "ROISignals", "*", atlas, "*")), full.names = T)
+    }
   })
 
 
@@ -27,24 +31,25 @@ RS.fMRI_4.2_Extracting.Results = function(path_Results, path_Norm.Pictures, atla
   names(Extracted_Data.list)[1] = "ROI_Signals"
   cat("\n", crayon::red("Step 4.2.1."), crayon::blue("Extracting"), crayon::yellow("ROI Signals"), crayon::blue("is done !!") ,"\n")
 
-
+  
+  
+  
   ##############################################################################
   # 2) Pearson Correlation
   ##############################################################################
-  Extracted_Data.list[[2]] = RS.fMRI_4.2_Extracting.Results___Pearson.Correlation(path_Results.ROISignals, files_Norm.Pictures, FisherZ = F)
+  Extracted_Data.list[[2]] = RS.fMRI_4.2_Extracting.Results___Pearson.Correlation(Extracted_Data.list[[1]], path_Results.ROISignals, files_Norm.Pictures, FisherZ = F)
   names(Extracted_Data.list)[2] = "Pearson_Correlation"
   cat("\n", crayon::red("Step 4.2.2."), crayon::blue("Extracting"), crayon::yellow("Pearson Correlation"), crayon::blue("is done !!") ,"\n")
-
-
-
+  
+  
   ##############################################################################
   # 3) Pearson Correlation FisherZ
   ##############################################################################
-  Extracted_Data.list[[3]] = RS.fMRI_4.2_Extracting.Results___Pearson.Correlation(path_Results.ROISignals, files_Norm.Pictures, FisherZ = T)
+  Extracted_Data.list[[3]] = RS.fMRI_4.2_Extracting.Results___Pearson.Correlation(Extracted_Data.list[[1]], path_Results.ROISignals, files_Norm.Pictures, FisherZ = T)
   names(Extracted_Data.list)[3] = "Pearson_Correlation_FisherZ"
   cat("\n", crayon::red("Step 4.2.3."), crayon::blue("Extracting"), crayon::yellow("FisherZ Pearson Correlation"), crayon::blue("is done !!") ,"\n")
 
-
+  
 
   # ############################################################################
   # # 4) Spearman Correlation
@@ -52,12 +57,15 @@ RS.fMRI_4.2_Extracting.Results = function(path_Results, path_Norm.Pictures, atla
   # Extracted_Data.list[[4]] = Spearman_Corr.list = RS.fMRI_4.2_Extracting.Results___Spearman.Correlation(ROI_Signals.list)
   # names(Extracted_Data.list)[4] = "Spearman Correlation"
   # cat("\n", crayon::red("Step 4.2.3."), crayon::blue("Extracting"), crayon::yellow("Spearman Correlation"), crayon::blue("is done !!") ,"\n")
-
+  
 
 
   ############################################################################
   # 5) returning data
   ############################################################################
+  Extracted_Data.list[[1]] = Extracted_Data.list[[1]][[1]]
+  
+  
   return(Extracted_Data.list)
 }
 

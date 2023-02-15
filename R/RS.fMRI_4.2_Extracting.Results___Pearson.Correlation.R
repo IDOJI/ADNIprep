@@ -1,4 +1,4 @@
-RS.fMRI_4.2_Extracting.Results___Pearson.Correlation = function(path_Results.ROISignals, files_Norm.Pictures, FisherZ=F){
+RS.fMRI_4.2_Extracting.Results___Pearson.Correlation = function(Extracted_ROI.Signals, path_Results.ROISignals, files_Norm.Pictures, FisherZ=F){
   ##############################################################################
   ### Files' path list
   ##############################################################################
@@ -65,7 +65,20 @@ RS.fMRI_4.2_Extracting.Results___Pearson.Correlation = function(path_Results.ROI
     names(combined.list) = c("ROI_Pearson.Correlation", "ROI_Pearson.Correlation_Upper.Triangle")
   }
 
-
+  
+  ##############################################################################
+  ### Excluding subjects
+  ##############################################################################
+  for(i in 1:length(Extracted_ROI.Signals[[1]])){
+    # i=2
+    ith_ROI.Sigs_names = Extracted_ROI.Signals[[2]][[i]] %>% names
+    if(length(ith_ROI.Sigs_names)>0){
+      ith_Corr_names = combined.list[[1]][[i]] %>% names
+      combined.list[[1]][[i]] = combined.list[[1]][[i]][!ith_Corr_names %in% ith_ROI.Sigs_names]
+      combined.list[[2]][[i]] = combined.list[[2]][[i]][!ith_Corr_names %in% ith_ROI.Sigs_names]
+    }
+  }
+  
   return(combined.list)
 }
 

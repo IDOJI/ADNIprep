@@ -5,7 +5,9 @@ RS.fMRI_4.1_Extract.Path = function(path_completed.preprocessing, folder.name = 
 
   # Results path
   path_Results = lapply(path_folders, FUN=function(ith_path){
-    list.files(ith_path, pattern = folder.name, full.names = T)
+    # ith_path = path_folders[1]
+    ith_folders = list.files(ith_path, pattern = folder.name, full.names = T)
+    filter_by(x = ith_folders, including.words = folder.name, any_including.words = T, excluding.words = c("\\.7z", "\\.zip"), any_excluding.words = T) %>% return
   })
 
   names(path_Results) = list.files(path_completed.preprocessing)
