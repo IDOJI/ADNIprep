@@ -1,6 +1,6 @@
-RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List = function(subjects_search_fMRI, subjects_search_MRI, path_Subjects_Downloaded, path_Rda){
+RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List = function(subjects_search_fMRI, subjects_search_MRI, path_SubjectsLists, path_ExportRda){
   ### 1.Loading data ======================================================================
-  Search_1.list = RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List___Loading.Data(subjects_search_fMRI, subjects_search_MRI, path_Subjects_Downloaded)
+  Search_1.list = RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List___Loading.Data(subjects_search_fMRI, subjects_search_MRI, path_SubjectsLists)
   cat("\n", crayon::green("1.1.1 : Loading data is done."), "\n")
 
 
@@ -40,9 +40,31 @@ RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List = function(subjects_search_fMR
   cat("\n", crayon::green(text), "\n")
 
 
+  ### 8.Exclude non ADNI phase
+  Search_8.df = Search_7.df %>% filter(PHASE!="")
+  text = "1.1.1 : Excluding Non ADNI Phase is done."
+  cat("\n", crayon::green(text), "\n")
+
+
+  ### 9.Exclude ADNI1
+  Search_9.df = Search_8.df %>% filter(PHASE != "ADNI1")
+  text = "1.1.1 : Excluding ADNI1 is done."
+  cat("\n", crayon::green(text), "\n")
+
+
+
+  ### 10. Arrange by RID and Date
+  Search_10.df = Search_9.df
+  Search_10.df$RID = Search_10.df$RID %>% as.numeric
+  Search_10.df = Search_10.df %>% arrange(RID, STUDY.DATE)
+  Search_10.df$RID = Search_10.df$RID %>% as.character
+  text = "1.1.1 : Arranging is done."
+  cat("\n", crayon::green(text), "\n")
+
+
 
   ### saving data ===================================================================
-  ADNI_Subjects_1.Search =  Search_7.df
+  ADNI_Subjects_1.Search =  Search_10.df
   # if(is.null(path_Rda)){
   #   setwd(path_Rda)
   #   usethis::use_data(ADNI_Subjects_1.Search, overwrite=T)

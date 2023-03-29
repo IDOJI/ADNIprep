@@ -1,13 +1,9 @@
-RS.fMRI_1.2_Merging.Lists___Slice.Order.Info = function(data.list=Combined_by_SeriesType.list){
+RS.fMRI_1.2_Merging.Lists___Slice.Order.Info = function(data.list = Merging_NFQ.list){
 
   ### Data load
   EPB = data.list[[1]]
   MT1 = data.list[[2]]
 
-
-  ### merge Manufacturer
-  EPB$MANUFACTURER_NFQ = NULL
-  EPB = EPB %>% dplyr::rename(MANUFACTURER = MANUFACTURER_SQ)
 
   ### variables
   MANU             = EPB$MANUFACTURER

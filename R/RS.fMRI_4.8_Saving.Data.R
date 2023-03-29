@@ -8,7 +8,6 @@ RS.fMRI_4.8_Saving.Data = function(Combining_Functional_Connectivity.list, path_
     }
     for(i in 1:length(filenames)){
       saving_data(rda.name = filenames[i], rda = ith_data, path = path_save)
-      }
     }
   }
 }

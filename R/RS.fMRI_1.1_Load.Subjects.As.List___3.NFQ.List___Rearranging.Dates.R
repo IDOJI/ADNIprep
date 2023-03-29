@@ -2,7 +2,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List___Rearranging.Dates = function(NF
   NFQ_1.df = NFQ.df %>% dplyr::relocate(contains("DATE"), .after=RID)
 
   NFQ_1.df$SERIESDATE = lubridate::ymd(NFQ_1.df$SERIESDATE) %>% as.character
-  NFQ_1.df$SCANDATE = lubridate::ymd(NFQ_1.df$SCANDATE) %>% as.character
+  NFQ_1.df$SCANDATE = lubridate::mdy(NFQ_1.df$SCANDATE) %>% as.character
 
 
   ### removing dup cols

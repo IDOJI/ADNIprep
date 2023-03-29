@@ -1,37 +1,39 @@
-RS.fMRI_1.2_Merging.Lists = function(Subjects.list, path_Rda, what.date){
+RS.fMRI_1.2_Merging.Lists = function(Subjects.list, path_ExportRda, what.date){
   #=============================================================================
-  # 1. Selecting data by RID and Dates
+  # 1. Selecting data by RID & Dates & ImageID
   #=============================================================================
-  Intersect_by_RID.list = RS.fMRI_1.2_Merging.Lists___Intersect.By.RID(Subjects.list)
+  Intersection.list = RS.fMRI_1.2_Merging.Lists___Intersect.By.RID.and.Dates.and.ImageID(Subjects.list)
   text = "1.2 : Extracting by RID & Dates is done!"
   cat("\n", crayon::green(text), "\n")
 
 
 
+
   #=============================================================================
-  # 2. Merging by dates having both EPB & MT1 by what.date
+  # 2. Merging Search & QC by date having MT1 & EPB
   #=============================================================================
-  Merged_by_dates.list = RS.fMRI_1.2_Merging.Lists___Merging.By.Date(Intersect_by_RID.list, what.date)
-  text = "1.2 : Merging by dates is done!"
+  Merging_Search_and_QC.list = RS.fMRI_1.2_Merging.Lists___Merging.Search.and.QC(Intersection.list, what.date)
+  text = "1.2 : Merging Search & QC is done!"
   cat("\n", crayon::green(text), "\n")
 
 
 
+
   #=============================================================================
-  # 3. combining by series type
+  # 3. Merging NFQ
   #=============================================================================
-  Combined_by_SeriesType.list = RS.fMRI_1.2_Merging.Lists___Combining.By.Series.Type(Merged_by_dates.list)
-  text = "1.2 : Combining by Series.Type is done!"
+  Merging_NFQ.list = RS.fMRI_1.2_Merging.Lists___Merging.With.NFQ(Merging_Search_and_QC.list)
+  text = "1.2 : Merging with NFQ is done!"
   cat("\n", crayon::green(text), "\n")
+
 
 
   #=============================================================================
   # 4. Extracting Slice.Order.Type
   #=============================================================================
-  Slice.Order.Type_Extracted.list = RS.fMRI_1.2_Merging.Lists___Slice.Order.Info(Combined_by_SeriesType.list)
+  Slice.Order.Type_Extracted.list = RS.fMRI_1.2_Merging.Lists___Slice.Order.Info(Merging_NFQ.list)
   text = "1.2 : Extracting Slice.Order.Type by Series.Type is done!"
   cat("\n", crayon::green(text), "\n")
-
 
 
 

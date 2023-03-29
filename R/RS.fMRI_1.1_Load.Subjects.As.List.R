@@ -1,26 +1,30 @@
-RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects,
-                                             path_Subjects_Downloaded,
-                                             path_Rda,
+RS.fMRI_1.1_Load.Subjects.As.List = function(path_SubjectsLists,
+                                             path_ExportRda,
                                              subjects_search_fMRI,
                                              subjects_search_MRI,
                                              subjects_QC_ADNI2GO,
                                              subjects_QC_ADNI3,
                                              subjects_NFQ,
-                                             Have_Previous_Study=F){
+                                             Exclude_RID){
   subjects.list = list()
-
   # (1) ida search ========================================================================================
-  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List(subjects_search_fMRI, subjects_search_MRI, path_Subjects_Downloaded, path_Rda)
+  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List(subjects_search_fMRI,
+                                                                         subjects_search_MRI,
+                                                                         path_SubjectsLists,
+                                                                         path_ExportRda)
 
 
 
   # (2) QC info ===========================================================================================
-  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects_Downloaded, path_Rda)
+  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List(subjects_QC_ADNI2GO,
+                                                                     subjects_QC_ADNI3,
+                                                                     path_SubjectsLists,
+                                                                     path_ExportRda)
 
 
 
   # (3) NFQ info ==========================================================================================
-  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List(subjects_NFQ, path_Subjects_Downloaded, path_Rda)
+  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List(subjects_NFQ, path_SubjectsLists, path_ExportRda)
 
 
 
@@ -36,7 +40,7 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects,
 
 
   # (5) Exlcude previous RID ===========================================================================
-  if(Have_Previous_Study){
+  if(!is.null(Exclude_RID)){
     folders = list.files(path_Subjects, full.names = T)
     previous = folders[grep("Previous", folders)] %>% list.files(full.names=T)
     previous_RID = read.csv(file=previous) %>% unlist %>% as.character

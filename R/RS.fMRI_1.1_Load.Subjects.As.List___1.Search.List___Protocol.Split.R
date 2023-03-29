@@ -1,34 +1,41 @@
 RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List___Protocol.Split = function(data.list){
+  ### Defining function
+  strsplit_by = function(x.vec, split_by_1st = ";", split_by_2nd = "="){
+    split_1st.list = strsplit(x.vec, split_by_1st)
 
-  fMRI_protocol.list = strsplit_by(x.vec=data.list[[1]]$IMAGING.PROTOCOL, split_by=";", subsplit_by="=")
-  MRI_protocol.list  = strsplit_by(x.vec=data.list[[2]]$IMAGING.PROTOCOL, split_by=";", subsplit_by="=")
+    col_names = sapply(strsplit(split_1st.list[[1]], split_by_2nd), FUN=function(ith_elements){
+      ith_elements[1]
+    })
 
+    split_2nd.list = lapply(split_1st.list, FUN = function(ith_element, ...){
+      # ith_element = split_1st.list[[1]]
+      strsplit(ith_element, split = split_by_2nd) %>% unlist
+    })
+    split_2nd.df = do.call(rbind, split_2nd.list) %>% suppressWarnings() %>% as.data.frame
 
-  binding_list = function(data.list){
-    if(length(data.list)!=1){
-      for(i in 1:length(data.list)){
-        if(i==1){
-          data.df = data.list[[i]]
-        }else{
-          data.df = dplyr::bind_rows(data.df, data.list[[i]])
-        }
-      }
-    }else{
-      data.df = data.list[[1]]
-    }
-    return(data.df)
+    # Check elements
+    which_is_cols = split_2nd.df[1, ] %in% col_names
+    New_split_2nd.df = split_2nd.df[, !which_is_cols]
+    names(New_split_2nd.df) = col_names
+    return(New_split_2nd.df)
   }
 
-  fMRI_protocol.df =  binding_list(fMRI_protocol.list)
-  MRI_protocol.df =  binding_list(MRI_protocol.list)
+  ### split protocol
+  fMRI_protocol.df = strsplit_by(x.vec = data.list[[1]]$IMAGING.PROTOCOL)
+  MRI_protocol.df  = strsplit_by(x.vec = data.list[[2]]$IMAGING.PROTOCOL)
 
+
+  ### Nullify
+  data.list[[2]]$IMAGING.PROTOCOL=NULL
+  data.list[[1]]$IMAGING.PROTOCOL=NULL
+
+
+  ### Changing names
   names(fMRI_protocol.df) = names(fMRI_protocol.df) %>% toupper
   names(MRI_protocol.df) = names(MRI_protocol.df) %>% toupper
 
-  data.list[[1]]$IMAGING.PROTOCOL = NULL
-  data.list[[2]]$IMAGING.PROTOCOL = NULL
 
-
+  ### combining
   fMRI_protocol_combined = cbind(data.list[[1]], fMRI_protocol.df)
   MRI_protocol_combined = cbind(data.list[[2]],  MRI_protocol.df)
 

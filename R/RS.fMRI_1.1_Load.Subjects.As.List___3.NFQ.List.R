@@ -1,8 +1,8 @@
-RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List = function(subjects_NFQ, path_Subjects_Downloaded, path_Rda){
+RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List = function(subjects_NFQ, path_SubjectsLists, path_ExportRda){
   #=============================================================================
   # 1.데이터 로드
   #=============================================================================
-  NFQ_1.df = RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List___Loading.Data(subjects_NFQ, path_Subjects_Downloaded)
+  NFQ_1.df = RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List___Loading.Data(subjects_NFQ, path_SubjectsLists)
 
 
   #=============================================================================
@@ -32,10 +32,22 @@ RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List = function(subjects_NFQ, path_Sub
 
 
 
+
+  #=============================================================================
+  # 6.arrange
+  #=============================================================================
+  NFQ_6.df = NFQ_5.df
+  NFQ_6.df$RID = NFQ_6.df$RID %>% as.numeric
+  NFQ_6.df = NFQ_6.df %>% arrange(RID, SCANDATE)
+  NFQ_6.df$RID = NFQ_6.df$RID %>% as.character
+
+
+
+
   #=============================================================================
   # 5.Saving results
   #=============================================================================
-  ADNI_Subjects_NFQ =  NFQ_5.df
+  ADNI_Subjects_NFQ =  NFQ_6.df
   # if(is.null(path_Rda)){
   #   setwd(path_Rda)
   #   usethis::use_data(ADNI_Subjects_NFQ, overwrite=T)

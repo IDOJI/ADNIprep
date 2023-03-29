@@ -1,8 +1,8 @@
-RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List = function(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects_Downloaded, path_Rda){
+RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List = function(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_SubjectsLists, path_ExportRda, what.date){
   ##############################################################################
   # Loading the datasets
   ##############################################################################
-  QC_1.list = RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Loading.Data(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects_Downloaded)
+  QC_1.list = RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Loading.Data(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_SubjectsLists)
   text = "1.1.2 : Loading data is done."
   cat("\n", crayon::green(text), "\n")
 
@@ -53,10 +53,19 @@ RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List = function(subjects_QC_ADNI2GO, su
 
 
 
+  ##############################################################################
+  # arrange by RID
+  ##############################################################################
+  QC_7.df = QC_6.df
+  QC_7.df$RID = QC_7.df$RID %>% as.numeric
+  QC_7.df = QC_7.df %>% arrange(RID, SERIES_DATE)
+  QC_7.df$RID = QC_7.df$RID %>% as.character
+
+
   #=============================================================================
   # 5.Saving results
   #=============================================================================
-  ADNI_Subjects_QC =  QC_6.df
+  ADNI_Subjects_QC =  QC_7.df
   # if(is.null(path_Rda)){
   #   setwd(path_Rda)
   #   usethis::use_data(ADNI_Subjects_QC, overwrite=T)

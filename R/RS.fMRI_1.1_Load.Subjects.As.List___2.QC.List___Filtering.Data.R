@@ -1,9 +1,9 @@
-RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Filtering.Data = function(QC.df,...){
-
+RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Filtering.Data = function(QC.df){
   #===========================================================================
   # filter each dataset by "Description" : Excluding "Mocoseries"
   #===========================================================================
   selected_QC.df = QC.df %>% filter(SERIES_DESCRIPTION!="ANONYMIZED" & SERIES_DESCRIPTION!="MoCoSeries");dim(selected_QC.df)
+
 
 
   #===========================================================================
@@ -60,6 +60,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Filtering.Data = function(QC.df,
 
 
 
+
   ### QC Var ======================================================================
   QC_var = c("SERIES_QUALITY",
              "SERIES_COVERAGE_OCCIPITAL",
@@ -104,39 +105,205 @@ RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List___Filtering.Data = function(QC.df,
 
 
 
+
   #===========================================================================
   # Removing Bad data : comments
   #===========================================================================
+  ### extracting
   comments.df = relocated.df
-
-  ### protocol comments
-  comments_1.df = comments.df
-  comments_1.df$QC_COMMENTS_PROTOCOL_COMMENTS %>% table
+  only_comments_col.df = comments.df %>% select(contains("comments"))
+  no_comments_col.df = comments.df %>% select(!contains("comments"))
 
 
-  ### series comments
-  comments_2.df = comments_1.df
-  comments_2.df$QC_COMMENTS_SERIES_COMMENTS %>% table
-  which_motion = grep("motion", comments_2.df$QC_COMMENTS_SERIES_COMMENTS, ignore.case = T)
-  comments_2.df = comments_2.df[-which_motion ,]
+  ### trimming comments
+  trimmed_comments_col.df = apply(only_comments_col.df, MARGIN=2, FUN=function(y){
+    stringr::str_trim(y %>% as.vector) %>% suppressWarnings()
+  })
 
 
-  ### Study comments
-  comments_3.df = comments_2.df
-  comments_3.df$QC_COMMENTS_STUDY_COMMENTS %>% table
-  which_motion = grep("motion", comments_3.df$QC_COMMENTS_STUDY_COMMENTS, ignore.case=T)
-  comments_3.df = comments_3.df[-which_motion,]
+  ### containing keywords
+  exclusion_words = c(# the other imaging methods
+                      "B0FM still need QC",
+
+                      # tissues
+                      "CSF suppression not very good",
+                      "CSF suppression issue",
+
+                      # SNR
+                      "Low SNR",
+                      "SNR and flow artifacts noted.",
+                      "SNR and motion artifacts noted. ",
+                      "grainy/low SNR",
+                      "low snr",
+                      "poor SNR",
+                      "Poor SNR",
+
+                      # motion
+                      "some motion noted around mouth and nose area",
+                      "Motion noted in the mouth and nose area",
+                      "some motion noted",
+                      "moderate motion noted",
+                      "motion;",
+
+                      # wrap
+                      "wrap noted",
+                      "wrap",
+                      "bright artifact noted",
+                      "Possible AVM noted",
+                      "patient motion",
+                      "metal artifact",
 
 
-  ### study protocol comments
-  comments_4.df = comments_3.df
-  comments_4.df$QC_COMMENTS_STUDY_PROTOCOL_COMMENT %>% table
-  which_motion = grep("motion", comments_4.df$QC_COMMENTS_STUDY_PROTOCOL_COMMENT, ignore.case=T)
-  comments_4.df = comments_4.df[-which_motion,]
+                      "Distortion Correction Issue",
+                      "coverage;",
+                      "dmn,motion;",
+                      "dmn,venetian;",
+                      "venetian;",
+                      ";Appears to be flipped in FSL",
+                      "dmn,venetian,motion;",
+                      ";failed protocol",
+                      "dmn,coverage;",
+                      "motion;Wrapping noted",
+                      "venetian,motion;",
+                      ";Wrap noted",
+                      ";Unexpected inhomogeneity",
+                      ";Images Flipped in Viewer",
+                      "motion;low SNR",
+                      "snr;",
+                      "motion,snr;",
+                      "motion;Low SNR",
+                      "inhomogeneity;",
+                      "inhomogeneity;Unexpected left/right inhomogeneity",
+                      "susceptibility;",
+                      ";Slight left/right inhomogeneity",
+                      ";very slight unexpected left/right inhomogeneity",
+                      "inhomogeneity;Unusual signal drop-off near center center of the image",
+                      "motion,wrap;",
+                      "motion,inhomogeneity;very slight frontal left/right inhomogeneity",
+                      "IMAGES COMPROMISED DUE TO PATIENT MOTION",
+                      "1.5T scanner no longer available.  ",
+                      "Subject moved from 1.5T to 3T (Scanner no longer available)",
+                      "Not sure this is the same subject.",
+                      "All scans contain mild to moderate motion.  ",
+                      "Motion noted. Subject was unable to complete the scan.  ",
+                      "All scans contain motion. ",
+                      "Subject moved to 3T",
+                      "Subject has moved to 3T",
+                      "fMRI is 20mins long.  Site has changed TR",
+                      "All scans show moderate to severe motion",
+                      "pencil;",
+                      "motion noted on all scans except MPRAGE scans",
+                      "Rescan",
+                      "possible micro-hemorrhage in caudate noted by Dr. Jack",
+                      "B0FM still needs QC",
+                      "checkerboard artifact noted. ",
+                      "fMRI scan did not come up.",
+                      "Motion noted on all scans",
+                      "All scans contain mild motion. ",
+                      "All scans show moderate motion",
+                      "All scans show mild motion.",
+                      "All scans seem grainy.  Low SNR?  Site contacted.  ",
+                      "SNR Seems low on all scans",
+                      "All scans show mild motion. ",
+                      "dmn,pencil;",
+                      "CSF Supression problems on IR-SPGR scans, high intensity area on GRE",
+                      "All scans contain motion.  ",
+                      "All scans show motion",
+                      "Nearly all scans show severe motion",
+                      "All scans show moderate to severe motion.",
+                      "Motion noted in all scans",
+                      "All scans show moderate motion.",
+                      "MPRAGE Shows moderate to severe motion",
+                      "ASL and Hippo Scans do not cover anatomy.  ",
+                      "waiting for missing slice",
+                      "Slices Reduced",
+                      "All scans seem low in SNR",
+                      "Missing fMRI",
+                      "No masks available",
+                      "Motion noted on all scans.",
+                      "Distortion Correction Issues",
+                      "WMH Noted.",
+                      "Motion noted on all sequences.",
+                      "mild motion noted",
+                      "Site did not have distortion correction for many scans.",
+                      "Slight motion noted on all scans.",
+                      "Metal artifact noted.",
+                      "Slight motion noted.",
+                      "Truncated protocol",
+                      "Poor FOV placement on the T1, FOV cuts off a bit of occipital lobe, consider when using for analysis.",
+                      "QC'd - Motion noted on most scans.",
+                      "QC'd - fMRI PE Incorrect",
+                      "Motion noted on most scans.",
+                      "flipped PE",
+                      "Swapped PE",
+                      "Incorrect PE",
+                      "QC'd - \tSite reduced slices on several series.",
+                      "Motion noted on all series.",
+                      "QC'd - Motion noted on all series.",
+                      "Missing vols?",
+                      "QC'd - Distortion Correct Issues",
+                      "QC'd - Motion noted on all sequences.",
+                      "QC'd - All scans contain motion.",
+                      "QC'd - Subject has a metal artifact causing distortion of the face.",
+                      "QC'd - \tSite did not have distortion correction for many scans. Contacted and site was very upset.",
+                      ###########################################################
+                      # # ????
+                      # "Truncated protocol.",
+                      # "QC'd - Truncated protocol.",
+                      # "QC'd Truncated protocol.",
+                      # "QC'd - Truncated protocol",
+                      # "QC'd - Truncated Protocol",
+                      ##########################################################
+                      "Swapped PE, Site reduced slices.",
+                      "PE Swapped",
+                      "swapped PE",
+                      "QC'd - All scans obliqued. Swapped PE on DTI/fMRI",
+                      "QC'd - No ASL License. Swapped PE on DTI/fMRI",
+                      "QC'd - Swapped PE on DTI and fMRI",
+                      "QC'd - fMRI/DTI PE Swapped",
+                      "QC'd - Non ADNI ASL, DTI and fMRI Swapped PE",
+                      "QC'd - Site changed FOVs for several scans.",
+                      "QC'd - Distortion correct shows up as off. Site has said that is not the case.",
+                      "QC'd - Axial 2D PASL not processed by Mayo",
+                      "Problem fields: phase_encoding_direction",
+                      "No distortion correction.",
+                      "Incorrect slice thickness",
+                      "removed some slices",
+                      "Distortion Correct Issue",
+                      "PE = AP",
+                      "Slices reduced.",
+                      "Problem fields: obliquity_min",
+                      "Distortion Correction",
+                      "swapped PE - other changes noted, perhaps to cover head?",
+                      "swapped pe",
+                      "Site reduced number of slices.",
+                      "incorrect FOV",
+                      "Maybe missing vols.",
+                      "Significant WMH noted."
 
 
-  return(comments_4.df)
+
+
+
+                      ) %>% stringr::str_trim()
+  ### Exclude
+  which_to_exclude = apply(trimmed_comments_col.df, MARGIN = 2, FUN = function(y, ...){
+    y %in% exclusion_words
+  })
+  exclude_rows = rowSums(which_to_exclude)>0
+
+  After_Exclusion_Comments.df = trimmed_comments_col.df[!exclude_rows,]
+  After_Exclusion_NonComments.df = no_comments_col.df[!exclude_rows, ]
+
+
+  ### combine
+  Combined.df = cbind(After_Exclusion_NonComments.df, After_Exclusion_Comments.df)
+
+
+  return(Combined.df)
 }
+
+
 
 
 
