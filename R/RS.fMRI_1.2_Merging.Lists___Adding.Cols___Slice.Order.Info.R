@@ -1,0 +1,32 @@
+RS.fMRI_1.2_Merging.Lists___Adding.Cols___Slice.Order.Info = function(data.list){
+
+  ### Data load
+  EPB = data.list[[1]]
+  MT1 = data.list[[2]]
+
+
+  ### variables
+  EPB$FMRI___MANUFACTURER = gsub(" ", ".", EPB$FMRI___MANUFACTURER)
+  Manu = EPB$FMRI___MANUFACTURER
+
+
+
+  ### which scanner
+  which_Philips = grep(pattern="Philips", x = MANU,  ignore.case = T)
+  which_SIEMENS = grep(pattern="SIEMENS", x = MANU,  ignore.case = F)
+  which_GE      = grep(pattern="GE",      x = MANU,  ignore.case = F)
+
+
+  #===========================================================================
+  # Slice Order Type
+  #===========================================================================
+  ### create variable
+  EPB$SLICE.ORDER.TYPE = rep(NA, nrow(EPB))
+
+  ### Adding slice order info : Philips & SIEMENS
+  EPB[which_Philips,"SLICE.ORDER.TYPE"] = "IA"
+  EPB[c(which_SIEMENS, which_GE),"SLICE.ORDER.TYPE"] = "No Need"
+
+  return(list(EPB = EPB, MT1 = MT1))
+
+}

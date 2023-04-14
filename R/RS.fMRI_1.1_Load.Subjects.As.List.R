@@ -1,69 +1,62 @@
-RS.fMRI_1.1_Load.Subjects.As.List = function(path_SubjectsLists,
-                                             path_ExportRda,
-                                             subjects_search_fMRI,
-                                             subjects_search_MRI,
+RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
                                              subjects_QC_ADNI2GO,
                                              subjects_QC_ADNI3,
                                              subjects_NFQ,
-                                             Exclude_RID){
-  subjects.list = list()
-  # (1) ida search ========================================================================================
-  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___1.Search.List(subjects_search_fMRI,
-                                                                         subjects_search_MRI,
-                                                                         path_SubjectsLists,
-                                                                         path_ExportRda)
+                                             subjects_search,
+                                             what.date,
+                                             Exclude_RID=NULL,
+                                             Exclude_ImageID=NULL,
+                                             Exclude_Comments=NULL){
+  # (0) list for saving ========================================================================================
+  subjects.list = rep(NA, 3) %>% as.list
+  names(subjects.list) = c("QC", "NFQ", "SEARCH")
 
 
 
-  # (2) QC info ===========================================================================================
-  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___2.QC.List(subjects_QC_ADNI2GO,
-                                                                     subjects_QC_ADNI3,
-                                                                     path_SubjectsLists,
-                                                                     path_ExportRda)
+  # QC info ===========================================================================================
+  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___QC.List(subjects_QC_ADNI2GO,
+                                                                   subjects_QC_ADNI3,
+                                                                   path_Subjects.Lists.Downloaded,
+                                                                   what.date,
+                                                                   Exclude_RID,
+                                                                   Exclude_ImageID,
+                                                                   Exclude_Comments)
 
 
 
-  # (3) NFQ info ==========================================================================================
-  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___3.NFQ.List(subjects_NFQ, path_SubjectsLists, path_ExportRda)
+
+  # NFQ info ==========================================================================================
+  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List(subjects_NFQ,
+                                                                    path_Subjects.Lists.Downloaded)
 
 
 
-  # (4) Intersection IMAGE_ID ===========================================================================
-  ### intersection by image ID (RID 기준으로 합치면 QC 정보를 빠뜨리게 된다.)
-  IMAGE_ID_intersect = intersect(subjects.list[[1]]$IMAGE_ID, subjects.list[[2]]$IMAGE_ID)
-  for(i in 1:2){
-    subjects.list[[i]] = subjects.list[[i]] %>% dplyr::filter(IMAGE_ID %in% IMAGE_ID_intersect)
-  }
-  text = "1.1 : Subsetting by intersection IMAGE_ID is done."
-  cat("\n", crayon::green(text), "\n")
 
 
 
-  # (5) Exlcude previous RID ===========================================================================
-  if(!is.null(Exclude_RID)){
-    folders = list.files(path_Subjects, full.names = T)
-    previous = folders[grep("Previous", folders)] %>% list.files(full.names=T)
-    previous_RID = read.csv(file=previous) %>% unlist %>% as.character
-    for(i in 1:length(subjects.list)){
-      subjects.list[[i]] = subjects.list[[i]] %>% dplyr::filter(! RID %in% previous_RID)
-    }
-  }
+
+  # ida search ========================================================================================
+  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(subjects_search,
+                                                                       path_Subjects.Lists.Downloaded,
+                                                                       Exclude_RID)
 
 
-  # (6) Intersection RID ===========================================================================
-  RID_intersect = intersect(subjects.list[[1]]$RID, subjects.list[[2]]$RID)
-  for(i in 1:2){
-    subjects.list[[i]] = subset(subjects.list[[i]], RID %in% RID_intersect)
-  }
-  text = "1.1 : Subsetting by intersection RID is done."
-  cat("\n", crayon::green(text), "\n")
+
+
+  # Final ==========================================================================================
+  final_subjects.list = subjects.list
+
 
 
   ### returning results ===========================================================================
   text = paste("\n","Step 1.1 is done !","\n")
   cat(crayon::bgMagenta(text))
-  return(subjects.list)
+  return(final_subjects.list)
 }
+
+
+# # (3) Intersection by Search & QC ===========================================================================
+# Intersection_subjects.list = RS.fMRI_1.1_Load.Subjects.As.List___3.Intersection.Search.and.QC(subjects.list)
 
 
 
@@ -85,4 +78,22 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_SubjectsLists,
 # }else{
 #   data("ADNI_Subjects_NFQ", package="ADNIprep")
 #   subjects.list[[3]] = ADNI_Subjects_NFQ
+# }
+
+#
+#
+# # (5) Intersection by SCAN.DATE ===========================================================================
+# ImageID_subjects.list = RS.fMRI_1.1_Load.Subjects.As.List___4.Intersection.by.Image.ID(subjects.list)
+#
+#
+
+
+# # (5) Exlcude previous RID ===========================================================================
+# if(!is.null(Exclude_RID)){
+#   folders = list.files(path_Subjects, full.names = T)
+#   previous = folders[grep("Previous", folders)] %>% list.files(full.names=T)
+#   previous_RID = read.csv(file=previous) %>% unlist %>% as.character
+#   for(i in 1:length(subjects.list)){
+#     subjects.list[[i]] = subjects.list[[i]] %>% dplyr::filter(! RID %in% previous_RID)
+#   }
 # }

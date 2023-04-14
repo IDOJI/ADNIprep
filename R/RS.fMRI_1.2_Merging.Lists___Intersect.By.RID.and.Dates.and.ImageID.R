@@ -2,43 +2,9 @@ RS.fMRI_1.2_Merging.Lists___Intersect.By.RID.and.Dates.and.ImageID = function(Su
   #=============================================================================
   # loading
   #=============================================================================
-  df1 = Subjects.list[[1]]
-  df2 = Subjects.list[[2]]
-  df3 = Subjects.list[[3]]
-
-
-
-  #=============================================================================
-  # ImageID
-  #=============================================================================
-  ### Intersect
-  ImageID = intersect(df1$IMAGE_ID, df2$IMAGE_ID)
-  df1_ImageID = df1 %>% filter(IMAGE_ID %in% ImageID)
-  df2_ImageID = df2 %>% filter(IMAGE_ID %in% ImageID)
-  df3_ImageID = df3
-
-
-  # ### Change Colnames
-  # df1_ImageID = df1_ImageID %>% rename(IMAGE_ID_SEARCH = IMAGE_ID)
-  # df2_ImageID = df2_ImageID %>% rename(IMAGE_ID_QC = IMAGE_ID)
-
-
-  #=============================================================================
-  # RID
-  #=============================================================================
-  ### Intersect
-  intersect_RID = intersect(intersect(df1_ImageID$RID, df2_ImageID$RID), df3_ImageID$RID) %>% unique %>% as.numeric %>% sort %>% as.character
-  df1_RID = df1_ImageID %>% dplyr::filter(RID %in% intersect_RID)
-  df2_RID = df2_ImageID %>% dplyr::filter(RID %in% intersect_RID)
-  df3_RID = df3_ImageID %>% dplyr::filter(RID %in% intersect_RID)
-
-
-  # ### Change RID colname
-  # df1_RID = df1_RID %>% rename(RID_SEARCH = RID)
-  # df2_RID = df2_RID %>% rename(RID_QC = RID)
-  # df3_RID = df3_RID %>% rename(RID_NFQ = RID)
-
-
+  Subjects_1 = Subjects.list[[1]]
+  Subjects_2 = Subjects.list[[2]]
+  Subjects_3 = Subjects.list[[3]]
 
 
   #=============================================================================
@@ -55,9 +21,11 @@ RS.fMRI_1.2_Merging.Lists___Intersect.By.RID.and.Dates.and.ImageID = function(Su
       class(df2_Date$STUDY.DATE) %>% is.character &&
         class(df3_Date$STUDY.DATE) %>% is.character){
     intersect_Date = intersect(intersect(df1_Date$STUDY.DATE, df2_Date$STUDY.DATE), df3_Date$STUDY.DATE)
-    df1_Date = df1_Date %>% filter(STUDY.DATE %in% intersect_Date)
-    df2_Date = df2_Date %>% filter(STUDY.DATE %in% intersect_Date)
-    df3_Date = df3_Date %>% filter(STUDY.DATE %in% intersect_Date)
+    df1_Date = df1_Date %>% filter(STUDY.DATE %in% intersect_Date) %>% as.tibble()
+    df2_Date = df2_Date %>% filter(STUDY.DATE %in% intersect_Date) %>% as.tibble()
+    df3_Date = df3_Date %>% filter(STUDY.DATE %in% intersect_Date) %>% as.tibble()
+  }else{
+    stop("The STUDY.DATE variable is not character. Check this out!")
   }
 
 
