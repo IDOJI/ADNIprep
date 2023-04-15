@@ -37,8 +37,7 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
 
   # ida search ========================================================================================
   subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(subjects_search,
-                                                                       path_Subjects.Lists.Downloaded,
-                                                                       Exclude_RID)
+                                                                       path_Subjects.Lists.Downloaded)
 
 
 

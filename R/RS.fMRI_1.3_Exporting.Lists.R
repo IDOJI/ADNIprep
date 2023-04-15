@@ -9,18 +9,18 @@ RS.fMRI_1.3_Exporting.Lists = function(data.list=Merged_Lists.list, path_Subject
   cat("\n", crayon::green(text), "\n")
 
 
-  ### Export Each Manufacturer Info
-  Combine_by_manufacturer.list = RS.fMRI_1.3_Exporting.Lists___Combine.by.Manufacturer(data.list)
-  text = "1.3 : Combining by 'Manufacturer' is done."
-  cat("\n", crayon::green(text), "\n")
-
-
-  ### Export info by Manufacturer
-  Export_info_by_manufacturer.list = RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info(Combine_by_manufacturer.list,
-                                                                                                 path_Subjects.Lists.Exported,
-                                                                                                 path_ExportRda)
-  text = "1.3 : Exporting Subjects' Information by 'Manufacturer' is done."
-  cat("\n", crayon::green(text), "\n")
+  # ### Export Each Manufacturer Info
+  # Combine_by_manufacturer.list = RS.fMRI_1.3_Exporting.Lists___Combine.by.Manufacturer(data.list)
+  # text = "1.3 : Combining by 'Manufacturer' is done."
+  # cat("\n", crayon::green(text), "\n")
+  #
+  #
+  # ### Export info by Manufacturer
+  # Export_info_by_manufacturer.list = RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info(Combine_by_manufacturer.list,
+  #                                                                                                path_Subjects.Lists.Exported,
+  #                                                                                                path_ExportRda)
+  # text = "1.3 : Exporting Subjects' Information by 'Manufacturer' is done."
+  # cat("\n", crayon::green(text), "\n")
 
 
   ### returning results

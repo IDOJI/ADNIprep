@@ -8,7 +8,6 @@ RS.fMRI_2. = function(path_raw = "D:/ADNI/ADNI_RS.fMRI_2/ADNI",
   subjects_list$MANUFACTURER = str_replace(subjects_list$MANUFACTURER, pattern = " ", replacement = ".")
   subjects_list$MANUFACTURER = str_replace(subjects_list$MANUFACTURER, pattern = " ", replacement = ".")
 
-
   Total_lists = list()
   Total_lists[[1]] = Manu_SIEMENS.SB_list = subjects_list %>% filter(MANUFACTURER == "SIEMENS" & FMRI_TR >= 2900)
   Total_lists[[2]] = Manu_SIEMENS.MB_list = subjects_list %>% filter(MANUFACTURER == "SIEMENS" & FMRI_TR < 1000)

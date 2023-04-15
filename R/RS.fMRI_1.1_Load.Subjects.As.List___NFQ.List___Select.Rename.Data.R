@@ -5,7 +5,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List___Select.Rename.Data = function(NFQ
   df2 = df1 %>% dplyr::select(-c("SERIESNUMBER", "ECHOTIME", "UPDATE_STAMP"))
 
   ### rename
-  df3 = df2 %>% dplyr::rename("PHASE":="COLPROT")
+  df3 = df2 %>% dplyr::rename("PHASE_NFQ":="COLPROT")
 
   ### NFQ overall QC가 4인 것 제외 : 1=excellent; 2=good; 3=fair; 4=fail
   df4 = df3 %>% dplyr::filter(OVERALLQC!=4)

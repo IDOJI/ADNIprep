@@ -40,12 +40,11 @@ RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbo
 
 
 
+
   #============================================================================
   # 2. Merging lists
   #============================================================================
   Merged_Lists.list = RS.fMRI_1.2_Merging.Lists(Subjects.list)
-
-
 
 
 

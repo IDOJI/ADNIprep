@@ -6,5 +6,8 @@ RS.fMRI_1.1_Load.Subjects.As.List___Search.List___ImageID = function(data.df){
   if(!have.ID){
     data.df$IMAGE.ID = paste0("I", Image.ID)
   }
+
+  data.df = data.df %>% rename(IMAGE_ID = IMAGE.ID)
+
   return(data.df)
 }
