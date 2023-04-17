@@ -1,5 +1,8 @@
-RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.List = function(data.list, index=NULL, Manufacturer, path_Subjects, path_Rda){
-  # data.list= data.list[[i]]
+RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.List = function(data.list,
+                                                                                             index=NULL,
+                                                                                             Manufacturer,
+                                                                                             path_Subjects.Lists.Exported){
+  # data.list = data.list[[1]]
   EPB = data.list[[1]]
   MT1 = data.list[[2]]
   list_names = Manufacturer
@@ -10,8 +13,8 @@ RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.Lis
   }else{
     folder.name = list_names
   }
-  dir.create(paste(path_Subjects, folder.name, sep=""), showWarnings = F)
-  sub_path = paste(path_Subjects, folder.name, sep="")
+  dir.create(paste(path_Subjects.Lists.Exported, folder.name, sep=""), showWarnings = F)
+  sub_path = paste(path_Subjects.Lists.Exported, folder.name, sep="")
 
 
   ## Image ID ==========================================================================
@@ -45,7 +48,7 @@ RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.Lis
 
   ### ======================================================================================================
   text1 = crayon::yellow("Exporting Subjects' Information of")
-  text2 = crayon::red(paste0(EPB$MANUFACTURER[1], "_", EPB$SERIES_BAND.TYPE[1]))
+  text2 = crayon::red(paste0(EPB$PROTOCOL.FMRI___MANUFACTURER[1], "_", EPB$FMRI___SLICE.BAND.TYPE[1]))
   text3 = crayon::yellow("is done!")
   cat("\n", text1, text2, text3,"\n")
 }

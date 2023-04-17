@@ -48,10 +48,17 @@ RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbo
 
 
 
+
+
   #============================================================================
   # 3.Exporting Results
   #============================================================================
-  RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list, path_Subjects.Lists.Downloaded, path_Subjects.Lists.Exported, path_ExportRda)
+  RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list,
+                              path_Subjects.Lists.Downloaded,
+                              path_Subjects.Lists.Exported,
+                              path_ExportRda)
+
+
 
 
   ### returning results

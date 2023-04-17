@@ -23,7 +23,7 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Slice.Order.Info = function(data.li
 
   ### Adding slice order info : Philips & SIEMENS
   EPB.df[which_Philips,"SLICE.ORDER.TYPE"] = "IA"
-  EPB.df[c(which_SIEMENS, which_GE),"SLICE.ORDER.TYPE"] = "No Need"
+  EPB.df[-which_Philips,"SLICE.ORDER.TYPE"] = "No Need"
 
   data.list[[1]] = EPB.df
 

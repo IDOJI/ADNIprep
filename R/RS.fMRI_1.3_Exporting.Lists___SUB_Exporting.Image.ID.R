@@ -1,4 +1,5 @@
 RS.fMRI_1.3_Exporting.Lists___SUB_Exporting.Image.ID = function(ImageID, filename, path){
+  dir.create(path, showWarnings = F)
   ImageID.txt = paste(filename, "txt", sep=".")
   # ImageID.csv = paste("[Final_Selected]_Image_ID_(",list_names,").csv", sep="")
   write.table(ImageID,

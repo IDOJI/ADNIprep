@@ -13,6 +13,11 @@ RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Loading.Data = function(subjec
   ### rm dup rows
   search = unique(search)
 
+
+  ### select research group
+  search = search %>% filter(RESEARCH.GROUP %in% c("AD", "CN", "EMCI", "LMCI", "MCI", "SMC"))
+
+
   return(search)
 }
 

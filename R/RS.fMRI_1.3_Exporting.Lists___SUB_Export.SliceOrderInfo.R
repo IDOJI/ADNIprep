@@ -1,5 +1,5 @@
 RS.fMRI_1.3_Exporting.Lists___SUB_Export.SliceOrderInfo = function(EPB, path, filename){
-  type = EPB$SLICE.ORDER.TYPE
+  type = EPB$FMRI___SLICE.ORDER.TYPE
   if(type[1]!="No Need"){
     ## TSV
     path = path %>% path_tail_slash()
