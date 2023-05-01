@@ -21,6 +21,10 @@ RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbo
   path_Subjects.Lists.Exported = path_tail_slash(path_Subjects.Lists.Exported)
 
 
+  dir.create(path_Subjects.Lists.Downloaded, showWarnings = F)
+  dir.create(path_Subjects.Lists.Exported, showWarnings = F)
+
+
 
 
 

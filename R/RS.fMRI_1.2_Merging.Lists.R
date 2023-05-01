@@ -39,10 +39,21 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
 
 
 
+
+
   #=============================================================================
-  # 5.Returning results
+  # 5. Adding numbering and Filenames by Manufacturer
   #=============================================================================
-  final.list = Modifying_cols.list
+  Added_Numbering.list = RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers(Modifying_cols.list)
+  text = "1.2.5 : Adding Numbering and Filenames is done!"
+  cat("\n", crayon::green(text), "\n")
+
+
+
+  #=============================================================================
+  # 6.Returning results
+  #=============================================================================
+  final.list = Added_Numbering.list
   text = "1.2 : Merging.Lists is done!"
   cat("\n", crayon::bgMagenta(text), "\n")
   return(final.list)

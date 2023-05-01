@@ -40,18 +40,26 @@ RS.fMRI_2.2_Finding.Zip.Files = function(path_ADNI.Unzipped.Folders,
   #=============================================================================
   # path 리스트에 따라 raw 폴더가 있으면, raw zip 파일 삭제
   #=============================================================================
-  for(r in 1:nrow(zip_files)){
-    rth_path = zip_files.df[r, 2] %>% unlist
-    rth_zip.file.path = list.files(rth_path, pattern = "\\.zip", full.names = T)
-    rth_Raw_files = list.files(rth_path, pattern = "Raw")
-    if(length(rth_Raw_files)==2 && length(rth_zip.file) == 1){
-      New_zip_files.df = zip_files.df[-r,]
-      file.remove(rth_zip.file.path)
+  if(nrow(zip_files.df)!=0){
+    for(r in 1:nrow(zip_files.df)){
+      rth_path = zip_files.df[r, 2] %>% unlist
+      rth_zip.file.path = list.files(rth_path, pattern = "\\.zip", full.names = T)
+      rth_Raw_files = list.files(rth_path, pattern = "Raw")
+      if(length(rth_Raw_files)==2 && length(rth_zip.file) == 1){
+        New_zip_files.df = zip_files.df[-r,]
+        file.remove(rth_zip.file.path)
+      }
     }
+    write.csv(x = New_zip_files.df, file = paste0(path_Export.Folders.List, "Folders_Having_Zip_Files.csv"))
   }
 
 
 
 
-  write.csv(x = New_zip_files.df, file = paste0(path_Export.Folders.List, "Folders_Having_Zip_Files.csv"))
+  if(nrow(zip_files.df)!=0){
+    cat("\n", crayon::yellow("STEP 2.2 : Finding FunRaw.zip files list is done!"), "\n")
+  }else{
+    cat("\n", crayon::yellow("STEP 2.2 : Finding FunRaw.zip files list is done! : "), crayon::bgMagenta("Nothing Found"), "\n")
+  }
+
 }

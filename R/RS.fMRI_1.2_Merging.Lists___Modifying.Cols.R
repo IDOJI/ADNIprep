@@ -28,6 +28,7 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
   data.list = list(EPB = EPB.df, MT1 = MT1.df)
 
 
+
   #===========================================================================
   # Slice Order Info
   #===========================================================================
@@ -40,6 +41,8 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
   # Bandtype
   #===========================================================================
   Band.Type.list = RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Band.Type(Order_Extracted.list)
+
+
 
 
 
@@ -101,5 +104,56 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
 
   New_Subjects.list = list(EPB = New_combined_EPB.df, MT1 = New_combined_MT1.df)
 
-  return(New_Subjects.list )
+
+
+
+
+
+
+  #=============================================================================
+  # Add New Manufactuers with Bandtype
+  #=============================================================================
+  EPB.df = New_Subjects.list[[1]]
+  MT1.df = New_Subjects.list[[2]]
+
+  Manufacturer_New = EPB.df$PROTOCOL.FMRI___MANUFACTURER
+
+  ### Changing Philips
+  Manufacturer_New[grep("Philips", Manufacturer_New, ignore.case = T)] = "Philips"
+  Manufacturer_New = paste(Manufacturer_New, EPB.df$FMRI___SLICE.BAND.TYPE, sep="_")
+
+  ### Add cols
+  New_Subjects.list[[1]] = cbind(Manufacturer_New, EPB.df) %>% as_tibble
+  New_Subjects.list[[2]] = cbind(Manufacturer_New, MT1.df) %>% as_tibble
+
+
+
+  return(New_Subjects.list)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

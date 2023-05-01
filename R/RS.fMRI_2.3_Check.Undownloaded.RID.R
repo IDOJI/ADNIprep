@@ -1,4 +1,4 @@
-RS.fMRI_2.3_Check.Undownloaded.Images = function(path_All.Subjects.EPB.List.File = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported/0.All_Subjects/[Final_Selected]_Subjects_list_EPB_(0.All_Subjects).csv"),
+RS.fMRI_2.3_Check.Undownloaded.RID = function(path_All.Subjects.EPB.List.File = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported/0.All_Subjects/[Final_Selected]_Subjects_list_EPB_(0.All_Subjects).csv"),
                                                  path_All.Subjects.MT1.List.File = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported/0.All_Subjects/[Final_Selected]_Subjects_list_MT1_(0.All_Subjects).csv"),
                                                  path_ADNI.Unzipped.Folders){
   #=============================================================================
@@ -20,6 +20,7 @@ RS.fMRI_2.3_Check.Undownloaded.Images = function(path_All.Subjects.EPB.List.File
 
 
 
+
   #=============================================================================
   # Extract RID
   #=============================================================================
@@ -29,7 +30,7 @@ RS.fMRI_2.3_Check.Undownloaded.Images = function(path_All.Subjects.EPB.List.File
     ith_RID = strsplit(ith_RID, "_")[[1]]
     ith_RID = ith_RID[length(ith_RID)]
     return(ith_RID)
-  }) %>% as.numeric
+  }) %>% as.numeric %>% suppressWarnings
   names(RID) = NULL
 
 
@@ -58,5 +59,11 @@ RS.fMRI_2.3_Check.Undownloaded.Images = function(path_All.Subjects.EPB.List.File
   # Export results
   #=============================================================================
   results.list = list(Duplicated_RID = duplicated_RID, Not_Downloaded = Not_Downloaded.df)
-  return(results.list)
+
+  if(nrow(Not_Downloaded.df)==0 && length(duplicated_RID)==0){
+    cat("\n", crayon::yellow("STEP 2.3 : Checking undownloaded RID is done! : "), crayon::bgMagenta("Nothing found"), "\n")
+  }else{
+    cat("\n", crayon::yellow("STEP 2.3 : Checking undownloaded RID is done!"), "\n")
+    return(results.list)
+  }
 }

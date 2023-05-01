@@ -21,7 +21,7 @@ RS.fMRI_1.3_Exporting.Lists = function(data.list,
 
 
   #=============================================================================
-  # Split by Manufacturer & Numbering
+  # Split by Manufacturer
   #=============================================================================
   Combine_by_manufacturer.list = RS.fMRI_1.3_Exporting.Lists___Combine.by.Manufacturer(Export_all_subjects.list)
   text = "1.3 : Combining by 'Manufacturer' is done."
