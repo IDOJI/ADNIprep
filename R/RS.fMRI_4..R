@@ -27,7 +27,7 @@ RS.fMRI_4. = function(path_completed.preprocessing, path_save=NULL, atlas= NULL)
 
 
   #==================================================================================================
-  # 4) combine regardless of manufacturers
+  # 4) combine regardless of manufacturers -> 각 그룹 별로 Manufacturer 나눠서 저장
   #==================================================================================================
   New_Combined_Subjects_Info.list = RS.fMRI_4.4_Combine.Regardless.Of.Manufacturers(Combined_Subjects_Info.list)
   cat("\n", crayon::red("Step 4.4."), crayon::yellow("Combining every manufacture"), crayon::blue("is done !!") ,"\n")
