@@ -1,4 +1,6 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = function(path_Preprocessing.Completed, DPABI.Template = "Original_EPI", what.result.folder){
+RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = function(path_Preprocessing.Completed,
+                                                                                     DPABI.Template = "Original_EPI",
+                                                                                     what.result.folder){
   #=============================================================================
   # path & folders
   #=============================================================================
