@@ -194,3 +194,13 @@ SNP_preprocessing_New = function(PLINK_path = "C:/Users/lleii/Dropbox/Github/Rpk
 
 
 }
+
+# # Perform linkage disequilibrium (LD) based pruning
+# system(paste0(plink_path, " --bfile input_data_filtered_maf_geno_mind_hwe --indep-pairwise 50 5 0.2 --out input_data_filtered_maf_geno_mind_hwe_pruned"))
+#
+# # Extract pruned SNPs
+# system(paste0(plink_path, " --bfile input_data_filtered_maf_geno_mind_hwe --extract input_data_filtered_maf_geno_mind_hwe_pruned.prune.in --make-bed --out input_data_preprocessed"))
+#
+# # Export the final preprocessed dataset in ".raw" format
+# system(paste0(plink_path, " --bfile input_data_preprocessed --recodeA --out input_data_preprocessed_raw"))
+
