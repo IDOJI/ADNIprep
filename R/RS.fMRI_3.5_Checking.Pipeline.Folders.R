@@ -10,8 +10,8 @@ RS.fMRI_3.5_Checking.Pipeline.Folders = function(path_Preprocessing.Completed, D
   #=============================================================================
   # Generated Folders for each DPABI template
   #=============================================================================
-  Template_Original_EPI = c("FunImg", "FunImgA", "FunImgAR", "FunImgARC", "FunImgARCF", "FunImgARCovs",
-                            "T1Img", "T1ImgBet", "T1ImgCoreg", "T1ImgSegment",
+  Template_Original_EPI = c("FunRaw","FunImg", "FunImgA", "FunImgAR", "FunImgARC", "FunImgARCF", "FunImgARCovs",
+                            "T1Raw","T1Img", "T1ImgBet", "T1ImgCoreg", "T1ImgSegment",
                             "Masks", "PicturesForChkNormalization", "QC", "RealignParameter", "ReorientMats",
                             "Results", "ResultsW", "ResultsWS",
                             "TRInfo.tsv", "SliceOrderInfo.tsv")
@@ -47,5 +47,5 @@ RS.fMRI_3.5_Checking.Pipeline.Folders = function(path_Preprocessing.Completed, D
   }else{
     cat("\n",crayon::green("There were no abnormal folders!"),"\n")
   }
-
+  cat("\n", crayon::bgMagenta("Step 3.4"), crayon::blue("Checking Pipeline folders is done!"), "\n")
 }
