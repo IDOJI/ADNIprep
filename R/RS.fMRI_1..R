@@ -3,26 +3,28 @@
 ###############################################################################
 # list.files("C:/Users/IDO/Dropbox/Github/Rpkgs/ADNIprep/R", full.names = T) %>% walk(source)
 # list.files("C:/Users/IDO/Dropbox/Github/Rpkgs/refineR/R", full.names = T) %>% walk(source)
-RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Downloaded"),
-                      path_Subjects.Lists.Exported = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported"),
-                      path_ExportRda       = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Data"),
-                      subjects_QC_ADNI2GO  = "MAYOADIRL_MRI_IMAGEQC_12_08_15",
-                      subjects_QC_ADNI3    = "MAYOADIRL_MRI_QUALITY_ADNI3",
-                      subjects_NFQ         = "MAYOADIRL_MRI_FMRI_NFQ_04_06_22",
-                      subjects_search      = "idaSearch_4_11_2023",
+
+RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
+                      path_Export_Subjects.Lists,
+                      path_Export_Rda      = NULL,
+                      Subjects_QC_ADNI2GO,
+                      Subjects_QC_ADNI3,
+                      Subjects_NFQ,
+                      Subjects_search,
                       what.date            = 1,
+                      Include_RID        = NULL,
+                      Include_ImageID    = NULL,
                       Exclude_RID          = NULL,
-                      Exclude_ImageID = c("I1173062", "I971099", "I1021034", "I1606245", "I1329385", "I1557905", "I1567175", "I1628478", "I1173060", "I971096", "I1021033", "I1606240", "I1329390", "I1557901", "I1567174", "I1628474"),
+                      Exclude_ImageID = NULL,
                       Exclude_Comments = NULL){
+  # Only.This.RID : 지정된 RID에 해당하는 개체들에 대해서만 데이터 선택
   #============================================================================
   # 0.path
   #============================================================================
-  path_Subjects.Lists.Downloaded = path_tail_slash(path_Subjects.Lists.Downloaded)
-  path_Subjects.Lists.Exported = path_tail_slash(path_Subjects.Lists.Exported)
-
-
-  dir.create(path_Subjects.Lists.Downloaded, showWarnings = F)
-  dir.create(path_Subjects.Lists.Exported, showWarnings = F)
+  path_Subjects.Lists_Downloaded = path_tail_slash(path_Subjects.Lists_Downloaded)
+  path_Export_Subjects.Lists = path_tail_slash(path_Export_Subjects.Lists)
+  dir.create(path_Subjects.Lists_Downloaded, showWarnings = F)
+  dir.create(path_Export_Subjects.Lists, showWarnings = F)
 
 
 
@@ -31,12 +33,14 @@ RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbo
   #============================================================================
   # 1.Loading Subjects
   #============================================================================
-  Subjects.list = RS.fMRI_1.1_Load.Subjects.As.List(path_Subjects.Lists.Downloaded,
-                                                    subjects_QC_ADNI2GO,
-                                                    subjects_QC_ADNI3,
-                                                    subjects_NFQ,
-                                                    subjects_search,
+  Subjects.list = RS.fMRI_1.1_Load.Subjects.As.List(path_Subjects.Lists_Downloaded,
+                                                    Subjects_QC_ADNI2GO,
+                                                    Subjects_QC_ADNI3,
+                                                    Subjects_NFQ,
+                                                    Subjects_search,
                                                     what.date,
+                                                    Include_RID,
+                                                    Include_ImageID,
                                                     Exclude_RID,
                                                     Exclude_ImageID,
                                                     Exclude_Comments)
@@ -58,9 +62,9 @@ RS.fMRI_1. = function(path_Subjects.Lists.Downloaded   = paste0(path_OS, "Dropbo
   # 3.Exporting Results
   #============================================================================
   RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list,
-                              path_Subjects.Lists.Downloaded,
-                              path_Subjects.Lists.Exported,
-                              path_ExportRda)
+                              path_Subjects.Lists_Downloaded,
+                              path_Export_Subjects.Lists,
+                              path_Export_Rda)
 
 
 

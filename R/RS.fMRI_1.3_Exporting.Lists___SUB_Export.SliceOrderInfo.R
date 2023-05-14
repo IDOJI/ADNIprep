@@ -2,12 +2,14 @@ RS.fMRI_1.3_Exporting.Lists___SUB_Export.SliceOrderInfo = function(path, EPB=NUL
 
   if(!is.null(EPB)){
     type = EPB$FMRI___SLICE.ORDER.TYPE
-    if(type[1]!="No Need"){
-      ## TSV
-      path = path %>% path_tail_slash()
-      subject = paste("Sub_", fit_length(1:nrow(EPB), nrow(EPB) %>% nchar), sep = "")
-      SliceOrderInfo = cbind("Subject ID" = subject, "Slice Order Type" = type)
-      write.table(SliceOrderInfo, paste(path, paste(filename, "tsv", sep="."), sep=""), row.names=F, quote=F, sep="\t")
+    if(!is.na(type[1])){
+      if(type[1]!="No Need"){
+        ## TSV
+        path = path %>% path_tail_slash()
+        subject = paste("Sub_", fit_length(1:nrow(EPB), nrow(EPB) %>% nchar), sep = "")
+        SliceOrderInfo = cbind("Subject ID" = subject, "Slice Order Type" = type)
+        write.table(SliceOrderInfo, paste(path, paste(filename, "tsv", sep="."), sep=""), row.names=F, quote=F, sep="\t")
+      }
     }
   }else{
     ## TSV

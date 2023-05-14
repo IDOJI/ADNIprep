@@ -8,13 +8,14 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
 
 
 
+
   #=============================================================================
   # 2. Merging Search & QC by date having MT1 & EPB
   #=============================================================================
   Merging_Search.list = RS.fMRI_1.2_Merging.Lists___Search(Merged_QC_NFQ.list)
   text = "1.2.2 : Merging Search & QC is done!"
   cat("\n", crayon::green(text), "\n")
-  Merging_Search.list[[1]]
+
 
 
 
@@ -34,7 +35,7 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
   # 4. Modifying Cols
   #=============================================================================
   Modifying_cols.list = RS.fMRI_1.2_Merging.Lists___Modifying.Cols(Protocol_Splitted.list)
-  text = "1.2.4 : Moidfying cols is done!"
+  text = "1.2.4 : Modifying cols is done!"
   cat("\n", crayon::green(text), "\n")
 
 

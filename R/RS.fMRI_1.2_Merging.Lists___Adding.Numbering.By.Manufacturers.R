@@ -3,8 +3,8 @@ RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers = function(data.li
   #=============================================================================
   # 1. split by EPB & MT1
   #=============================================================================
-  EPB.df = Modifying_cols.list[[1]]
-  MT1.df = Modifying_cols.list[[2]]
+  EPB.df = data.list[[1]]
+  MT1.df = data.list[[2]]
 
 
 

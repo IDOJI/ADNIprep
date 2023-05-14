@@ -1,7 +1,7 @@
 RS.fMRI_1.3_Exporting.Lists = function(data.list,
                                        path_Subjects.Lists.Downloaded,
                                        path_Subjects.Lists.Exported,
-                                       path_ExportRda){
+                                       path_Export_Rda){
   # data.list = Merged_Lists.list
   #=============================================================================
   # Path
@@ -14,7 +14,7 @@ RS.fMRI_1.3_Exporting.Lists = function(data.list,
   #=============================================================================
   # Export All Subjects Info
   #=============================================================================
-  Export_all_subjects.list = RS.fMRI_1.3_Exporting.Lists___Export.All.Subjects.Info(data.list, path_Subjects.Lists.Exported, path_ExportRda)
+  Export_all_subjects.list = RS.fMRI_1.3_Exporting.Lists___Export.All.Subjects.Info(data.list, path_Subjects.Lists.Exported, path_Export_Rda)
   text = "1.3 : Exporting All Subjects Info is done."
   cat("\n", crayon::green(text), "\n")
 

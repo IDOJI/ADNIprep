@@ -1,4 +1,5 @@
 RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, Exclude_Comments){
+  # QC.df = QC_6.df
   #===========================================================================
   # filter each dataset by "Description" : Excluding "Mocoseries"
   #===========================================================================
@@ -56,7 +57,12 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, E
       TRUE_ind[i] = selected_good_QC_17_with_index.df$index[i]
     }
   }
-  selected_good_QC_18.df = selected_good_QC_17.df[-unlist(TRUE_ind),];dim(selected_good_QC_18.df)
+  if(length(TRUE_ind)>0){
+    selected_good_QC_18.df = selected_good_QC_17.df[-unlist(TRUE_ind),];dim(selected_good_QC_18.df)
+  }else{
+    selected_good_QC_18.df = selected_good_QC_17.df
+  }
+
 
 
 

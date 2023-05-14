@@ -3,8 +3,8 @@ RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.Lis
                                                                                              Manufacturer,
                                                                                              path_Subjects.Lists.Exported){
   # data.list = data.list[[1]]
-  EPB = data.list[[1]]
-  MT1 = data.list[[2]]
+  EPB = data.list$EPB
+  MT1 = data.list$MT1
   list_names = Manufacturer
 
   ### Creating directory ===============================================================
@@ -32,7 +32,7 @@ RS.fMRI_1.3_Exporting.Lists___Export.Each.Manufacturer.Info___Export.Divided.Lis
 
   ### Exporting SliceOrderInfo ==========================================================================
   filename = paste0("SliceOrderInfo(",list_names, ")")
-  RS.fMRI_1.3_Exporting.Lists___SUB_Export.SliceOrderInfo(EPB, sub_path, filename)
+  RS.fMRI_1.3_Exporting.Lists___SUB_Export.SliceOrderInfo(path = sub_path, EPB = EPB, filename = filename)
 
 
   ### Exporting subjects for SNP ==========================================================================

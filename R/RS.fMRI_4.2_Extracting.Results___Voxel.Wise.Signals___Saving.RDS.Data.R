@@ -1,5 +1,10 @@
 RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data = function(path_Preprocessing.Completed, Volumes_path, save_path){
   #=============================================================================
+  # Extracting files at save_path
+  #=============================================================================
+  files_at_save_path = list.files(save_path)
+
+  #=============================================================================
   # Extracting save_names
   #=============================================================================
   save_names = list.files(path_Preprocessing.Completed) %>% strsplit("___") %>% sapply(FUN=function(y){y[3]})
@@ -11,6 +16,12 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data = function
     # Index
     #=============================================================================
     ind = which(Volumes_path == ith_Volume_path)
+
+
+
+    #=============================================================================
+    # check having files already
+    #=============================================================================
 
 
 

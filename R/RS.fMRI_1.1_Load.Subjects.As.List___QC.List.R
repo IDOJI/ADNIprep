@@ -1,14 +1,16 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(subjects_QC_ADNI2GO,
-                                                       subjects_QC_ADNI3,
-                                                       path_Subjects.Lists.Downloaded,
+RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
+                                                       Subjects_QC_ADNI3,
+                                                       path_Subjects.Lists_Downloaded,
                                                        what.date,
+                                                       Include_RID = NULL,
+                                                       Include_ImageID=NULL,
                                                        Exclude_RID = NULL,
                                                        Exclude_ImageID = NULL,
                                                        Exclude_Comments = NULL){
   ##############################################################################
   # Loading the datasets
   ##############################################################################
-  QC_1.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Loading.Data(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects.Lists.Downloaded)
+  QC_1.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Loading.Data(Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, path_Subjects.Lists_Downloaded)
   text = "1.1.1 : Loading data is done."
   cat("\n", crayon::green(text), "\n")
 
@@ -54,11 +56,24 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(subjects_QC_ADNI2GO,
   ##############################################################################
   # Excluding RID & Image ID
   ##############################################################################
-  QC_5.df$RID = as.character(QC_5.df$RID)
-  QC_6.df = QC_5.df %>% filter(!RID %in% as.character(Exclude_RID))
-  QC_6.df = QC_6.df %>% filter(!IMAGE_ID %in% as.character(Exclude_ImageID))
-  text = "1.1.1 : Excluding RID is done."
+  QC_6.df = QC_5.df
+  QC_6.df$RID = as.character(QC_6.df$RID)
+  QC_6.df = QC_6.df %>% filter(!RID %in% as.character(Exclude_RID)) %>% filter(!IMAGE_ID %in% as.character(Exclude_ImageID))
+
+
+  Include_RID = Include_RID %>% as.character
+  if(length(Include_RID)>0){
+    QC_6.df = QC_6.df %>% filter(RID %in% Include_RID)
+  }
+
+  if(length(Include_ImageID)>0){
+    QC_6.df = QC_6.df %>% filter(IMAGE_ID %in% Include_ImageID)
+  }
+  text = "1.1.1 : Excluding RID & ImageID is done."
   cat("\n", crayon::green(text), "\n")
+
+
+
 
 
 

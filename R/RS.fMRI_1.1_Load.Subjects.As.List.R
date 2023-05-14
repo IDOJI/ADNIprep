@@ -1,9 +1,11 @@
-RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
-                                             subjects_QC_ADNI2GO,
-                                             subjects_QC_ADNI3,
-                                             subjects_NFQ,
-                                             subjects_search,
+RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists_Downloaded,
+                                             Subjects_QC_ADNI2GO,
+                                             Subjects_QC_ADNI3,
+                                             Subjects_NFQ,
+                                             Subjects_search,
                                              what.date,
+                                             Include_RID=NULL,
+                                             Include_ImageID =NULL,
                                              Exclude_RID=NULL,
                                              Exclude_ImageID=NULL,
                                              Exclude_Comments=NULL){
@@ -14,10 +16,12 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
 
 
   # QC info ===========================================================================================
-  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___QC.List(subjects_QC_ADNI2GO,
-                                                                   subjects_QC_ADNI3,
-                                                                   path_Subjects.Lists.Downloaded,
+  subjects.list[[1]] = RS.fMRI_1.1_Load.Subjects.As.List___QC.List(Subjects_QC_ADNI2GO,
+                                                                   Subjects_QC_ADNI3,
+                                                                   path_Subjects.Lists_Downloaded,
                                                                    what.date,
+                                                                   Include_RID,
+                                                                   Include_ImageID,
                                                                    Exclude_RID,
                                                                    Exclude_ImageID,
                                                                    Exclude_Comments)
@@ -26,8 +30,8 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
 
 
   # NFQ info ==========================================================================================
-  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List(subjects_NFQ,
-                                                                    path_Subjects.Lists.Downloaded)
+  subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List(Subjects_NFQ,
+                                                                    path_Subjects.Lists_Downloaded)
 
 
 
@@ -36,8 +40,8 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
 
 
   # ida search ========================================================================================
-  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(subjects_search,
-                                                                       path_Subjects.Lists.Downloaded)
+  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(Subjects_search,
+                                                                       path_Subjects.Lists_Downloaded)
 
 
 
@@ -59,20 +63,20 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists.Downloaded,
 
 
 
-# if(!is.null(subjects_search_fMRI) && !is.null(subjects_search_MRI)){
+# if(!is.null(Subjects_search_fMRI) && !is.null(Subjects_search_MRI)){
 #
 # }else{
-#   data("ADNI_Subjects_Search", package="ADNIprep")
-#   subjects.list[[1]] = ADNI_Subjects_Search
+#   data("ADNI_Subjects_search", package="ADNIprep")
+#   subjects.list[[1]] = ADNI_Subjects_search
 # }
 #
-# if(!is.null(subjects_QC_ADNI2GO) && !is.null(subjects_QC_ADNI3)){
+# if(!is.null(Subjects_QC_ADNI2GO) && !is.null(Subjects_QC_ADNI3)){
 #
 # }else{
 #   data("ADNI_Subjects_QC", package="ADNIprep")
 #   subjects.list[[2]] = ADNI_Subjects_QC
 # }
-# if(!is.null(subjects_NFQ)){
+# if(!is.null(Subjects_NFQ)){
 #
 # }else{
 #   data("ADNI_Subjects_NFQ", package="ADNIprep")

@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Exporting.Lists___Export.All.Subjects.Info = function(data.list, path_Subjects, path_Rda){
+RS.fMRI_1.3_Exporting.Lists___Export.All.Subjects.Info = function(data.list, path_Subjects, path_Export_Rda=NULL){
   ### loading data =====================================================================
   EPB = data.list[[1]]
   MT1 = data.list[[2]]
@@ -24,14 +24,19 @@ RS.fMRI_1.3_Exporting.Lists___Export.All.Subjects.Info = function(data.list, pat
   RS.fMRI_1.3_Exporting.Lists___SUB_Exporting.Subjects.List.CSV(MT1, sub_path, MT1.csv)
 
 
+
   ### Exporting subjects for SNP ==========================================================================
   filename = paste0("[Final_Selected]_keep_RID_for_SNP", "_(", list_names,")")
   RS.fMRI_1.3_Exporting.Lists___SUB_Exporting.RID.for.SNP(EPB, sub_path, filename)
 
 
 
-  ### Exporting comments ==========================================================================
 
+
+  ### Exporting comments ==========================================================================
+  if(!is.null(path_Export_Rda)){
+
+  }
 
 
 
