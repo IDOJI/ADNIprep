@@ -1,12 +1,28 @@
 RS.fMRI_3.1_Moving.Specific.Folders = function(path_ADNI.Unzipped.Folders, destination, keywords = c("PicturesForChkNormalization", "EPI")){
   # destination = "E:/ADNI/ADNI_RS.fMRI_2/@완료"
   #=============================================================================
-  # folders list
+  # Create destination
   #=============================================================================
   destination = destination %>% path_tail_slash()
+  dir.create(destination, F)
+
+
+
+
+
+  #=============================================================================
+  # folders list
+  #=============================================================================
   path_folders = list.files(path_ADNI.Unzipped.Folders, full.names = T)
   folders = list.files(path_ADNI.Unzipped.Folders, full.names = F)
 
+
+
+
+
+  #=============================================================================
+  # Moving folders
+  #=============================================================================
   sapply(path_folders, FUN=function(ith_folder_path, ...){
     # ith_folder_path = path_folders[2]
     ind = which(path_folders == ith_folder_path)

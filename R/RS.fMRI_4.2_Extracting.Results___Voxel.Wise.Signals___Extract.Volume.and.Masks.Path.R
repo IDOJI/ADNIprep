@@ -1,6 +1,23 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = function(path_Preprocessing.Completed,
-                                                                                     DPABI.Template = "Original_EPI",
-                                                                                     what.result.folder){
+RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path = function(path_Preprocessing.Completed,
+                                                                                               DPABI.Template= NULL,
+                                                                                               what.result.folder){
+
+  if(is.null(DPABI.Template)){
+    # 여러 명의 사람들에 대해 한 번에 전처리한 결과를 추출하는 경우
+    path_Voume_and_Masks = RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path___No.DPABI.Template(path_Preprocessing.Completed, what.result.folder)
+    return(path_Voume_and_Masks)
+  }else{
+    # 각각의 사람들에 대해 한 명 씩 전처리 한 결과가 @Original_EPI / @MNI_EPI 등의 폴더에 저장된 경우
+
+
+  }
+}
+
+
+
+RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path___DPABI.Template = function(path_Preprocessing.Completed,
+                                                                                                                DPABI.Template,
+                                                                                                                what.result.folder){
   #=============================================================================
   # path & folders
   #=============================================================================
@@ -9,13 +26,10 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = func
   folders_path = list.files(path_Preprocessing.Completed, full.names = T)
 
 
-
-
   #=============================================================================
   # template path & folders
   #=============================================================================
   template_path = sapply(folders_path, FUN=function(y, ...){list.files(y, pattern = DPABI.Template, full.names = T)})
-
 
 
   #=============================================================================
@@ -28,10 +42,6 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = func
     stop("Therer are folders having no folder named 'what result.folder' !")
   }
 
-
-
-
-
   #=============================================================================
   # volume files path
   #=============================================================================
@@ -42,3 +52,6 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path = func
 
   return(Volumes_path)
 }
+
+
+

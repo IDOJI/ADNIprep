@@ -1,11 +1,18 @@
 RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals = function(path_Preprocessing.Completed,
-                                                               DPABI.Template = "Original_EPI",
+                                                               DPABI.Template,
                                                                what.result.folder = "FunImgARCF",
                                                                save_path){
+  # Clipboard_to_path()
+  # path_Preprocessing.Completed = "E:/test_GroupMasking_After_Normalization_MNI"
+  # DPABI.Template = "Original_EPI"
+  # save_path = "E:/test_GroupMasking_After_Normalization_MNI/Voxelwise_BOLD_Signals"
+  # what.result.folder = "FunImgARCWSF"
+
   #=============================================================================
   # Extracting volumes path
   #=============================================================================
-  Volumes_path = RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.Path(path_Preprocessing.Completed, DPABI.Template, what.result.folder)
+  path_Volumes.and.Masks = RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path(path_Preprocessing.Completed, DPABI.Template, what.result.folder)
+
 
 
 
@@ -20,6 +27,7 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals = function(path_Preprocessin
 
   cat("\n", crayon::bgMagenta("Step 4.2"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
 }
+
 
 
 

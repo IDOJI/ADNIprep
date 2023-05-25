@@ -1,4 +1,4 @@
-RS.fMRI_3.3_Excluding.Subjects.with.Abnormal.Normalization.Pictures = function(path_Preprocessing.Completed,
+RS.fMRI_3.2_Moving.Subjects.with.Abnormal.Normalization.Pictures = function(path_Preprocessing.Completed,
                                                                                path_Normalization.Pictures_Excluding,
                                                                                Sub.Num_GE.MEDICAL.SYSTEMS_SB = NULL,
                                                                                Sub.Num_Philips_SB = NULL,
