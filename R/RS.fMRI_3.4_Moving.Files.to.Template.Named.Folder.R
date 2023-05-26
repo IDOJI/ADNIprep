@@ -44,8 +44,12 @@ RS.fMRI_3.4_Moving.Files.to.Template.Named.Folder = function(path_Preprocessing.
     sapply(ith_files_path_except_Raw, FUN=function(y, ...){
       # y = ith_files_path_except_Raw[1]
       ind = which(ith_files_path_except_Raw==y)
+
+
       fs::file_move(path = y, new_path = paste0(destination_folders_path[i], "/", ith_files_except_Raw[ind]))
-    })
+
+
+      })
     cat("\n",crayon::green("Moving folders to a template-named folder is done : "), crayon::red(folders[i]),"\n")
   }
 
