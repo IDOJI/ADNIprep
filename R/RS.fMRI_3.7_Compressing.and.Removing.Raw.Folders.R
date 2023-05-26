@@ -1,54 +1,42 @@
 RS.fMRI_3.7_Compressing.and.Removing.Raw.Folders = function(path_Preprocessing.Completed,
                                                             hide.zip.file = T){
+  # path_Preprocessing.Completed = Clipboard_to_path()
   # ith_path = "C:/Users/lleii/Desktop/Test"
   # which.Folders = c("FunImg")
   folders = list.files(path_Preprocessing.Completed)
   folders_path = list.files(path_Preprocessing.Completed, full.names = T)
 
 
-  sapply(folders, FUN=function(y,...){
-    # y = folders[1]
-    ind = which(folders == y)
-    ith_path = folders_path[ind]
 
-    # Define the path to the folder containing the files you want to compress
+  lapply(seq_along(folders), function(i, ...){
+    ith_folder_name = folders[i]
+    ith_path = folders_path[i]
+    #===========================================================================
+    # FunRaw & T1Raw path
+    #===========================================================================
     ith_FunRaw_path = list.files(ith_path, full.names = T, pattern = "FunRaw")[list.files(ith_path, full.names = F, pattern = "FunRaw") == "FunRaw"]
     ith_MT1Raw_path = list.files(ith_path, full.names = T, pattern = "T1Raw")[list.files(ith_path, full.names = F, pattern = "T1Raw") == "T1Raw"]
 
-
-    if(length(ith_FunRaw_path)>0 & length(ith_MT1Raw_path) > 0){
-      # Define the destination folder and the name of the compressed file
-      ith_destination_folder = ith_path
-      ith_compressed_file_name = paste0(y, ".zip")
-      ith_compressed_file_path = file.path(ith_destination_folder, ith_compressed_file_name)
-
-
-
-      # compress folders
-      tictoc::tic()
-      zip::zip(zipfile = ith_compressed_file_path, files = c(ith_FunRaw_path, ith_MT1Raw_path), include_directories = F, recurse = T, mode = "cherry-pick")
-      cat("\n", crayon::green("Compressing Raw folders is done : "), crayon::red(y), "\n")
-      tictoc::toc()
-
-
-
-      # remove folders
-      tictoc::tic()
-      unlink(ith_FunRaw_path, recursive = T) %>% invisible()
-      unlink(ith_MT1Raw_path, recursive = T) %>% invisible()
-      cat("\n", crayon::green("Removing Raw folders is done : "), crayon::red(y), "\n")
-      tictoc::toc()
-
-
-      # Hide zip file
-      if(hide.zip.file){
-        cmd = paste("attrib +h", shQuote(ith_compressed_file_path))
-        system(cmd) %>% invisible()
-      }
+    #===========================================================================
+    # Check folder's existence : 어느 한 쪽만 있는 경우 에러, 둘 다 없으면 생략
+    #===========================================================================
+    if(length(ith_FunRaw_path) == 0 & length(ith_MT1Raw_path) != 0){
+      stop(paste("There is no FunRaw files for", ith_folder_name))
+    }else if(length(ith_FunRaw_path) != 0 & length(ith_MT1Raw_path) == 0){
+      stop(paste("There is no T1Raw files for", ith_folder_name))
+    }else if(length(ith_FunRaw_path)==0 & length(ith_MT1Raw_path) == 0){
+      cat("\n", crayon::green("Compressing Raw folders is done :"), crayon::red(ith_folder_name), "\n")
     }else{
-      cat("\n", crayon::green("Compressing Raw folders is done : "), crayon::red(y), "\n")
-      # cat("\n", crayon::green("Removing Raw folders is done : "), crayon::red(y), "\n")
+      RS.fMRI_3.7_Compressing.and.Removing.Raw.Folders___Having.Raw.Folders(ith_path, ith_folder_name, ith_FunRaw_path, ith_MT1Raw_path, hide.zip.file)
     }
   })
+
   cat("\n", crayon::bgMagenta("Step 3.7"), crayon::blue("Compressing and Removing Raw folders is done!"), "\n")
 }
+
+
+
+
+
+
+
