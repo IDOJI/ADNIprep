@@ -1,4 +1,4 @@
-RS.fMRI_2.6_Changing.Folders.Names.for.DPABI = function(path_ADNI.Unzipped.Folders){
+RS.fMRI_2_Changing.Raw.Folders.Names.by.Sub.Numbering.for.DPABI = function(path_ADNI.Unzipped.Folders){
   #===========================================================================================
   # path & folders
   #===========================================================================================

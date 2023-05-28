@@ -4,21 +4,16 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Band.Type = function(data.list){
   MT1.df = data.list[[2]]
 
 
-  ### Repetition Time
-  EPB.df$PROTOCOL.FMRI___TR = EPB.df$PROTOCOL.FMRI___TR %>% as.numeric
-
-
-  ### needed information
-  MANU = EPB.df$PROTOCOL.FMRI___MANUFACTURER
-  TR = EPB.df$PROTOCOL.FMRI___TR
+  # MB description
+  which_MB = grep(pattern = " MB ", x = EPB.df$DESCRIPTION)
+  which_SB = (1:nrow(EPB.df))[-which_MB]
 
 
   ### Band type
-  BAND.TYPE = rep("SB", times = length(MANU))
-  BAND.TYPE[which(MANU=="SIEMENS" & TR < 900)] = "MB"
+  EPB.df$BAND.TYPE = NA
+  EPB.df[which_MB, "BAND.TYPE"] = rep("MB", times=length(which_MB))
+  EPB.df[which_SB, "BAND.TYPE"] = rep("MB", times=length(which_SB))
 
-  ### adding col
-  EPB.df$BAND.TYPE = BAND.TYPE
 
   return(list(EPB = EPB.df, MT1 = MT1.df))
 }

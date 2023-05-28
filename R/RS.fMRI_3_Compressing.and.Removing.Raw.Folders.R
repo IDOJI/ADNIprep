@@ -1,4 +1,4 @@
-RS.fMRI_3.7_Compressing.and.Removing.Raw.Folders = function(path_Preprocessing.Completed,
+RS.fMRI_3_Compressing.and.Removing.Raw.Folders = function(path_Preprocessing.Completed,
                                                             hide.zip.file = T){
   # path_Preprocessing.Completed = Clipboard_to_path()
   # ith_path = "C:/Users/lleii/Desktop/Test"
@@ -27,7 +27,7 @@ RS.fMRI_3.7_Compressing.and.Removing.Raw.Folders = function(path_Preprocessing.C
     }else if(length(ith_FunRaw_path)==0 & length(ith_MT1Raw_path) == 0){
       cat("\n", crayon::green("Compressing Raw folders is done :"), crayon::red(ith_folder_name), "\n")
     }else{
-      RS.fMRI_3.7_Compressing.and.Removing.Raw.Folders___Having.Raw.Folders(ith_path, ith_folder_name, ith_FunRaw_path, ith_MT1Raw_path, hide.zip.file)
+      RS.fMRI_3_Compressing.and.Removing.Raw.Folders___Having.Raw.Folders(ith_path, ith_folder_name, ith_FunRaw_path, ith_MT1Raw_path, hide.zip.file)
     }
   })
 

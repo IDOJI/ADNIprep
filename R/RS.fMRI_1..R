@@ -5,7 +5,7 @@
 # list.files("C:/Users/IDO/Dropbox/Github/Rpkgs/refineR/R", full.names = T) %>% walk(source)
 
 RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
-                      path_Export_Subjects.Lists,
+                      path_Export_Subjects.Lists =NULL,
                       path_Export_Rda      = NULL,
                       Subjects_QC_ADNI2GO,
                       Subjects_QC_ADNI3,

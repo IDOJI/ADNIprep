@@ -1,4 +1,4 @@
-RS.fMRI_4.2_Removing.Specific.Files___Single.Path = function(path,
+RS.fMRI_3_Removing.Specific.Files___Single.Path = function(path,
                                                              recursive_folder=NULL,
                                                              files_list,
                                                              remove){

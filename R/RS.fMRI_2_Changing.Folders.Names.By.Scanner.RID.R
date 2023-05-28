@@ -1,4 +1,4 @@
-RS.fMRI_2.5_Changing.Folders.Names.By.Sub.Numbering = function(path_All.Subjects.EPB.List.File,
+RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB.List.File,
                                                                path_ADNI.Unzipped.Folders){
   #===========================================================================================
   # path & folders
@@ -35,7 +35,7 @@ RS.fMRI_2.5_Changing.Folders.Names.By.Sub.Numbering = function(path_All.Subjects
   #===========================================================================================
   # Rename Folders' name
   #===========================================================================================
-  sapply(RID, FUN=function(ith_RID, ...){
+  Results = sapply(RID, FUN=function(ith_RID, ...){
     # ith_RID = RID[1]
     ind = which(RID == ith_RID)
     ith_EPB.df = All_Subjects_EPB.df %>% filter(RID == ith_RID)
