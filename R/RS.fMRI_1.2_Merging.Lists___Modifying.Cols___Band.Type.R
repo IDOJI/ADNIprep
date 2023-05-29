@@ -6,13 +6,20 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Band.Type = function(data.list){
 
   # MB description
   which_MB = grep(pattern = " MB ", x = EPB.df$DESCRIPTION)
-  which_SB = (1:nrow(EPB.df))[-which_MB]
+  if(length(which_MB)>0){
+    which_SB = (1:nrow(EPB.df))[-which_MB]
+  }else{
+    which_SB = 1:nrow(EPB.df)
+  }
+
 
 
   ### Band type
   EPB.df$BAND.TYPE = NA
-  EPB.df[which_MB, "BAND.TYPE"] = rep("MB", times=length(which_MB))
-  EPB.df[which_SB, "BAND.TYPE"] = rep("MB", times=length(which_SB))
+  if(length(which_MB)>0){
+    EPB.df[which_MB, "BAND.TYPE"] = rep("MB", times=length(which_MB))
+  }
+  EPB.df[which_SB, "BAND.TYPE"] = rep("SB", times=length(which_SB))
 
 
   return(list(EPB = EPB.df, MT1 = MT1.df))

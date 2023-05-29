@@ -1,5 +1,7 @@
 RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB.List.File,
-                                                               path_ADNI.Unzipped.Folders){
+                                                            path_ADNI.Unzipped.Folders){
+  # path_New.EPI.Subjects.Lists = "C:/Users/lleii/Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported_New/[Final_Selected]_Subjects_list_EPB_All_New.csv"
+  # path_Sub.Folders = "E:/ADNI/ADNI_RS.fMRI___SB/New_Downloaded/ADNI"
   #===========================================================================================
   # path & folders
   #===========================================================================================
