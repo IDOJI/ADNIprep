@@ -32,13 +32,17 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Slice.Order.Info = function(data.li
 
 
   ### Multi Band (MB)
-  EPB.df[which_MB,"SLICE.ORDER.TYPE"] = "No Need (MB)"
+  if(length(which_MB)>0){
+    EPB.df[which_MB,"SLICE.ORDER.TYPE"] = "No Need (MB)"
+    SB_Slice.Order = EPB.df$SLICE.ORDER[-which_MB]
+  }else{
+    SB_Slice.Order = EPB.df$SLICE.ORDER
+  }
 
 
-  ### SB Slice order
-  SB_Slice.Order = EPB.df$SLICE.ORDER[-which_MB]
 
-  EPB.df[-index_MB, "SLICE.ORDER.TYPE"] = sapply(SB_Slice.Order, function(k){
+  ### SB Slice order Type
+  SB_Slice.Order.Type = sapply(SB_Slice.Order, function(k){
     if(!is.na(k)){
       k_splitted_order = strsplit(k, split = "    ")[[1]] %>% as.numeric
 
@@ -57,6 +61,14 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Slice.Order.Info = function(data.li
       return(NA)
     }
   })
+
+
+  if(length(which_MB)>0){
+    EPB.df[-which_MB, "SLICE.ORDER.TYPE"] = SB_Slice.Order.Type
+  }else{
+    EPB.df[, "SLICE.ORDER.TYPE"] = SB_Slice.Order.Type
+  }
+
 
 
 

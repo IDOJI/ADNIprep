@@ -33,7 +33,7 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
   # Slice Order Info
   #===========================================================================
   Order_Extracted.list = RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Slice.Order.Info(data.list)
-  Order_Extracted.list[[1]]$SLICE.ORDER.TYPE
+
 
 
 

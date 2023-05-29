@@ -1,9 +1,3 @@
-###############################################################################
-# Step 01 : Selecting subjects from subjects list files
-###############################################################################
-# list.files("C:/Users/IDO/Dropbox/Github/Rpkgs/ADNIprep/R", full.names = T) %>% walk(source)
-# list.files("C:/Users/IDO/Dropbox/Github/Rpkgs/refineR/R", full.names = T) %>% walk(source)
-
 RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
                       path_Export_Subjects.Lists =NULL,
                       path_Export_Rda      = NULL,
@@ -22,9 +16,14 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
   # 0.path
   #============================================================================
   path_Subjects.Lists_Downloaded = path_tail_slash(path_Subjects.Lists_Downloaded)
-  path_Export_Subjects.Lists = path_tail_slash(path_Export_Subjects.Lists)
   dir.create(path_Subjects.Lists_Downloaded, showWarnings = F)
-  dir.create(path_Export_Subjects.Lists, showWarnings = F)
+  if(!is.null(path_Export_Subjects.Lists)){
+    path_Export_Subjects.Lists = path_tail_slash(path_Export_Subjects.Lists)
+    dir.create(path_Export_Subjects.Lists, showWarnings = F)
+  }
+
+
+
 
 
 
@@ -61,51 +60,19 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
   #============================================================================
   # 3.Exporting Results
   #============================================================================
-  RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list,
-                              path_Subjects.Lists_Downloaded,
-                              path_Export_Subjects.Lists,
-                              path_Export_Rda)
+  if(is.null(path_Export_Subjects.Lists)){
+    ### returning results
+    text = paste("\n","Step 1 is all done !","\n")
+    cat(crayon::bgRed(text))
+    return(Merged_Lists.list)
+  }else{
+    RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list,
+                                path_Subjects.Lists_Downloaded,
+                                path_Export_Subjects.Lists,
+                                path_Export_Rda)
+    ### returning results
+    text = paste("\n","Step 1 is all done !","\n")
+    cat(crayon::bgRed(text))
+  }
 
-
-
-
-  ### returning results
-  text = paste("\n","Step 1 is all done !","\n")
-  cat(crayon::bgRed(text))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
-# dim(new_EPB)
-# new_EPB = read.csv("C:\\Users\\lleii\\Dropbox\\Github\\Rpkgs\\0.All_Subjects\\[Final_Selected]_Subjects_list_EPB_(0.All_Subjects).csv")
-# new_MT1 = read.csv("C:\\Users\\lleii\\Dropbox\\Github\\Rpkgs\\0.All_Subjects\\[Final_Selected]_Subjects_list_MT1_(0.All_Subjects).csv")
-#
-# old_EPB = read.csv("C:\\Users\\lleii\\Dropbox\\Github\\Rpkgs\\ADNIprep\\Subjects_Lists_Exported\\0.All_Subjects\\[Final_Selected]_Subjects_list_EPB_(0.All_Subjects).csv")
-# old_MT1 = read.csv("C:\\Users\\lleii\\Dropbox\\Github\\Rpkgs\\ADNIprep\\Subjects_Lists_Exported\\0.All_Subjects\\[Final_Selected]_Subjects_list_MT1_(0.All_Subjects).csv")
-# dim(old_EPB)
-# sum(old_EPB$IMAGE_ID %in% new_EPB$IMAGE.ID)
-#============================================================================
-# Path
-#============================================================================
-# path_ADNI                =   path_ADNI %>% path_tail_slash()
-# path_Subjects            =   paste(path_ADNI, "ADNI_Subjects", sep="") %>% path_tail_slash()
-# path_Subjects_Downloaded =   paste(path_Subjects, "Downloaded", sep="") %>% path_tail_slash()
