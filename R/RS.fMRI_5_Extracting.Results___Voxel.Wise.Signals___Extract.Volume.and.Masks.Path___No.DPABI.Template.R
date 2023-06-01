@@ -1,4 +1,4 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path___No.DPABI.Template = function(path_Preprocessing.Completed,
+RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path___No.DPABI.Template = function(path_Preprocessing.Completed,
                                                                                                                    what.result.folder){
   #=============================================================================
   # Extracting path

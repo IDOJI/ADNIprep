@@ -90,9 +90,12 @@ RS.fMRI_1.2_Merging.Lists___Search = function(Subjects.list){
   #=====================================================================================
   Merged_EPB.list = list()
   Merged_MT1.list = list()
-  for(i in 1:length(Intersection_QC_EPB.list)){
-    Merged_EPB.list[[i]] = bind_cols(Intersection_QC_EPB.list[[i]], Search_EPB.df[i,]) %>% as_tibble
-    Merged_MT1.list[[i]] = bind_cols(Intersection_QC_MT1.list[[i]], Search_MT1.df[i,]) %>% as_tibble
+  if(length(QC_EPB.list)>0 & length(QC_MT1.list)){
+    for(i in 1:length(Intersection_QC_EPB.list)){
+      Merged_EPB.list[[i]] = bind_cols(Intersection_QC_EPB.list[[i]], Search_EPB.df[i,]) %>% as_tibble
+      Merged_MT1.list[[i]] = bind_cols(Intersection_QC_MT1.list[[i]], Search_MT1.df[i,]) %>% as_tibble
+    }
+
   }
 
 

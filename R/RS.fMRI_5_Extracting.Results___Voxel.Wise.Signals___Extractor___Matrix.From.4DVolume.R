@@ -1,4 +1,4 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extractor = function(path_4DVolume.nii=NULL, Filtered_4DVolume=NULL){
+RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Extractor___Matrix.From.4DVolume = function(path_4DVolume.nii=NULL, Filtered_4DVolume=NULL){
 
   if(!is.null(path_4DVolume.nii)){
     # path_4DVolume.nii
@@ -21,7 +21,6 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extractor = function(path_
   ith_row_names_xy = lapply(1:n_y, FUN=function(y, ...){
     paste(fit_length(1:n_x,2), fit_length(y, 2), sep="_")
   }) %>% unlist
-
   ith_row_names_xyz = lapply(1:n_z, FUN=function(z, ...){
     paste(ith_row_names_xy, fit_length(z, 2), sep="_")
   }) %>% unlist

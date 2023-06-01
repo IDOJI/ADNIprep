@@ -5,8 +5,8 @@ RS.fMRI_4_Copying.Specific.Files = function(path, destination, Files = NULL, Fol
   #=============================================================================
   # list each RID folders
   #=============================================================================
-  RID_folders = list.files(path)
-  path_RID_folders = list.files(path, full.names=T)
+  path_RID_folders = fs::dir_ls(path, type = "dir")
+  RID_folders = basename(path_RID_folders)
 
 
 
@@ -35,8 +35,9 @@ RS.fMRI_4_Copying.Specific.Files = function(path, destination, Files = NULL, Fol
   #=============================================================================
   if(!is.null(Folders)){
     path_Specified.Folders = lapply(seq_along(path_RID_folders), FUN=function(i,...){
+
       # Folders에 해당하는 폴더들의 path 추출
-      index = list.files(path_RID_folders[i]) %>% filter_by(include=Folders, any_include = T, exact_include = F, as.ind = T)
+      index = list.files(path_RID_folders[i]) %>% filter_by(include=Folders, any_include = T, exact_include = T, as.ind = T)
       selected_path = list.files(path_RID_folders[i], full.names=T)[index]
 
       for(k in seq_along(selected_path)){

@@ -1,28 +1,106 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals = function(path_Preprocessing.Completed,
-                                                               DPABI.Template,
-                                                               what.result.folder = "FunImgARCF",
-                                                               save_path){
+RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals = function(path_Preprocessing.Completed,
+                                                             what.result.folder = "FunImgARCWSF",
+                                                             atlas = "AAL1",
+                                                             save_path){
   # Clipboard_to_path()
-  # path_Preprocessing.Completed = "E:/test_GroupMasking_After_Normalization_MNI"
-  # DPABI.Template = "Original_EPI"
+  # path_Preprocessing.Completed = "E:/ADNI/ADNI_RS.fMRI___SB/(완료)Preprocessing___MNI_EPI___AuotoMask___X___Philips___AAL1"
   # save_path = "E:/test_GroupMasking_After_Normalization_MNI/Voxelwise_BOLD_Signals"
   # what.result.folder = "FunImgARCWSF"
-
   #=============================================================================
   # Extracting volumes path
   #=============================================================================
-  path_Volumes.and.Masks = RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Volume.and.Masks.Path(path_Preprocessing.Completed, DPABI.Template, what.result.folder)
+  path_Subjects = fs::dir_ls(paste0(path_Preprocessing.Completed, "/", what.result.folder), type = "dir") %>% sort
+  path_Volumes = sapply(path_Subjects, function(y){
+    list.files(y, full.names=T)
+  })
+
+
+
+
+  #=============================================================================
+  # Extracting FC ROI path
+  #=============================================================================
+  path_FCROI = list.files(paste0(path_Preprocessing.Completed, "/Masks"), pattern = "FCROI", full.names=T) %>% sort
 
 
 
 
 
   #=============================================================================
-  # Extracting & Saving Volume
+  # Extracting BOLD signals
   #=============================================================================
-  RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data(path_Preprocessing.Completed, Volumes_path, save_path)
+  path_BOLD_Signals = list.files(paste0(path_Preprocessing.Completed, "/Results", "/ROISignals_", what.result.folder), pattern = "ROISignals_Sub", full.names=T) %>% sort %>% filter_by(include = "\\.txt", any_include = T, exact_include = F, exclude = "\\.mat", any_exclude = T, exact_exclude = F)
 
 
+
+
+  #=============================================================================
+  # Extracting ROI Order keys
+  #=============================================================================
+  path_ROI_Order_Keys = list.files(paste0(path_Preprocessing.Completed, "/Results", "/ROISignals_", what.result.folder), pattern = "ROI_OrderKey_Sub", full.names=T) %>% sort
+
+
+
+
+
+  #=============================================================================
+  # Extracting volumes
+  #=============================================================================
+  Results = lapply(seq_along(path_FCROI), function(i, ...){
+    # 4D Volume
+    ith_path_Volume = path_Volumes[i]
+    ith_Volume.mat = RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Extractor___Matrix.From.4DVolume(path_4DVolume.nii = ith_path_Volume)
+
+    # FC ROI
+    ith_path_FCROI = path_FCROI[i]
+    ith_FC_Mask.vec = RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Vector.From.FC.ROI.Mask(path_Mask = ith_path_FCROI)
+
+
+
+    # BOLD signals
+    ith_BOLD_Signals = read.table(path_BOLD_Signals[i])
+
+
+    # Grouping Voxels by ROIs
+    ith_Grouped_Voxels.list = RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Extract.Voxel.BOLD.Signals.Grouped.by.ROI(ith_Volume.mat, ith_FC_Mask.vec, ith_BOLD_Signals)
+
+
+
+
+
+
+    RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Compare.DPABI.BOLD.Signals = function()
+  })
+
+
+
+  Extracted_Voxel_BOLD_Signals_For_Each_ROI.list = lapply(FC_Mask_ROI_Label, function(ith_ROI, ...){
+    which_ith_ROI_Voxel= which(FC_Mask==ith_ROI)
+
+    ### ith ROI voxels in Volume
+    ith_ROI_Volume = Volume[which_ith_ROI_Voxel, ]
+
+
+    ### Check Voxel Coordinates
+    ith_ROI_Voxel_Coordinates = FC_Mask_Voxel_Coordinates[which_ith_ROI_Voxel]
+    if(sum(ith_ROI_Voxel_Coordinates == rownames(ith_ROI_Volume)) != length(ith_ROI_Voxel_Coordinates)){
+      stop(paste0(ith_ROI, "different coordinates voxels exist"))
+    }
+
+
+    return(ith_ROI_Volume)
+  })
+
+
+
+
+
+
+
+  FC_Mask_Voxel_Coordinates = names(FC_Mask)
+
+
+  RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data(path_Preprocessing.Completed, Volumes_path, save_path)
 
 
   cat("\n", crayon::bgMagenta("Step 4.2"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")

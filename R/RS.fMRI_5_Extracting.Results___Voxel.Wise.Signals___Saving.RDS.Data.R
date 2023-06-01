@@ -1,4 +1,4 @@
-RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data = function(path_Preprocessing.Completed, Volumes_path, save_path){
+RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data = function(path_Preprocessing.Completed, Volumes_path, save_path){
   #=============================================================================
   # Extracting files at save_path
   #=============================================================================
@@ -21,7 +21,7 @@ RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Saving.RDS.Data = function
     #=============================================================================
     # Extracting Signals from 4D volume.nii
     #=============================================================================
-    ith_Voxel_Signals.mat = RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extractor(ith_Volume_path)
+    ith_Voxel_Signals.mat = RS.fMRI_5_Extracting.Results___Voxel.Wise.Signals___Extractor(ith_Volume_path)
 
 
 

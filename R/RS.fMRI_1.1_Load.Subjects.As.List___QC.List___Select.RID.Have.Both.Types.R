@@ -44,10 +44,13 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types = funct
   #===========================================================================
   # Having only 2 rows?
   #===========================================================================
-  nrows_are_2 = sapply(Having_Both_Type_QC.list, nrow) %>% table %>% length == 1
-  if(!nrows_are_2){
-    stop("There are selected data with more than 2 rows")
+  if(length(Having_Both_Type_QC.list)>0){
+    nrows_are_2 = sapply(Having_Both_Type_QC.list, nrow) %>% table %>% length == 1
+    if(!nrows_are_2){
+      stop("There are selected data with more than 2 rows")
+    }
   }
+
 
 
   #===========================================================================

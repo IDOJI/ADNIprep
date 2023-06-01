@@ -25,6 +25,7 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
     EPB.df$`PROTOCOL.FMRI___MFG MODEL` = EPB.df$MANUFACTURERSMODELNAME
     EPB.df$MANUFACTURERSMODELNAME = NULL
   }
+
   data.list = list(EPB = EPB.df, MT1 = MT1.df)
 
 
@@ -37,11 +38,11 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
 
 
 
+
   #===========================================================================
   # Bandtype
   #===========================================================================
   Band.Type.list = RS.fMRI_1.2_Merging.Lists___Modifying.Cols___Band.Type(Order_Extracted.list)
-
 
 
 

@@ -9,7 +9,8 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
                                                Subjects_NFQ,
                                                Subjects_search,
                                                #################################
-                                               Former_Exclude_ImageID){
+                                               Former_Exclude_ImageID,
+                                               what.date=2){
   # path_Error.Folders.To.Exlude = "E:/ADNI/ADNI_RS.fMRI___SB/Error/_완전제외"
   #=============================================================================
   # 1.Loading Subjects Lists
@@ -45,7 +46,7 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
   # Check the former ImageID
   #=============================================================================
   Selected_RID_Subjects_Lists_1 = RS.fMRI_1.(path_Subjects.Lists_Downloaded, path_Export_Subjects.Lists = NULL, path_Export_Rda = NULL, Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, Subjects_NFQ, Subjects_search,
-                                             what.date = 1, Include_RID = RID_Exclude, Include_ImageID = NULL, Exclude_RID = NULL, Exclude_ImageID = Former_Exclude_ImageID, Exclude_Comments = NULL)
+                                             what.date = what.date-1, Include_RID = RID_Exclude, Include_ImageID = NULL, Exclude_RID = NULL, Exclude_ImageID = Former_Exclude_ImageID, Exclude_Comments = NULL)
   EPI_List.df = Selected_RID_Subjects_Lists_1[[1]]
   MT1_List.df = Selected_RID_Subjects_Lists_1[[2]]
 
@@ -63,7 +64,7 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
   # Select Second date
   #=============================================================================
   Selected_RID_Subjects_Lists_2 = RS.fMRI_1.(path_Subjects.Lists_Downloaded, path_Export_Subjects.Lists = NULL, path_Export_Rda = NULL, Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, Subjects_NFQ, Subjects_search,
-                                             what.date = 2, Include_RID = RID_Exclude, Include_ImageID = NULL, Exclude_RID = NULL, Exclude_ImageID = Former_Exclude_ImageID, Exclude_Comments = NULL)
+                                             what.date = what.date, Include_RID = RID_Exclude, Include_ImageID = NULL, Exclude_RID = NULL, Exclude_ImageID = Former_Exclude_ImageID, Exclude_Comments = NULL)
   New_Selected_EPI = Selected_RID_Subjects_Lists_2[[1]]
   New_Selected_MT1 = Selected_RID_Subjects_Lists_2[[2]]
 
@@ -101,6 +102,10 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
   #=============================================================================
   # Image ID
   #=============================================================================
-  cat("\n", crayon::blue("New Image IDs to download : "),"\n")
-  paste(c(New_Selected_EPI$IMAGE_ID,New_Selected_MT1$IMAGE_ID), collapse = ",") %>% cat
+  if(nrow(New_Selected_EPI)>0 & nrow(New_Selected_MT1)>0){
+    cat("\n", crayon::blue("New Image IDs to download : "),"\n")
+    paste(c(New_Selected_EPI$IMAGE_ID,New_Selected_MT1$IMAGE_ID), collapse = ",") %>% cat
+  }else{
+    cat("\n", crayon::red("There is no newly selected subject!"),"\n")
+  }
 }
