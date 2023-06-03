@@ -24,6 +24,10 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, E
   selected_good_QC_2.df = selected_good_QC_1.df %>% filter(SERIES_SELECTED==1);dim(selected_good_QC_2.df)
   selected_good_QC_2.df$SERIES_SELECTED = NULL
 
+
+
+
+
   #<blank> Not evaluated, (0) No coverage issue, (1) Coverage issue
   selected_good_QC_3.df = selected_good_QC_2.df %>% filter(SERIES_COVERAGE_OCCIPITAL %>% is.na | SERIES_COVERAGE_OCCIPITAL==0);dim(selected_good_QC_3.df)
   selected_good_QC_4.df = selected_good_QC_3.df %>% filter(SERIES_COVERAGE_VERMIS %>% is.na | SERIES_COVERAGE_VERMIS==0);dim(selected_good_QC_4.df)
@@ -31,9 +35,10 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, E
   selected_good_QC_6.df = selected_good_QC_5.df %>% filter(SERIES_COVERAGE_SUPERIOR %>% is.na | SERIES_COVERAGE_SUPERIOR==0) ;dim(selected_good_QC_6.df)
   selected_good_QC_7.df = selected_good_QC_6.df %>% filter(SERIES_COVERAGE_TEMPORAL %>% is.na | SERIES_COVERAGE_TEMPORAL==0) ;dim(selected_good_QC_7.df)
   selected_good_QC_8.df = selected_good_QC_7.df %>% filter(SERIES_COVERAGE_OTHER %>% is.na | SERIES_COVERAGE_OTHER==0)  ;dim(selected_good_QC_8.df)
-
-
   selected_good_QC_9.df = selected_good_QC_8.df
+
+
+
 
   # <blank> Not relevant, (0) Not present, (1) Present
   selected_good_QC_10.df = selected_good_QC_9.df %>% filter(FMRI_PHASE %>% is.na | FMRI_PHASE==0);dim(selected_good_QC_10.df)
@@ -293,7 +298,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, E
 
                       ) %>% stringr::str_trim()
 
-  ### adding cooments
+  ### adding comments
   exclusion_words = c(exclusion_words, Exclude_Comments)
 
 

@@ -22,10 +22,14 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
 
 
 
+
+
   #=============================================================================
   # Select Excluding RID
   #=============================================================================
   RID_Exclude = Error.RID.To.Exlude %>% as.numeric
+
+
 
 
 
@@ -38,6 +42,8 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
 
   EPI_Selected = EPI %>% filter(! RID %in% RID_Exclude)
   MT1_Selected = MT1 %>% filter(! RID %in% RID_Exclude)
+
+
 
 
 
@@ -60,6 +66,8 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
 
 
 
+
+
   #=============================================================================
   # Select Second date
   #=============================================================================
@@ -67,6 +75,8 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
                                              what.date = what.date, Include_RID = RID_Exclude, Include_ImageID = NULL, Exclude_RID = NULL, Exclude_ImageID = Former_Exclude_ImageID, Exclude_Comments = NULL)
   New_Selected_EPI = Selected_RID_Subjects_Lists_2[[1]]
   New_Selected_MT1 = Selected_RID_Subjects_Lists_2[[2]]
+
+
 
 
 
@@ -84,10 +94,16 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
 
 
 
+
+
+
   #=============================================================================
   # Adding Subnumbering
   #=============================================================================
   Subnum_Binded.list = RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers(Binded.list)
+
+
+
 
 
 
@@ -97,6 +113,11 @@ RS.fMRI_3_Export.New.Subjects.Lists = function(path_All.Subjects.EPB.List.File,
   write.csv(Subnum_Binded.list[[1]], file = paste0(path_New.Export.Subjects.Lists,"/[Final_Selected]_Subjects_list_EPB_All_New.csv"), row.names = F)
   write.csv(Subnum_Binded.list[[2]], file = paste0(path_New.Export.Subjects.Lists,"/[Final_Selected]_Subjects_list_MT1_All_New.csv"), row.names = F)
   cat("\n",crayon::yellow("Exporting"), crayon::red("New Subjects Lists"), crayon::yellow("is done!"),"\n")
+
+
+
+
+
 
 
   #=============================================================================

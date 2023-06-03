@@ -58,6 +58,17 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
 
 
   #============================================================================
+  # 3.Research Group
+  #============================================================================
+  RS.fMRI_1.3_Research.Group =
+
+
+
+
+
+
+
+  #============================================================================
   # 3.Exporting Results
   #============================================================================
   if(is.null(path_Export_Subjects.Lists)){
@@ -76,3 +87,38 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
   }
 
 }
+
+
+#===============================================================================
+# ADNIMERGE 패키지 설치
+#===============================================================================
+install.packages("Hmisc")
+Clipboard_to_path()
+install.packages("C:/Users/lleii/Dropbox/Github/Rpkgs/ADNIprep/ADNIMERGE/ADNIMERGE_0.0.1.tar.gz", repose = NULL, type="source")
+require(ADNIMERGE)
+
+
+
+#===============================================================================
+# 데이터 로드
+#===============================================================================
+class(adnimerge)
+dim(adnimerge)
+
+
+test[test$Subject.ID=="052_S_7036",]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

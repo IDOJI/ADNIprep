@@ -34,23 +34,30 @@ RS.fMRI_4_Copying.Specific.Files = function(path, destination, Files = NULL, Fol
   if(!is.null(Folders)){
 
     path_Specified.Folders = lapply(seq_along(path_RID_folders), FUN=function(i,...){
-
       # Folders에 해당하는 폴더들의 path 추출
       ith_RID = RID_folders[i]
       ith_RID_folder_path = path_RID_folders[i]
       ith_folders_index = list.files(ith_RID_folder_path) %>% filter_by(include=Folders, any_include = T, exact_include = T, as.ind = T) %>% sort
       ith_selected_path = list.files(ith_RID_folder_path, full.names=T)[ith_folders_index] %>% sort
-      ith_destination = paste(destination, Folders, sep="/")
+      ith_destination = paste(destination, Folders, sep="/") %>% sort
 
 
-      for(k in seq_along(selected_path)){
+
+      # Folders don't exist
+      ith_Dont.Exist.Folder = Folders[! Folders %in% basename(ith_selected_path)]
+      if(length(ith_Dont.Exist.Folder)>0){
+        stop(paste(ith_RID, "don't have some folders : ", ith_Dont.Exist.Folder))
+      }
+
+
+      # Moving
+      for(k in seq_along(ith_selected_path)){
         if(basename(ith_selected_path[k])==basename(ith_destination[k])){
           copy_files(path = ith_selected_path[k], is.path.dir = T, destination = ith_destination[k], overwrite = T, message = F)
         }else{
           stop(paste("The foder's name of selected folder and destination is different! : ", ith_RID))
         }
       }
-
       cat("\n",  crayon::yellow("Copying files for preprocessing is done ! :"),  crayon::red(RID_folders[i]),"\n")
     })
 
