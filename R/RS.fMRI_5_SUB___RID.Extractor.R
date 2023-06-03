@@ -1,36 +1,7 @@
-RS.fMRI_5_Voxelwise.Signals___Extractor___Vectorize.FC.ROI.Mask = function(path_Mask){
-  # path_Mask = "E:/ADNI/ADNI_RS.fMRI___SB/Completed___AutoMask___O/Philips/Philips_SB___Sub_015___RID_4021/Masks/FCROI_1_Sub_015.nii"
-  #=============================================================================
-  # Load the data
-  #=============================================================================
-  Mask =  oro.nifti::readNIfTI(path_Mask, reorient=F)
-  Mask.vec = Mask %>% as.vector
-
-
-
-  #=============================================================================
-  # Dimension
-  #=============================================================================
-  n_x = dim(Mask)[1]
-  n_y = dim(Mask)[2]
-  n_z = dim(Mask)[3]
-
-  names_xy = lapply(1:n_y, FUN=function(y, ...){
-    paste(fit_length(1:n_x,2), fit_length(y, 2), sep="_")
-  }) %>% unlist
-  names_xyz = lapply(1:n_z, FUN=function(z, ...){
-    paste(names_xy, fit_length(z, 2), sep="_")
-  }) %>% unlist
-
-
-  #=============================================================================
-  # Labeling
-  #=============================================================================
-  names(Mask.vec) = names_xyz
-
-
-
-
-  return(Mask.vec)
+RS.fMRI_5_SUB___RID.Extractor = function(path_All.Subjects.EPB.List.File, path_Preprocessing.Completed, Manufacturer = c("Philips", "GE.MEDICAL.SYSTEMS", "SIEMENS"), Band.Type = c("SB", "MB")){
+  EPB.df = read.csv(path_All.Subjects.EPB.List.File)
+  Sub_Folders = list.files(paste0(path_Preprocessing.Completed %>% path_tail_slash(), "FunImgAR"), pattern="Sub_")
+  Selected_EPB.df = EPB.df %>% filter(Manufacturer_New==paste(Manufacturer, Band.Type, sep="_") & Sub_Num %in% Sub_Folders)
+  return(Selected_EPB.df$RID)
 
 }

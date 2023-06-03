@@ -5,8 +5,9 @@ RS.fMRI_4_Copying.Specific.Files = function(path, destination, Files = NULL, Fol
   #=============================================================================
   # list each RID folders
   #=============================================================================
-  path_RID_folders = fs::dir_ls(path, type = "dir")
-  RID_folders = basename(path_RID_folders)
+  Folders = Folders %>% sort
+  path_RID_folders = fs::dir_ls(path, type = "dir") %>% sort
+  RID_folders = basename(path_RID_folders) %>% sort
 
 
 
@@ -27,26 +28,54 @@ RS.fMRI_4_Copying.Specific.Files = function(path, destination, Files = NULL, Fol
 
 
 
-
-
-
   #=============================================================================
   # 2) Specified Folders path
   #=============================================================================
   if(!is.null(Folders)){
+
     path_Specified.Folders = lapply(seq_along(path_RID_folders), FUN=function(i,...){
 
       # Folders에 해당하는 폴더들의 path 추출
-      index = list.files(path_RID_folders[i]) %>% filter_by(include=Folders, any_include = T, exact_include = T, as.ind = T)
-      selected_path = list.files(path_RID_folders[i], full.names=T)[index]
+      ith_RID = RID_folders[i]
+      ith_RID_folder_path = path_RID_folders[i]
+      ith_folders_index = list.files(ith_RID_folder_path) %>% filter_by(include=Folders, any_include = T, exact_include = T, as.ind = T) %>% sort
+      ith_selected_path = list.files(ith_RID_folder_path, full.names=T)[ith_folders_index] %>% sort
+      ith_destination = paste(destination, Folders, sep="/")
+
 
       for(k in seq_along(selected_path)){
-        copy_files(path = selected_path[k], is.path.dir = T, destination = file.path(destination, Folders)[k], overwrite = T, message = F)
+        if(basename(ith_selected_path[k])==basename(ith_destination[k])){
+          copy_files(path = ith_selected_path[k], is.path.dir = T, destination = ith_destination[k], overwrite = T, message = F)
+        }else{
+          stop(paste("The foder's name of selected folder and destination is different! : ", ith_RID))
+        }
       }
 
       cat("\n",  crayon::yellow("Copying files for preprocessing is done ! :"),  crayon::red(RID_folders[i]),"\n")
     })
+
   }
 
   cat("\n",  crayon::blue("Copying files for"),  crayon::bgRed("DPABI preprocessing"), crayon::blue("is done") ,"\n")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
