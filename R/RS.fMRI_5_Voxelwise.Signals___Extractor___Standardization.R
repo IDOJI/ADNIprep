@@ -6,9 +6,6 @@ RS.fMRI_5_Voxelwise.Signals___Extractor___Standardization = function(ith_Volume.
     ith_Mean = mean(Selected_Coordinates_BOLD_Signals.mat)
     ith_SD = sd(Selected_Coordinates_BOLD_Signals.mat)
     ith_Volume.mat[which_Selected_ROI, ] = (Selected_Coordinates_BOLD_Signals.mat - ith_Mean)/ith_SD
-
-    test= (Selected_Coordinates_BOLD_Signals.mat - ith_Mean)/ith_SD
-    matplot(test,type='l')
   }
   return(ith_Volume.mat)
 }

@@ -51,15 +51,6 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Preprocessing.Completed,
                                                                     path_Volumes, path_FCROI, path_BOLD_Signals, path_ROI_Order_Keys, save_path, Include.Raw)
 
 
-
-
-  #=============================================================================
-  # Exporting Report
-  #=============================================================================
-  saveRDS(object = Voxels_Coordinates.list, file = paste0(save_path, "/Each_RID_Voxels_Coordinates.rds"))
-
-
-
   cat("\n", crayon::bgMagenta("Step 5"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
 }
 
