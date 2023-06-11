@@ -1,5 +1,5 @@
 RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
-                                       path_Sub.Multiple=NULL,
+                                       path_Preprocessing.Completed=NULL,
                                        result.folder.name = "FunImgARCWSF",
                                        Atlas = c("AAL1", "AAL3"),
                                        Standardization.Method=c("NULL", "Z.standardization"),
@@ -11,22 +11,44 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
   # what.result.folder = "FunImgARCWSF"
 
 
+  # 하나의 sub 폴더에 대해서
   if(!is.null(path_Sub.Single)){
-    path_Sub.Single = "E:/ADNI/ADNI_RS.fMRI___SB/AutoMask___O/MNI_EPI_AAL3___GE.MEDICAL.SYSTEMS/GE.MEDICAL.SYSTEMS_SB___Sub_002___RID_0120___EPI_I838962___MT1_I838961"
-    RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = path_Sub.Single,
-                                                 result.folder.name,
-                                                 Atlas,
-                                                 Standardization.Method,
-                                                 path_save,
-                                                 Include.Raw)
+    Error_path = tryCatch({
+      RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = path_Sub.Single,
+                                                   result.folder.name,
+                                                   Atlas,
+                                                   Standardization.Method,
+                                                   path_save,
+                                                   Include.Raw)
+    }, error = function(e) {
+      return(path_Sub.Single)
+    })
+  # 여러 개의 SUb 폴더들이 있는 경우
+  }else if(!is.null(path_Preprocessing.Completed)){
+    path_Sub_Folders = fs::dir_ls(path_Preprocessing.Completed, type="dir")
+    Error_path = sapply(path_Sub_Folders, function(y){
+      tryCatch({
+        RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = y,
+                                                     result.folder.name,
+                                                     Atlas,
+                                                     Standardization.Method,
+                                                     path_save,
+                                                     Include.Raw)
+      }, error = function(e) {
+        return(y)
+      })# tryCatch
+    })# sapply
   }
 
 
   cat("\n", crayon::bgMagenta("Step 5"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
+  cat("\n", crayon::bgRed("These are error path!"), "\n")
+
+  Results = sapply(Error_path, function(y){
+    cat("\n",  y, "\n")
+  })
+  return(Error_path)
 }
-
-
-
 
 
 
