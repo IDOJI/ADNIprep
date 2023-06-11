@@ -81,8 +81,6 @@ RS.fMRI_1.2_Merging.Lists___Modifying.Cols = function(data.list){
   New_combined_EPB.df = New_combined_EPB.df %>% rename(FMRI___SLICE.ORDER.TYPE = SLICE.ORDER.TYPE)
   New_combined_EPB.df = New_combined_EPB.df %>% rename(FMRI___SLICE.BAND.TYPE = BAND.TYPE)
   # protocol : manufacturer rename
-  New_combined_EPB.df = New_combined_EPB.df %>% rename(PROTOCOL.FMRI___MANUFACTURER2 = MANUFACTURER)
-  New_combined_EPB.df = New_combined_EPB.df %>% rename(PROTOCOL.FMRI___MANUFACTURERSMODELNAME = MANUFACTURERSMODELNAME)
   New_combined_EPB.df = New_combined_EPB.df %>% rename(PROTOCOL.FMRI___SOFTWAREVERSIONS = SOFTWAREVERSIONS)
   New_combined_EPB.df = New_combined_EPB.df %>% rename(PROTOCOL.FMRI___SERIESTIME = SERIESTIME)
   New_combined_EPB.df = New_combined_EPB.df %>% relocate(starts_with("PROTOCOL"), .after = last_col())

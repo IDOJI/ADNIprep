@@ -1,5 +1,6 @@
 RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB.List.File,
-                                                            path_ADNI.Unzipped.Folders){
+                                                           path_ADNI.Unzipped.Folders,
+                                                           filename_col_name = "File_Names_New"){
   # path_New.EPI.Subjects.Lists = "C:/Users/lleii/Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported_New/[Final_Selected]_Subjects_list_EPB_All_New.csv"
   # path_Sub.Folders = "E:/ADNI/ADNI_RS.fMRI___SB/New_Downloaded/ADNI"
   #===========================================================================================
@@ -16,11 +17,11 @@ RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB
   # Extract RID from folders' name
   #===========================================================================================
   RID = sapply(Unzipped.Folders, FUN=function(ith_Folder){
-    # ith_Folder = Unzipped.Folders[430]
-    ith_RID = substr(ith_Folder, nchar(ith_Folder)-3, nchar(ith_Folder))
+    # ith_Folder = Unzipped.Folders[100]
+    ith_RID = str_extract(ith_Folder, "RID_\\d+")
     gsub("[^0-9]", "", ith_RID) %>% as.numeric
-  })
-  names(RID) = NULL
+  }) %>% unname
+
 
 
 
@@ -37,13 +38,13 @@ RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB
   #===========================================================================================
   # Rename Folders' name
   #===========================================================================================
-  Results = sapply(RID, FUN=function(ith_RID, ...){
-    # ith_RID = RID[1]
-    ind = which(RID == ith_RID)
+  Results = sapply(seq_along(RID), FUN=function(i, ...){
+    ith_RID = RID[i]
     ith_EPB.df = All_Subjects_EPB.df %>% filter(RID == ith_RID)
-    ith_Filename_To = ith_EPB.df$File_Names
-    ith_Filename_From = Unzipped.Folders[ind]
-    ith_Filename_From_path = path_Unzipped.Folders[ind]
+
+    ith_Filename_To = ith_EPB.df[,filename_col_name] %>% unlist %>% unname
+    ith_Filename_From = Unzipped.Folders[i]
+    ith_Filename_From_path = path_Unzipped.Folders[i]
 
     ith_Filename_From_path_split = strsplit(ith_Filename_From_path, "/")[[1]]
     ith_Filename_From_path_split = ith_Filename_From_path_split[-length(ith_Filename_From_path_split)]
@@ -57,5 +58,19 @@ RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB
     }
   })
 
-  cat("\n", crayon::bgMagenta("Step 2.5"), crayon::blue("Changing folders names by Sub_Numbering is done!"), "\n")
+  cat("\n", crayon::bgMagenta("Step 2"), crayon::blue("Changing folders names by Sub_Numbering is done!"), "\n")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

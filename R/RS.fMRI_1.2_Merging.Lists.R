@@ -29,7 +29,7 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
 
 
 
-
+  # if there is no selected subject
   if(Protocol_Splitted.list[[1]] %>% length == 0 & Protocol_Splitted.list[[2]] %>% length ==0){
     text = "1.2 : Merging.Lists is done!"
     cat("\n", crayon::bgMagenta(text), "\n")

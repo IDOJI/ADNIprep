@@ -1,4 +1,4 @@
-RS.fMRI_3.2_Checking.Normalization.Pictures = function(path_Preprocessing.Completed, path_Normalization.Pictures, preprocessing.template=NULL){
+RS.fMRI_3_Checking.Normalization.Pictures = function(path_Preprocessing.Completed, path_Normalization.Pictures, preprocessing.template=NULL){
   # @Original_EPI 등의 템플릿 폴더에 옮겨놓았으면 preprocessing.template에 "EPI" 등의 키워드로 해당 폴더 지정하기
   #=============================================================================
   # create norm dir
@@ -46,11 +46,30 @@ RS.fMRI_3.2_Checking.Normalization.Pictures = function(path_Preprocessing.Comple
     # moving files
     fs::file_copy(path = ith_Norm.Pictures.File_path,
                   new_path = paste0(ith_Norm.Pictures_Destination_path, "/", ith_Norm.Pictures.File),
-                  overwrite = F)
+                  overwrite = T)
     # file.copy(from = ith_Norm.Pictures.File_path,
     #           to = )
     cat("\n", crayon::green("Copying Normalization Pictures is done : "), crayon::red(folders[ind]), "\n")
   })
 
-  cat("\n", crayon::bgMagenta("Step 3.2"), crayon::red("Copying Normalization Pictures"), crayon::blue("is done!"),"\n")
+  cat("\n", crayon::bgMagenta("Step 3"), crayon::red("Copying Normalization Pictures"), crayon::blue("is done!"),"\n")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

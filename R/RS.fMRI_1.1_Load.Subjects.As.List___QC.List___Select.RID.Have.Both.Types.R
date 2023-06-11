@@ -4,12 +4,14 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types = funct
   # 1) Remove RIDs which don't have either type
   #===========================================================================
   RID = QC.df$RID %>% unique()
-  selected_RID.list = list()
   selected_RID = sapply(RID, FUN=function(ith_RID, ...){
     if(QC.df %>% filter(RID ==ith_RID) %>% select(SERIES_TYPE) %>% unlist %>% unique %>% length == 2){
       return(ith_RID)
     }
   }) %>% unlist
+  if(length(selected_RID)==0){
+    stop("There is no RID having both MT1 & EPB")
+  }
   QC_1.df = QC.df %>% filter(RID %in% selected_RID)
 
 

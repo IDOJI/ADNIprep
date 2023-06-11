@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Extractor___Matrix.From.4DVolume = function(path_4DVolume.nii=NULL, Filtered_4DVolume=NULL){
+RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Matrix.From.4DVolume = function(path_4DVolume.nii=NULL, Filtered_4DVolume=NULL){
 
   if(!is.null(path_4DVolume.nii)){
     # path_4DVolume.nii

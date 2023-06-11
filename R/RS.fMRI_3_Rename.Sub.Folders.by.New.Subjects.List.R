@@ -1,11 +1,13 @@
-RS.fMRI_3_Rearrange.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Subjects.Lists,
-                                                                path_Sub.Folders){
+RS.fMRI_3_Rename.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Subjects.Lists,
+                                                             path_Sub.Folders,
+                                                             filename_col_name){
   # path_Sub.Folders = "E:/ADNI/ADNI_RS.fMRI___SB/Error/_완전제외"
   #=============================================================================
   # Changing Sub folders' names
   #=============================================================================
   RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID(path_New.EPI.Subjects.Lists,
-                                                  path_Sub.Folders)
+                                                  path_Sub.Folders,
+                                                  filename_col_name)
 
 
 
@@ -24,8 +26,8 @@ RS.fMRI_3_Rearrange.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Sub
   # Extract Sub num
   #===============================================================================
   Sub_Num_New = sapply(Sub.Folders, function(y){
-    strsplit(y, "___")[[1]][2]
-  })
+    stringr::str_extract(y, pattern = "Sub_\\d+")
+  }) %>% unname
 
 
 
@@ -36,13 +38,19 @@ RS.fMRI_3_Rearrange.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Sub
 
 
 
+
   #===============================================================================
   # Changing files' names
   #===============================================================================
   is_same_with_Old = sapply(seq_along(path_FunImg), function(i, ...){
-    ith_Sub_Num_Old = list.files(path_FunImg[i])[1]
+    ith_Sub_Num_Old = list.files(path_FunImg[i], pattern="Sub_")
     ith_Sub_Num_New = Sub_Num_New[i]
     ith_Sub_path = path_Each.Sub.Folders[i]
+
+
+    if(length(ith_Sub_Num_Old)==0){
+      stop(paste0("There is no FunImg folder in ", ith_Sub_path))
+    }
 
 
     if(ith_Sub_Num_Old != ith_Sub_Num_New){

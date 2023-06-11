@@ -3,7 +3,8 @@ RS.fMRI_3_Extract.ImageIDs.of.Specific.Folders.Named.as.RID = function(path_All.
                                                                        path_Sub.Folders=NULL,
                                                                        Sub_Num=NULL,
                                                                        Manufacturer=NULL,
-                                                                       Band.Type=NULL){
+                                                                       Band.Type=NULL,
+                                                                       for.downloading =T){
   #=============================================================================
   # Loading subjects lists for each Manufacturer
   #=============================================================================
@@ -34,11 +35,17 @@ RS.fMRI_3_Extract.ImageIDs.of.Specific.Folders.Named.as.RID = function(path_All.
     }) %>% unlist
   }else if(!is.null(Sub_Num) & !is.null(Manufacturer) & !is.null(Band.Type) & is.null(path_Sub.Folders)){
 
-
-
   }
 
 
-  cat("\n", crayon::blue("The selected Image IDs are as follows : ") ,"\n")
-  paste(ImageIDs, collapse=",") %>% cat
+  if(for.downloading){
+    cat("\n", crayon::blue("The selected Image IDs are as follows : ") ,"\n")
+    paste(ImageIDs, collapse=",") %>% cat
+  }else{
+    cat(paste0("\"", ImageIDs, "\"", collapse = ", "), "\n")
+    return(ImageIDs)
+  }
+
+
+
 }

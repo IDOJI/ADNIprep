@@ -1,54 +1,25 @@
-RS.fMRI_5_Voxelwise.Signals = function(path_Preprocessing.Completed,
-                                       what.result.folder = "FunImgARCWSF",
-                                       Atlas = c("AAL1"),
+RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
+                                       path_Sub.Multiple=NULL,
+                                       result.folder.name = "FunImgARCWSF",
+                                       Atlas = c("AAL1", "AAL3"),
                                        Standardization.Method=c("NULL", "Z.standardization"),
-                                       save_path,
-                                       RID, Include.Raw){
+                                       path_save,
+                                       Include.Raw = T){
   # Clipboard_to_path()
-  # path_Preprocessing.Completed = "E:/ADNI/ADNI_RS.fMRI___SB/(완료)Preprocessing___MNI_EPI___AuotoMask___X___Philips___AAL1"
+  # path_Sub.Single = "E:/ADNI/ADNI_RS.fMRI___SB/(완료)Preprocessing___MNI_EPI___AuotoMask___X___Philips___AAL1"
   # save_path = "E:/test_GroupMasking_After_Normalization_MNI/Voxelwise_BOLD_Signals"
   # what.result.folder = "FunImgARCWSF"
-  #=============================================================================
-  # Extracting volumes path
-  #=============================================================================
-  path_Subjects = fs::dir_ls(paste0(path_Preprocessing.Completed, "/", what.result.folder), type = "dir") %>% sort
-  Subjects = basename(path_Subjects)
-  path_Volumes = sapply(path_Subjects, function(y){ list.files(y, full.names=T) })
 
 
-
-
-  #=============================================================================
-  # Extracting FC ROI path
-  #=============================================================================
-  path_FCROI = list.files(paste0(path_Preprocessing.Completed, "/Masks"), pattern = "FCROI", full.names=T) %>% sort
-
-
-
-
-
-  #=============================================================================
-  # Extracting BOLD signals
-  #=============================================================================
-  path_BOLD_Signals = list.files(paste0(path_Preprocessing.Completed, "/Results", "/ROISignals_", what.result.folder), pattern = "ROISignals_Sub", full.names=T) %>% sort %>% filter_by(include = "\\.txt", any_include = T, exact_include = F, exclude = "\\.mat", any_exclude = T, exact_exclude = F)
-
-
-
-
-  #=============================================================================
-  # Extracting ROI Order keys
-  #=============================================================================
-  path_ROI_Order_Keys = list.files(paste0(path_Preprocessing.Completed, "/Results", "/ROISignals_", what.result.folder), pattern = "ROI_OrderKey_Sub", full.names=T) %>% sort
-
-
-
-
-
-  #=============================================================================
-  # Extracting volumes & Exporting
-  #=============================================================================
-  Voxels_Coordinates.list = RS.fMRI_5_Voxelwise.Signals___Extractor(RID, Subjects, Atlas, Standardization.Method,
-                                                                    path_Volumes, path_FCROI, path_BOLD_Signals, path_ROI_Order_Keys, save_path, Include.Raw)
+  if(!is.null(path_Sub.Single)){
+    path_Sub.Single = "E:/ADNI/ADNI_RS.fMRI___SB/AutoMask___O/MNI_EPI_AAL3___GE.MEDICAL.SYSTEMS/GE.MEDICAL.SYSTEMS_SB___Sub_002___RID_0120___EPI_I838962___MT1_I838961"
+    RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = path_Sub.Single,
+                                                 result.folder.name,
+                                                 Atlas,
+                                                 Standardization.Method,
+                                                 path_save,
+                                                 Include.Raw)
+  }
 
 
   cat("\n", crayon::bgMagenta("Step 5"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
@@ -206,13 +177,13 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Preprocessing.Completed,
 # #=============================================================================
 # # Extracting Mask path
 # #=============================================================================
-# RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Mask.Path = function(path_Preprocessing.Completed, DPABI.Template = "Original_EPI"){
+# RS.fMRI_4.2_Extracting.Results___Voxel.Wise.Signals___Extract.Mask.Path = function(path_Sub.Single, DPABI.Template = "Original_EPI"){
 #   #=============================================================================
 #   # path & folders
 #   #=============================================================================
-#   path_Preprocessing.Completed = path_Preprocessing.Completed %>% path_tail_slash()
-#   folders = list.files(path_Preprocessing.Completed)
-#   folders_path = list.files(path_Preprocessing.Completed, full.names = T)
+#   path_Sub.Single = path_Sub.Single %>% path_tail_slash()
+#   folders = list.files(path_Sub.Single)
+#   folders_path = list.files(path_Sub.Single, full.names = T)
 #
 #
 #

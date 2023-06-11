@@ -5,6 +5,7 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
                       Subjects_QC_ADNI3,
                       Subjects_NFQ,
                       Subjects_search,
+                      Subjects_DX_Summary=NULL,
                       what.date            = 1,
                       Include_RID        = NULL,
                       Include_ImageID    = NULL,
@@ -56,12 +57,11 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
 
 
 
-
   #============================================================================
   # 3.Research Group
   #============================================================================
-  RS.fMRI_1.3_Research.Group =
-
+  # RS.fMRI_1.3_Research.Group = RS.fMRI_1.3_Define.DX(Subjects_DX_Summary)
+  # RS.fMRI_1.3_Define.DX = function()
 
 
 
@@ -75,6 +75,10 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
     ### returning results
     text = paste("\n","Step 1 is all done !","\n")
     cat(crayon::bgRed(text))
+
+    if(Merged_Lists.list[[1]] %>% length == 0 & Merged_Lists.list[[2]] %>% length == 0){
+      cat("\n",crayon::red("There's no selected subjects"),"\n")
+    }
     return(Merged_Lists.list)
   }else{
     RS.fMRI_1.3_Exporting.Lists(Merged_Lists.list,

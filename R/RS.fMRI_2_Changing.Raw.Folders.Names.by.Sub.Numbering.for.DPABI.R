@@ -11,18 +11,17 @@ RS.fMRI_2_Changing.Raw.Folders.Names.by.Sub.Numbering.for.DPABI = function(path_
   # Extracting Sub Numbering
   #===========================================================================================
   Sub_Num = sapply(Unzipped.Folders, FUN=function(ith_folder_name){
-    # ith_folder_name = Unzipped.Folders[1]
-    strsplit(ith_folder_name, "___")[[1]][2]
-  })
+    stringr::str_extract(ith_folder_name, "Sub_\\d+")
+  }) %>% unname
 
 
 
   #===========================================================================================
   # Change folders names to FunRaw & T1Raw
   #===========================================================================================
-  sapply(path_Unzipped.Folders, FUN=function(ith_path, ...){
-    # ith_path = path_Unzipped.Folders[816]
-    ind = which(path_Unzipped.Folders == ith_path)
+  Results = sapply(seq_along(path_Unzipped.Folders), FUN=function(i, ...){
+    # ith_path = path_Unzipped.Folders[100]
+    ith_path = path_Unzipped.Folders[i]
     ith_folders = list.files(ith_path)
 
     Have_FunRaw = grep("FunRaw", ith_folders) %>% length > 0
