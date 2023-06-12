@@ -2,7 +2,7 @@ RS.fMRI_5_Voxelwise.Signals___Sub.to.Repreprocess = function(path_Extracted.Resu
   #===============================================================================
   # list RDS files
   #===============================================================================
-  Extracted_RDS_RID = list.files(path_Extracted.Results) %>% substr(1,8) %>% unique
+  Extracted_RDS_RID = list.files(path_Extracted.Results) %>% stringr::str_extract(pattern = "RID_\\d+")
 
 
   #===============================================================================
@@ -11,6 +11,7 @@ RS.fMRI_5_Voxelwise.Signals___Sub.to.Repreprocess = function(path_Extracted.Resu
   Sub_Folders = sapply(path_Lists, function(y){
     list.files(y)
   }) %>% unlist %>% unname
+
 
 
   path_Sub_Folders = sapply(path_Lists, function(y){
@@ -28,8 +29,13 @@ RS.fMRI_5_Voxelwise.Signals___Sub.to.Repreprocess = function(path_Extracted.Resu
   }) %>% unlist %>% unname %>% sort
 
 
-  sapply(path_Sub_Folders[-index], function(y){
-    cat("\n", crayon::yellow(y) ,"\n")
-  })
-  return(path_Sub_Folders[-index])
+  if(length(index)>0){
+    cat("\n", crayon::red("These are the Subjects that have not been extracted voxel-wise signals"), "\n")
+    sapply(path_Sub_Folders[-index], function(y){
+      cat("\n", crayon::yellow(y) ,"\n")
+    })
+    return(path_Sub_Folders[-index])
+  }
+
+
 }
