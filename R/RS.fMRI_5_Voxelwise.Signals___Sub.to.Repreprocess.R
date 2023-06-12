@@ -1,0 +1,35 @@
+RS.fMRI_5_Voxelwise.Signals___Sub.to.Repreprocess = function(path_Extracted.Results, path_Lists){
+  #===============================================================================
+  # list RDS files
+  #===============================================================================
+  Extracted_RDS_RID = list.files(path_Extracted.Results) %>% substr(1,8) %>% unique
+
+
+  #===============================================================================
+  # Extract Sub folders list and path
+  #===============================================================================
+  Sub_Folders = sapply(path_Lists, function(y){
+    list.files(y)
+  }) %>% unlist %>% unname
+
+
+  path_Sub_Folders = sapply(path_Lists, function(y){
+    list.files(y, full.names=T)
+  }) %>% unlist %>% unname
+
+
+
+
+  #===============================================================================
+  # Find which ones have not been preprocessed
+  #===============================================================================
+  index = sapply(Extracted_RDS_RID, function(ith_RID){
+    grep(pattern = ith_RID, Sub_Folders)
+  }) %>% unlist %>% unname %>% sort
+
+
+  sapply(path_Sub_Folders[-index], function(y){
+    cat("\n", crayon::yellow(y) ,"\n")
+  })
+  return(path_Sub_Folders[-index])
+}

@@ -42,12 +42,17 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
 
 
   cat("\n", crayon::bgMagenta("Step 5"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
-  cat("\n", crayon::bgRed("These are error path!"), "\n")
 
-  Results = sapply(Error_path, function(y){
-    cat("\n",  y, "\n")
-  })
-  return(Error_path)
+
+
+  if(length(Error_path)>0){
+    Results = sapply(Error_path, function(y){
+      cat("\n",  y, "\n")
+    })
+
+    cat("\n", crayon::bgRed("These are error path!"), "\n")
+    Error_path %>% unlist %>% unname %>% return
+  }
 }
 
 

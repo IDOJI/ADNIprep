@@ -5,7 +5,8 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
                       Subjects_QC_ADNI3,
                       Subjects_NFQ,
                       Subjects_search,
-                      Subjects_DX_Summary=NULL,
+                      Subjects_DX_Summary,
+                      Subjects_BL_CHANGE,
                       what.date            = 1,
                       Include_RID        = NULL,
                       Include_ImageID    = NULL,
@@ -22,10 +23,6 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
     path_Export_Subjects.Lists = path_tail_slash(path_Export_Subjects.Lists)
     dir.create(path_Export_Subjects.Lists, showWarnings = F)
   }
-
-
-
-
 
 
 
@@ -58,10 +55,14 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
 
 
   #============================================================================
-  # 3.Research Group
+  # 3.New Diagnosis
   #============================================================================
-  # RS.fMRI_1.3_Research.Group = RS.fMRI_1.3_Define.DX(Subjects_DX_Summary)
-  # RS.fMRI_1.3_Define.DX = function()
+  RS.fMRI_1.3_Research.Group = RS.fMRI_1.3_Diagnosis(Subjects_DX_Summary)
+
+
+
+
+
 
 
 
