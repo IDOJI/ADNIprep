@@ -1,18 +1,18 @@
-RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
-                      path_Export_Subjects.Lists =NULL,
-                      path_Export_Rda      = NULL,
-                      Subjects_QC_ADNI2GO,
-                      Subjects_QC_ADNI3,
-                      Subjects_NFQ,
-                      Subjects_search,
-                      Subjects_DX_Summary,
-                      Subjects_BL_CHANGE,
-                      what.date            = 1,
-                      Include_RID        = NULL,
-                      Include_ImageID    = NULL,
-                      Exclude_RID          = NULL,
-                      Exclude_ImageID = NULL,
-                      Exclude_Comments = NULL){
+RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
+                                    path_Export_Subjects.Lists =NULL,
+                                    path_Export_Rda      = NULL,
+                                    Subjects_QC_ADNI2GO,
+                                    Subjects_QC_ADNI3,
+                                    Subjects_NFQ,
+                                    Subjects_search,
+                                    Subjects_DX_Summary,
+                                    Subjects_BL_CHANGE,
+                                    what.date            = 1,
+                                    Include_RID        = NULL,
+                                    Include_ImageID    = NULL,
+                                    Exclude_RID          = NULL,
+                                    Exclude_ImageID = NULL,
+                                    Exclude_Comments = NULL){
   # Only.This.RID : 지정된 RID에 해당하는 개체들에 대해서만 데이터 선택
   #============================================================================
   # 0.path
@@ -50,19 +50,6 @@ RS.fMRI_1. = function(path_Subjects.Lists_Downloaded,
   # 2. Merging lists
   #============================================================================
   Merged_Lists.list = RS.fMRI_1.2_Merging.Lists(Subjects.list)
-
-
-
-
-  #============================================================================
-  # 3.New Diagnosis
-  #============================================================================
-  RS.fMRI_1.3_Research.Group = RS.fMRI_1.3_Diagnosis(Subjects_DX_Summary)
-
-
-
-
-
 
 
 
