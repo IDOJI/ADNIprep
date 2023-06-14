@@ -1,49 +1,79 @@
-RS.fMRI_1.3_Diagnosis___DX.Summary = function(Subjects_List_BLCHANGE.list, path_Subjects_DX.Summary){
+RS.fMRI_1.3_Diagnosis___DX.Summary = function(Merged_Lists.list, path_Subjects_DX.Summary){
   #=============================================================================
-  # Load
+  # csv?
   #=============================================================================
-  if(grep("csv", path_Subjects_DX.Summary) %>% length > 1){
-    DX.df = read.csv(path_Subjects_DX.Summary)
+  if(grep("csv", path_Subjects_DX.Summary) %>% length > 0){
+    DXSUM.df = read.csv(path_Subjects_DX.Summary)
   }else{
-    DX.df = read.csv(paste0(path_Subjects_DX.Summary, ".csv"))
+    DXSUM.df = read.csv(paste0(path_Subjects_DX.Summary, ".csv"))
   }
-  DX.df$EXAMDATE = DX.df$EXAMDATE %>% as.Date
+
+
+  #=============================================================================
+  # As date
+  #=============================================================================
+  DXSUM.df$EXAMDATE = DXSUM.df$EXAMDATE %>% as.Date()
+
+
+
 
 
   #=============================================================================
   # EPB, MT1
   #=============================================================================
-  EPB_BLCHANGE.list = Subjects_List_BLCHANGE.list[[1]]
-  MT1.df = Subjects_List_BLCHANGE.list[[2]]
+  EPB.df = Merged_Lists.list[[1]]
+  MT1.df = Merged_Lists.list[[2]]
 
 
 
 
   #=============================================================================
-  # Extract nearest
+  # Intersect RID
   #=============================================================================
-  Combined.list = lapply(EPB_BLCHANGE.list, function(y, ...){
-    ith_RID = y[[1]]$RID
-    ith_Study.Date = y[[1]]$STUDY.DATE %>% as.Date
+  RID_BL = DXSUM.df$RID %>% unique %>% sort
+  RID_EPB = EPB.df$RID %>% sort
+  RID_Intersect = intersect(RID_BL, RID_EPB) %>% sort
 
-    ith_DX = DX.df %>% filter(RID==ith_RID)
 
-    if(nrow(ith_DX)>0){
-      ith_DX_Date = ith_DX$EXAMDATE
-      minium_index = difftime(ith_DX_Date, ith_Study.Date, units = "days") %>% abs %>% which.min
-      ith_DX_Min.Date = ith_DX %>% filter(EXAMDATE == ith_DX_Date[minium_index])
-
-      ith_List = c(y, list(ith_DX_Min.Date), list(ith_DX))
-    }else{
-      ith_List = c(y, list(NA), list(NA))
-    }
-
-    names(ith_List)[4:5] = paste0("RID_", ith_RID, "___",c("Nearest_DX", "DX"))
-    return(ith_List)
-  })
+  DXSUM_Intersect.df = DXSUM.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, EXAMDATE)
 
 
 
 
-  return(list(EPB_combined = Combined.list, MT1 = MT1.df))
+
+  #=============================================================================
+  # Selecting columns
+  #=============================================================================
+  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("DIAGNOSIS")
+  DXSUM_Intersect_Selected.df = DXSUM_Intersect.df %>% select(c("RID", "VISCODE", "VISCODE2", "EXAMDATE",
+                                                                "DXCHANGE", "DXCURREN", "DXCONV", "DXCONTYP", "DXREV",
+                                                                "DXNORM", "DXMCI", "DXAD","DXADES", "DXAPP", "DXOTHDEM", "DIAGNOSIS"))
+
+
+
+
+  #=============================================================================
+  # Change Description
+  #=============================================================================
+  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCPREDX")
+  DXSUM_Intersect_Selected.df = replace_elements(DXSUM_Intersect_Selected.df, col_name = "DIAGNOSIS", from = c(1,2,3,-4, NA), to = c("CN", "MCI", "Dementia", "NA", "NA"))
+
+
+
+
+
+  #=============================================================================
+  # Replace Names
+  #=============================================================================
+  names(DXSUM_Intersect_Selected.df) = paste0("DXSUM___", names(DXSUM_Intersect_Selected.df))
+
+
+
+  #=============================================================================
+  # DXSUM  as list by RID
+  #=============================================================================
+  DXSUM.list = as_list_by(DXSUM_Intersect_Selected.df, by =  "DXSUM___RID")
+
+
+  return(DXSUM.list)
 }

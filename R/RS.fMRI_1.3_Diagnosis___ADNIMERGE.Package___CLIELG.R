@@ -1,18 +1,12 @@
-RS.fMRI_1.3_Diagnosis___BLCHANGE = function(Merged_Lists.list, path_Subjects_BLCHANGE){
-  #=============================================================================
-  # csv?
-  #=============================================================================
-  if(grep("csv", path_Subjects_BLCHANGE) %>% length > 0){
-    BLCHANGE.df = read.csv(path_Subjects_BLCHANGE)
-  }else{
-    BLCHANGE.df = read.csv(paste0(path_Subjects_BLCHANGE, ".csv"))
-  }
-
-
+RS.fMRI_1.3_Diagnosis___ADNIMERGE.Package___CLIELG = function(Merged_Lists.list){
   #=============================================================================
   # As date
   #=============================================================================
-  BLCHANGE.df$EXAMDATE = BLCHANGE.df$EXAMDATE %>% as.Date()
+  require(ADNIMERGE)
+  CLIELG.df = clielg
+  CLIELG.df$CDATE = CLIELG.df$CDATE %>% as.Date()
+  CLIELG.df$USERDATE = CLIELG.df$USERDATE %>% as.Date()
+  CLIELG.df$USERDATE2 = CLIELG.df$USERDATE2 %>% as.Date()
 
 
 
@@ -30,12 +24,10 @@ RS.fMRI_1.3_Diagnosis___BLCHANGE = function(Merged_Lists.list, path_Subjects_BLC
   #=============================================================================
   # Intersect RID
   #=============================================================================
-  RID_BL = BLCHANGE.df$RID %>% unique %>% sort
+  RID_CLIELG = CLIELG.df$RID %>% unique %>% sort
   RID_EPB = EPB.df$RID %>% sort
-  RID_Intersect = intersect(RID_BL, RID_EPB) %>% sort
-
-
-  BLCHANGE_Intersect.df = BLCHANGE.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, EXAMDATE)
+  RID_Intersect = intersect(RID_CLIELG, RID_EPB) %>% sort
+  CLIELG_Intersect.df = CLIELG.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, USERDATE)
 
 
 
@@ -44,26 +36,20 @@ RS.fMRI_1.3_Diagnosis___BLCHANGE = function(Merged_Lists.list, path_Subjects_BLC
   #=============================================================================
   # Selecting columns
   #=============================================================================
-  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCCORCOG")
-  BLCHANGE_Intersect_Selected.df = BLCHANGE_Intersect.df %>% select(c("RID", "VISCODE", "VISCODE2", "EXAMDATE", "BCPREDX", "BCEXTSP", "BCSUMM"))
+  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("CRAND")
+  # cat(paste0('"',names(CLIELG_Intersect.df), '"'), sep=", ")
+  CLIELG_Intersect_Selected.df = CLIELG_Intersect.df %>% select(c("RID", "VISCODE", "USERDATE", "USERDATE2", "CCOMM", "CENROLL", "DIAGNOSIS", "INCLUSION", "EXCLUSION","CRAND", "CDATE"))
+
+  names(CLIELG_Intersect_Selected.df) = paste0("CLIELG___", names(CLIELG_Intersect_Selected.df))
 
 
-  names(BLCHANGE_Intersect_Selected.df) = paste0("BLCHANGE___", names(BLCHANGE_Intersect_Selected.df))
-
-
-
-  #=============================================================================
-  # Change Description
-  #=============================================================================
-  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCPREDX")
-  BLCHANGE_Intersect_Selected.df = replace_elements(BLCHANGE_Intersect_Selected.df, col_name = "BLCHANGE___BCPREDX", from = c(1,2,3,-4, NA), to = c("CN", "MCI", "AD", "NA", "NA"))
 
 
 
   #=============================================================================
   # BL  as list by RID
   #=============================================================================
-  BL.list = as_list_by(BLCHANGE_Intersect_Selected.df, by =  "BLCHANGE___RID")
+  CLIELG.list = as_list_by(CLIELG_Intersect_Selected.df, by =  "CLIELG___RID")
 
 
 
