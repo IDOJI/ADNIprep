@@ -44,12 +44,18 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
 
 
 
+    #=============================================================================
+    # 5.Merging EPB & MT1
+    #=============================================================================
+    Merged.df = RS.fMRI_1.2_Merging.Lists___Merging.EPI.and.MT1(Modifying_cols.list)
+
+
 
 
     #=============================================================================
     # 5. Adding numbering and Filenames by Manufacturer
     #=============================================================================
-    Added_Numbering.list = RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers(Modifying_cols.list)
+    Added_Numbering.df = RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers(Merged.df)
     text = "1.2.5 : Adding Numbering and Filenames is done!"
     cat("\n", crayon::green(text), "\n")
 
@@ -61,10 +67,10 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
     #=============================================================================
     # 6.Returning results
     #=============================================================================
-    final.list = Added_Numbering.list
+    final.df = Added_Numbering.df
     text = "1.2 : Merging.Lists is done!"
     cat("\n", crayon::bgMagenta(text), "\n")
-    return(final.list)
+    return(final.df)
   }
 
 }
