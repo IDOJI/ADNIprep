@@ -1,5 +1,0 @@
-https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FEAT/UserGuide
-
-https://www.youtube.com/watch?v=E9FwDCYAto8
-
-https://andysbrainbook.readthedocs.io/en/latest/fMRI_Short_Course/Preprocessing/Registration_Normalization.html
