@@ -1,4 +1,4 @@
-RS.fMRI_1.4_Adding.Numbering.By.Manufacturers = function(Merged_Diagnosis.list){
+RS.fMRI_1.3_Adding.Numbering.By.Manufacturers = function(Merged_Diagnosis.list){
   #=============================================================================
   # Data
   #=============================================================================

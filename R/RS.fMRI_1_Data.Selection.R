@@ -76,10 +76,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
-  #=============================================================================
-  # 5. Adding numbering and Filenames by Manufacturer
-  #=============================================================================
-  Added_Numbering.list = RS.fMRI_1.4_Adding.Numbering.By.Manufacturers(Merged_Diagnosis.list)
+
 
 
 
@@ -100,6 +97,8 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
     Final.list = RS.fMRI_1.5_Exporting.Lists(Merged_Diagnosis.list,
                                              path_Subjects.Lists_Downloaded,
                                              path_Export_Subjects.Lists)
+
+
     ### returning results
     text = paste("\n","Step 1 is all done !","\n")
     cat(crayon::bgRed(text))

@@ -16,7 +16,6 @@ RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
 
 
 
-
   #===============================================================================
   # Extracting Demographics & Data binding
   #===============================================================================
@@ -25,9 +24,15 @@ RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
 
 
 
+  #=============================================================================
+  # Adding numbering and Filenames by Manufacturer
+  #=============================================================================
+  Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
+
+
 
   cat("\n", crayon::bgMagenta("STEP 1.3"), crayon::green("Deciding Diagnosis is done!") ,"\n")
-  return(Binded.list)
+  return(Added_Numbering.list)
 }
 
 

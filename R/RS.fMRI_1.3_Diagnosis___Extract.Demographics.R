@@ -1,58 +1,120 @@
 RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
-  # Add empty elements
+  # Handedness
   #=============================================================================
-  Add_Empty_Elements.list = lapply(seq_along(Time_To_First_AD.list), function(i){
-    ith_RID.df = Time_To_First_AD.list[[i]]
-
-    # Hand
-    ith_Hand = ith_RID.df$PTDEMO___PTHAND %>% na.omit %>% unique
-    if(1 %in% ith_Hand | "Right" %in% ith_Hand){
-      ith_RID.df$PTDEMO___PTHAND = rep("Right", nrow(ith_RID.df))
-    }else if(2 %in% ith_Hand | "Left" %in% ith_Hand){
-      ith_RID.df$PTDEMO___PTHAND = rep("Left", nrow(ith_RID.df))
-    }
+  Handedness.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Handedness(Time_To_First_AD.list)
 
 
-    # Gender
-    ith_Gender = ith_RID.df$SEX %>% na.omit %>% unique
-    if("Female" %in% ith_Gender | "F" %in% ith_Gender){
-      ith_RID.df$ADNIMERGE___PTGENDER = rep("Female", nrow(ith_RID.df))
-      ith_RID.df$SEX = rep("Female", nrow(ith_RID.df))
-    }else if("Male" %in% ith_Gender | "M" %in% ith_Gender){
-      ith_RID.df$ADNIMERGE___PTGENDER = rep("Male", nrow(ith_RID.df))
-      ith_RID.df$SEX = rep("Male", nrow(ith_RID.df))
-    }
 
-    return(ith_RID.df)
-  })
+
+  #=============================================================================
+  # Gender
+  #=============================================================================
+  Gender.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Gender(Handedness.list)
+
+
+
+
+  #=============================================================================
+  # Retirement
+  #=============================================================================
+  Retire.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Retirement(Gender.list)
+
+
+
+
+
+  #=============================================================================
+  # Education
+  #=============================================================================
+  Education.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Education(Retire.list)
+
+
+
+
+
+
+  #=============================================================================
+  # Marital status
+  #=============================================================================
+  Marriage.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Marriage(Education.list)
+
+
+
+
+
+
+  #=============================================================================
+  # APOE
+  #=============================================================================
+  RS.fMRI_1.3_Diagnosis___Extract.Demographics___APOE = function(Data.list, path_APOE = "C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/APOE4/APOERES_19Jun2023.csv"){
+    APOERES = read.csv(path_APOE)
+
+
+    Returned.list = lapply(seq_along(Data.list), function(i,...){
+      ith_RID.df %>% View
+      ith_RID.df = Data.list[[i]]
+      ith_RID = ith_RID.df$RID %>% na.omit %>% as.numeic %>% unique
+
+      # APOE
+      ith_APOE = ith_RID.df$ADNIMERGE___APOE4
+
+      # only one?
+      ith_Unique_APOE = ith_APOE %>% na.omit %>% as.numeric %>% unique
+      if(length(ith_Unique_APOE)==1){
+        ith_RID.df$ADNIMERGE___APOE4 = ith_Unique_APOE
+      # 아예 정보가 없는 경우
+      }else if(length(ith_Unique_APOE) == 0){
+        require(ADNIMERGE)
+        if(ith_RID %in% apoe3$RID){
+
+        }else if(ith_RID %in% apoego2$RID){
+
+        }else if(ith_RID %in% apoeres$RID){
+
+          sum(as.numeric(APOERES$RID) %in% apoeres$RID) == nrow(APOERES)
+        }else if(ith_RID %in% as.numeric(APOERES$RID))
+          APOERES$RID %>% class
+        ith_RID
+        tail(APOERES$RID, 30)
+        data
+
+        APOE3 = apoe3
+        APOEGO2 =
+        APOE_RES = apoeres$RID
+
+        if(w)
+
+
+        ith_RID.df$ADNIMERGE___APOE4 = NA
+
+
+
+
+
+
+      }else{
+        print(i)
+        stop("there are more than one!")
+      }
+
+
+      return(ith_RID.df)
+
+    })
+    cat("\n",crayon::green("Checking"), crayon::red("APOE4"), crayon::green("is done!"),"\n")
+    return(Returned)
+
+  }
+
 
 
 
   #=============================================================================
   # demographic variable
   #=============================================================================
-  Demo_Variables = c("WEIGHT",
-                     "ADNIMERGE___AGE", "ADNIMERGE___PTGENDER", "ADNIMERGE___PTEDUCAT",
-                     "ADNIMERGE___PTETHCAT", "ADNIMERGE___PTRACCAT",
-                     "ADNIMERGE___PTMARRY", "ADNIMERGE___APOE4",
-                     "ADNIMERGE___ADAS11", "ADNIMERGE___ADAS13", "ADNIMERGE___ADASQ4", "ADNIMERGE___MMSE",
-                     "PTDEMO___PTWORKHS", "PTDEMO___PTWORK", "PTDEMO___PTWRECNT", "PTDEMO___PTNOTRT",
-                     "PTDEMO___PTRTYR", "PTDEMO___PTHOME", "PTDEMO___PTOTHOME",
-                     "PTDEMO___PTTLANG", "PTDEMO___PTPLANG")
-  Demo_Variables_Added = paste0("DEMO___", Demo_Variables)
-  Demo_Added.list = lapply(Add_Empty_Elements.list , function(ith_RID.df, ...){
-    for(k in seq_along(Demo_Variables_Added)){
-      ith_RID.df = change_colnames(ith_RID.df, from = Demo_Variables[k], to = Demo_Variables_Added[k])
-    }
+  Demo.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Renaming.Demographics(Marriage.list)
 
-
-    for(k in seq_along(ith_RID.df)){
-      ith_RID.df[,k] = ith_RID.df[,k] %>% as.character()
-
-    }
-    return(ith_RID.df)
-  })
 
 
 
@@ -61,34 +123,9 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Extract Demo variables
   #=============================================================================
-  Selected_Variables = c("ADNIMERGE___COLPROT", "ADNIMERGE___ORIGPROT",
-                         "PTDEMO___SITEID", "RID", "SUBJECT.ID", "Manufacturer_New",
-                         "DAYS_TO_FIRST_AD",
-                         "DIAGNOSIS_NEW", "BLCHANGE___BCSUMM", "DXSUM___DXCHANGE",
-                         # fMRI MRI
-                         "EPI___IMAGE_ID", "MT1___IMAGE_ID", "EPI___MANUFACTURER",
-                         "EPI___SERIES_DESCRIPTION", "EPI___PROTOCOL___TR(QC)", "EPI___PROTOCOL___MANUFACTURER", "EPI___PROTOCOL___FIELD STRENGTH",
-                         "EPI___SLICE.BAND.TYPE", "EPI___SERIES_DESCRIPTION", "MT1___T1_ACCELERATED",
-                         # VISCODE
-                         "VISIT", "VISCODE2", "VISCODE", "STUDY.DATE", "NEW_EXAMDATE",
-                         # Diagnosis
-                         "DIAGNOSIS_NEW","BLCHANGE___BCSUMM", "DXSUM___DXCHANGE",
-                         # Demographic
-                         "DEMO___WEIGHT", "DEMO___ADNIMERGE___AGE", "DEMO___ADNIMERGE___PTGENDER",
-                         "DEMO___ADNIMERGE___PTEDUCAT", "DEMO___ADNIMERGE___PTETHCAT",
-                         "DEMO___ADNIMERGE___PTRACCAT", "DEMO___ADNIMERGE___PTMARRY",
-                         "DEMO___ADNIMERGE___APOE4", "DEMO___ADNIMERGE___ADAS11",
-                         "DEMO___ADNIMERGE___ADAS13", "DEMO___ADNIMERGE___ADASQ4",
-                         "DEMO___ADNIMERGE___MMSE", "DEMO___PTDEMO___PTWORKHS",
-                         "DEMO___PTDEMO___PTWORK", "DEMO___PTDEMO___PTWRECNT",
-                         "DEMO___PTDEMO___PTNOTRT", "DEMO___PTDEMO___PTRTYR",
-                         "DEMO___PTDEMO___PTHOME", "DEMO___PTDEMO___PTOTHOME",
-                         "DEMO___PTDEMO___PTTLANG", "DEMO___PTDEMO___PTPLANG")
+  Selected.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Selecting.Variables(Demo.list)
 
-  Selected_by_STUDY.DATE.list = lapply(Demo_Added.list, function(ith_RID.df, ...){
-    ith_Selected.df = ith_RID.df %>% select(all_of(Selected_Variables))
-    ith_Selected.df[!is.na(ith_Selected.df$STUDY.DATE),]
-  })
+
 
 
 
@@ -96,20 +133,14 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Binding
   #=============================================================================
-  Only_Demographics.df = do.call(dplyr::bind_rows, Selected_by_STUDY.DATE.list) %>% relocate(starts_with("EPI___"), .after=last_col()) %>% relocate(starts_with("MT1___"), .after=last_col())
-  Full.df = do.call(dplyr::bind_rows, Demo_Added.list) %>% relocate(starts_with("EPI___"), .after=last_col()) %>% relocate(starts_with("MT1___"), .after=last_col())
-
-
-  Only_Demographics.df$BLCHANGE___VISCODE = Only_Demographics.df$VISCODE
-  Only_Demographics.df = Only_Demographics.df %>% relocate(starts_with("SUBJECT.ID")) %>% relocate(starts_with("RID"))
-
-
-  Full.df$BLCHANGE___VISCODE =  Full.df$VISCODE
-  Full.df = Full.df %>% relocate(BLCHANGE___VISCODE, .after = PTDEMO___VISCODE)
-  Full.df = Full.df %>% relocate(starts_with("SUBJECT.ID")) %>% relocate(starts_with("RID"))
+  Binded.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Combining.Data(Selected.list)
 
 
 
   cat("\n", crayon::green("Extracting Demographics is done!") ,"\n")
-  return(list(Only_Study.Date = Only_Demographics.df, Full_Data = Full.df))
+  return(Binded.list)
 }
+
+
+
+
