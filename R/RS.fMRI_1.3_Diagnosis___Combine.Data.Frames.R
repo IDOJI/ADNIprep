@@ -1,6 +1,6 @@
 RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
                                                        path_Subjects_BLCHANGE,
-                                                       path_Subjects_DX.Summary){
+                                                       path_Subjects_DX_Summary){
   #===============================================================================
   # Base Line (BL) Change
   #===============================================================================
@@ -12,7 +12,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
   #===============================================================================
   # DX Summary
   #===============================================================================
-  DXSUM.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___DX.Summary(Merged_Lists.df, path_Subjects_DX.Summary)
+  DXSUM.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___DX.Summary(Merged_Lists.df, path_Subjects_DX_Summary)
 
 
 
@@ -27,7 +27,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
   #===============================================================================
   # ADNIMERGE 패키지 : ADNIMERGE
   #===============================================================================
-  ADNIMERGE.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE(Merged_Lists.list)
+  ADNIMERGE.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE(Merged_Lists.df)
 
 
 
@@ -35,7 +35,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
   #===============================================================================
   # ADNIMERGE 패키지 : CLIELG
   #===============================================================================
-  CLIELG.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___CLIELG(Merged_Lists.list)
+  CLIELG.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___CLIELG(Merged_Lists.df)
 
 
 

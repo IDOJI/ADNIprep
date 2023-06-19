@@ -5,8 +5,8 @@ RS.fMRI_3_Rename.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Subjec
   #=============================================================================
   # Changing Sub folders' names
   #=============================================================================
-  RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID(path_New.EPI.Subjects.Lists,
-                                                  path_Sub.Folders,
+  RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID(path_All.Subjects.EPB.List.File = path_New.EPI.Subjects.Lists,
+                                                  path_ADNI.Unzipped.Folders = path_Sub.Folders,
                                                   filename_col_name)
 
 

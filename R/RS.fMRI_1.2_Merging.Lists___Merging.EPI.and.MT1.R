@@ -80,7 +80,7 @@ RS.fMRI_1.2_Merging.Lists___Merging.EPI.and.MT1 = function(Modifying_cols.list){
                     "QC_COMMENTS_STUDY_COMMENTS",
                     "QC_COMMENTS_STUDY_PROTOCOL_COMMENT",
                     "QC_COMMENTS_PROTOCOL_COMMENTS")
-  fMRI_Info_1.2 = paste0("EPI___", fMRI_Info1.1)
+  fMRI_Info_1.2 = paste0("EPI___", fMRI_Info_1.1)
 
   Result = sapply(seq_along(fMRI_Info_1.1), function(k,...){
     EPB.df <<- change_colnames(EPB.df, from = fMRI_Info_1.1[k], to = fMRI_Info_1.2[k])

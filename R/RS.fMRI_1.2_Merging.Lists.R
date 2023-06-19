@@ -53,21 +53,9 @@ RS.fMRI_1.2_Merging.Lists = function(Subjects.list){
 
 
     #=============================================================================
-    # 5. Adding numbering and Filenames by Manufacturer
-    #=============================================================================
-    Added_Numbering.df = RS.fMRI_1.2_Merging.Lists___Adding.Numbering.By.Manufacturers(Merged.df)
-    text = "1.2.5 : Adding Numbering and Filenames is done!"
-    cat("\n", crayon::green(text), "\n")
-
-
-
-
-
-
-    #=============================================================================
     # 6.Returning results
     #=============================================================================
-    final.df = Added_Numbering.df
+    final.df = Merged.df
     text = "1.2 : Merging.Lists is done!"
     cat("\n", crayon::bgMagenta(text), "\n")
     return(final.df)

@@ -30,7 +30,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   }
   path_Subjects_BLCHANGE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_BLCHANGE)
   path_Subjects_DX_Summary = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_DX_Summary)
-  # path_Subjects_PTDEMO = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_PTDEMO)
+  path_Subjects_PTDEMO = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_PTDEMO)
 
 
 
@@ -74,6 +74,15 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
+
+
+  #=============================================================================
+  # 5. Adding numbering and Filenames by Manufacturer
+  #=============================================================================
+  Added_Numbering.list = RS.fMRI_1.4_Adding.Numbering.By.Manufacturers(Merged_Diagnosis.list)
+
+
+
   #============================================================================
   # 4.Exporting Results
   #============================================================================
@@ -88,7 +97,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
     return(Merged_Diagnosis.list)
   }else{
 
-    Final.list = RS.fMRI_1.3_Exporting.Lists(Merged_Diagnosis.list,
+    Final.list = RS.fMRI_1.5_Exporting.Lists(Merged_Diagnosis.list,
                                              path_Subjects.Lists_Downloaded,
                                              path_Export_Subjects.Lists)
     ### returning results

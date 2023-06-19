@@ -58,13 +58,11 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
 
 
 
-
-
   #=============================================================================
   # Extract Demo variables
   #=============================================================================
   Selected_Variables = c("ADNIMERGE___COLPROT", "ADNIMERGE___ORIGPROT",
-                         "PTDEMO___SITEID", "RID", "SUBJECT.ID", "File_Names",
+                         "PTDEMO___SITEID", "RID", "SUBJECT.ID", "Manufacturer_New",
                          "DAYS_TO_FIRST_AD",
                          "DIAGNOSIS_NEW", "BLCHANGE___BCSUMM", "DXSUM___DXCHANGE",
                          # fMRI MRI

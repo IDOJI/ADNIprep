@@ -4,7 +4,7 @@ RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
   #===============================================================================
   # Combining Data
   #===============================================================================
-  Merged_Diagnosis.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames(Merged_Lists.list, path_Subjects_BLCHANGE, path_Subjects_DX_Summary)
+  Merged_Diagnosis.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames(Merged_Lists.df, path_Subjects_BLCHANGE, path_Subjects_DX_Summary)
 
 
 
