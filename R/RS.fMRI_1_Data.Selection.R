@@ -1,3 +1,9 @@
+# what.date            = 1
+# Include_RID        = NULL
+# Include_ImageID    = NULL
+# Exclude_RID          = NULL
+# Exclude_ImageID = NULL
+# Exclude_Comments = NULL
 RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                     path_Export_Subjects.Lists =NULL,
                                     ############################################
@@ -80,7 +86,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
-  #============================================================================
+   #============================================================================
   # 4.Exporting Results
   #============================================================================
   if(is.null(path_Export_Subjects.Lists)){

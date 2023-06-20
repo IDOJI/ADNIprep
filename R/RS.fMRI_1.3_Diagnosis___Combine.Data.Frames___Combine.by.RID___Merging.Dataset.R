@@ -2,7 +2,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Merging.Dataset =
   RID = EPB_Selected.df$RID %>% sort
 
   Combined_Data.list = lapply(seq_along(RID), function(i, ...){
-
+    # i=626
     ith_RID = RID[i]
     ith_EPB_Selected.df = EPB_Selected.df %>% filter(RID == ith_RID)
     #===========================================================================
@@ -118,38 +118,66 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Merging.Dataset =
     # ADNIMERGE DX.bl :AD, CN, EMCI, LMCI, SMC
     # ADNIMERGE DX :  CN, MCI, Dementia
     # DXSUM Diagnosis : CN, Dementia, MCI
-    # DXSUM Current : AD, CN, MCI
-
+    # DXSUM Current : AD, CN, MCIs
     ith_Diagnosis.df = data.frame(a = ith_Combined.df$CLIELG___DIAGNOSIS, b = ith_Combined.df$ADNIMERGE___DX, c = ith_Combined.df$DXSUM___DIAGNOSIS, d = ith_Combined.df$DXSUM___DXCURREN)
-    ith_New_Diagnosis = apply(ith_Diagnosis.df, 1, function(kth_row){
-      kth_row = kth_row %>% unname %>% na.omit %>% unlist
 
+
+    ith_New_Diagnosis = apply(ith_Diagnosis.df, 1, function(kth_row){
+      kth_row = kth_row %>% unlist %>% unname %>% na.omit %>% as.character %>% unique
+
+
+      # AD
       have_Dementia = grep("Dementia", kth_row) %>% length > 0
       have_AD = grep("AD", kth_row) %>% length > 0
 
+
+      # MCI
       have_LMCI = grep("LMCI", kth_row) %>% length > 0
       have_EMCI = grep("EMCI", kth_row) %>% length > 0
       have_MCI = grep("MCI", kth_row) %>% length > 0
 
+
+      # SMC
       have_SMC = grep("SMC", kth_row) %>% length > 0
 
+
+      # CN
       have_CN = grep("CN", kth_row) %>% length > 0
+
+
 
       if(kth_row %>% length == 0){
         return(NA)
+
+        # MCI
       }else if(have_MCI){
-        if(have_LMCI) return("LMCI")
-        else if(have_EMCI) return("EMCI")
-        else return("MCI")
+
+        if(have_LMCI){
+          return("LMCI")
+        }else if(have_EMCI){
+          return("EMCI")
+        }else{
+          return("MCI")
+        }
+
+        # AD
       }else if(have_Dementia){
-        if(have_AD) return("AD")
-        else return("Dementia")
+        if(have_AD){
+          return("AD")
+        }else{
+          return("Dementia")
+        }
+
+        # CN
       }else if(have_CN){
         return("CN")
+
+        # SMC
       }else if(have_SMC){
         return("SMC")
       }
-    })
+
+    })# apply
 
     ith_Combined.df$CLIELG___DIAGNOSIS = NULL
     ith_Combined.df$ADNIMERGE___DX = NULL
