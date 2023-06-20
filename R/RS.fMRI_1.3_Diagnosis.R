@@ -4,7 +4,14 @@ RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
   #===============================================================================
   # Combining Data
   #===============================================================================
-  Merged_Diagnosis.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames(Merged_Lists.df, path_Subjects_BLCHANGE, path_Subjects_DX_Summary)
+  Combined.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames(Merged_Lists.df, path_Subjects_BLCHANGE, path_Subjects_DX_Summary)
+
+
+
+  #===============================================================================
+  # Decide Diagnosis
+  #===============================================================================
+  Diagnosis.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis(Combined.list)
 
 
 
@@ -12,27 +19,14 @@ RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
   #===============================================================================
   # Calculating times till AD
   #===============================================================================
-  Time_To_First_AD.list = RS.fMRI_1.3_Diagnosis___Time.To.First.AD(Merged_Diagnosis.list)
+  Time_To_First_AD.list = RS.fMRI_1.3_Diagnosis___Time.To.First.AD(Diagnosis.list)
 
 
-
-  #===============================================================================
-  # Extracting Demographics & Data binding
-  #===============================================================================
-  Binded.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics(Time_To_First_AD.list)
-
-
-
-
-  #=============================================================================
-  # Adding numbering and Filenames by Manufacturer
-  #=============================================================================
-  Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
 
 
 
   cat("\n", crayon::bgMagenta("STEP 1.3"), crayon::green("Deciding Diagnosis is done!") ,"\n")
-  return(Added_Numbering.list)
+  return(Time_To_First_AD.list)
 }
 
 

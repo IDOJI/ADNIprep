@@ -1,49 +1,74 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis = function(Merged_Data.list){
+RS.fMRI_1.3_Diagnosis___Decide.Diagnosis = function(Combined.list){
+  # Data.list = Merged_Diagnosis.list
   #=======================================================================
   # Data Exclusion
   #=======================================================================
-  Excluded.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Data.Exclusion(Merged_Data.list)
+  Excluded.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Data.Exclusion(Combined.list)
 
 
 
   #=======================================================================
   # Diagnosis conversion
   #=======================================================================
-  Diagnosis_New.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Conversion(Excluded.list)
+  Diagnosis_New.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Conversion(Excluded.list)
 
 
 
 
   #=======================================================================
-  # AD probability
+  # AD Likelihood
   #=======================================================================
-  AD_Probability.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___AD.Probability()
+  AD_Likelihood.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___AD.Likelihood(Diagnosis_New.list)
 
 
 
   #=======================================================================
   # Dementia -> AD, MCI -> LMCI, EMCI by comments
   #=======================================================================
-  Change_Diagnosis_by_Comments.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comments(Merged_Data.list)
+  Change_Diagnosis_by_Comments.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Comments(AD_Likelihood.list)
 
 
 
 
 
+  #=======================================================================
+  # Dementia between AD?
+  #=======================================================================
+  Dementia_AD.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Dementia.Between.AD(Change_Diagnosis_by_Comments.list)
+
+
+
+
+  #=============================================================================
+  # Same Date?
+  #=============================================================================
+  Same_Date.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Same.Date(Dementia_AD.list)
 
 
 
 
 
-
-
-
+  #=============================================================================
+  # Change NA by pre-diagnosis
+  #=============================================================================
+  Diagnosis_New.list = lapply(seq_along(Same_Date.list), function(i){
+    ith_RID.df = Same_Date.list[[i]]
+    ith_Diagnosis = ith_RID.df$DIAGNOSIS_NEW
+    for(k in seq_along(ith_Diagnosis)[-1]){
+      kth = ith_Diagnosis[k]
+      if(is.na(kth)){
+        ith_Diagnosis[k] = ith_Diagnosis[k-1]
+      }
+    }
+    ith_RID.df$DIAGNOSIS_NEW = ith_Diagnosis
+    return(ith_RID.df)
+  })
 
 
 
 
   cat("\n", crayon::green("Deciding diagnosis conversion is done!"),"\n")
-  return(Diagnosis_New_AD_2.list)
+  return(Diagnosis_New.list )
 }
 
 

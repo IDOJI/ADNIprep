@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Education = function(Data.list){
+RS.fMRI_1.4_Extract.Demographics___Education = function(Data.list){
   Education.list = lapply(seq_along(Data.list), function(i){
     ith_RID.df = Data.list[[i]]
     ith_RID = ith_RID.df$RID %>% na.omit %>% as.character %>% unique

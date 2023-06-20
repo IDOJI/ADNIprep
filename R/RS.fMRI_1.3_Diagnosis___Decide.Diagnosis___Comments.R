@@ -1,16 +1,17 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comments = function(Data.list){
-  # Data.list = Merged_Data.list
-
+RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Comments = function(Data.list){
+  # Data.list = AD_Likelihood.list
   Returned.list = lapply(Data.list, function(ith_RID.df){
-    # ith_RID.df = Merged_Data.list[[8]]
-    ith_RID.df = ith_RID.df %>% relocate(BLCHANGE___BCSUMM)
-    ith_RID.df = cbind(DIAGNOSIS_NEW = ith_RID.df$DIAGNOSIS, ith_RID.df)
+    # ith_RID.df = Data.list[[8]]
 
+    ith_RID.df = ith_RID.df %>% relocate(BLCHANGE___BCSUMM)
+
+    ith_DIAGNOSIS = ith_RID.df$DIAGNOSIS_NEW
     ith_Comments = ith_RID.df$BLCHANGE___BCSUMM
 
 
+
     #===========================================================================
-    # MCI
+    # MCI :  if MCI, find "EMCI", "LMCI"
     #===========================================================================
     ith_Which_Rows_MCI = which(ith_RID.df$DIAGNOSIS_NEW == "MCI")
     ith_Have_MCI = ith_Which_Rows_MCI %>% length > 0
@@ -38,7 +39,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comme
 
       # ith_RID.df$BLCHANGE___BCSUMM[which_Rows_EMCI]
       if(length(which_Rows_EMCI)>0){
-        ith_RID.df$DIAGNOSIS_NEW[which_Rows_EMCI] = "EMCI"
+        ith_DIAGNOSIS[which_Rows_EMCI] = "EMCI"
       }
 
 
@@ -53,7 +54,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comme
 
       which_Rows_LMCI = sapply(which_comments_LMCI, function(x,...){grep(x, ith_Comments, ignore.case = T)}) %>% unlist %>% unique
       if(length(which_Rows_LMCI)>0){
-        ith_RID.df$DIAGNOSIS_NEW[which_Rows_LMCI] = "LMCI"
+        ith_DIAGNOSIS[which_Rows_LMCI] = "LMCI"
       }
 
     }
@@ -62,9 +63,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comme
     #===========================================================================
     # AD
     #===========================================================================
-    ith_Comments = ith_RID.df$BLCHANGE___BCSUMM
-
-    ith_Which_Rows_Dementia = which(ith_RID.df$DIAGNOSIS_NEW == "Dementia")
+    ith_Which_Rows_Dementia = which(ith_DIAGNOSIS == "Dementia")
     ith_Have_Dementia = ith_Which_Rows_Dementia %>% length > 0
 
     if(ith_Have_Dementia){
@@ -97,8 +96,12 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comme
       which_Rows_AD = sapply(which_comments_AD, function(x, ...){grep(x, ith_Comments, ignore.case = T)}) %>% unlist %>% unique
 
 
-      if(length(which_Rows_AD)>0){
-        ith_RID.df$DIAGNOSIS_NEW[which_Rows_AD] = "AD"
+      which_AD = which(ith_DIAGNOSIS %in% c("AD", "AD(Probable)", "AD(Possible)"))
+      which_Rows_AD_new = which_Rows_AD[!which_Rows_AD %in% which_AD]
+
+
+      if(length(which_Rows_AD_new)>0){
+        ith_DIAGNOSIS[which_Rows_AD_new] = "AD"
       }
 
 
@@ -127,9 +130,10 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Comme
 
 
     if(length(which_Rows_CN)>0){
-      ith_RID.df$DIAGNOSIS_NEW[which_Rows_CN] = "CN"
+      ith_DIAGNOSIS[which_Rows_CN] = "CN"
     }
 
+    ith_RID.df$DIAGNOSIS_NEW = ith_DIAGNOSIS
 
 
     return(ith_RID.df)

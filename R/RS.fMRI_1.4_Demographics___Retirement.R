@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Retirement = function(Data.list){
+RS.fMRI_1.4_Demographics___Retirement = function(Data.list){
   Retire.list = lapply(Data.list, function(ith_RID.df){
     ith_Retirement = ith_RID.df$PTDEMO___PTNOTRT
     ith_Retirement_New = rep(NA, length(ith_Retirement))

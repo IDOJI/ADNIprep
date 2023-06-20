@@ -54,7 +54,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
   #===============================================================================
   # Combine By RID
   #===============================================================================
-  Decided_Diagnosis.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID(Merged_Lists.df, BLCHANGE.list, DXSUM.list, PTDEMO.list, ADNIMERGE.list, CLIELG.list)
+  Combined.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID(Merged_Lists.df, BLCHANGE.list, DXSUM.list, PTDEMO.list, ADNIMERGE.list, CLIELG.list)
 
 
 
@@ -65,7 +65,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames = function(Merged_Lists.df,
   #===============================================================================
   # arrange by exam date
   #===============================================================================
-  Rearranged.list = lapply(Decided_Diagnosis.list, function(ith_RID.df){
+  Rearranged.list = lapply(Combined.list, function(ith_RID.df){
     ith_RID.df %>% arrange(NEW_EXAMDATE)
   })
 

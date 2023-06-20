@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Renaming.Demographics = function(Data.list){
+RS.fMRI_1.4_Demographics___Renaming.Demographics = function(Data.list){
   Demo_Variables = c("WEIGHT",
                      "ADNIMERGE___AGE", "ADNIMERGE___PTGENDER", "ADNIMERGE___PTEDUCAT",
                      "ADNIMERGE___PTETHCAT", "ADNIMERGE___PTRACCAT",

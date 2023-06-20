@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Combining.Data = function(Selected.list){
+RS.fMRI_1.4_Demographics___Combining.Data = function(Selected.list){
   Full.df = do.call(dplyr::bind_rows, Selected.list[[1]]) %>% relocate(starts_with("EPI___"), .after=last_col()) %>% relocate(starts_with("MT1___"), .after=last_col())
   Demo.df = do.call(dplyr::bind_rows, Selected.list[[2]]) %>% relocate(starts_with("EPI___"), .after=last_col()) %>% relocate(starts_with("MT1___"), .after=last_col())
 

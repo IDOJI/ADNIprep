@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Marriage = function(Data.list){
+RS.fMRI_1.4_Demographics___Marriage = function(Data.list){
   Marriage.list = lapply(seq_along(Education.list), function(i){
     ith_RID.df = Education.list[[i]]
     ith_Marry_1 = ith_RID.df$PTDEMO___PTMARRY %>% as.character

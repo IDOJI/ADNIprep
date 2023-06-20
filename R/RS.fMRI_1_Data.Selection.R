@@ -84,9 +84,21 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
+  #===============================================================================
+  # Extracting Demographics & Data binding
+  #===============================================================================
+  Binded.list = RS.fMRI_1.4_Demographics(Time_To_First_AD.list)
 
 
-   #============================================================================
+
+
+  #=============================================================================
+  # Adding numbering and Filenames by Manufacturer
+  #=============================================================================
+  Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
+
+
+  #============================================================================
   # 4.Exporting Results
   #============================================================================
   if(is.null(path_Export_Subjects.Lists)){

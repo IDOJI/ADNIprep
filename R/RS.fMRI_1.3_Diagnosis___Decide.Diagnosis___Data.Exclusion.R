@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Data.Exclusion = function(Data.list){
+RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Data.Exclusion = function(Data.list){
   # Data.list  = Merged_Data.list
   Excluded.list = lapply(seq_along(Data.list), function(i){
     # which(names(Merged_Data.list)=="6576")

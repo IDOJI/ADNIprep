@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Conversion = function(Data.list){
+RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
   # Data.list = Merged_Data.list
 
   Returned.list = lapply(seq_along(Data.list), function(i){
@@ -157,7 +157,6 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Diagnosis___Conve
         #=================================
         # 5=Conversion: MCI to Dementia;
         #=================================
-
         }else if(kth_DX==5){
           if(is.na(ith_DIAGNOSIS_NEW[k-1])){
             ith_DIAGNOSIS_NEW[k-1] = "MCI"

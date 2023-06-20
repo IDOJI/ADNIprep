@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Gender = function(Data.list){
+RS.fMRI_1.4_Demographics___Gender = function(Data.list){
 
   Gender.list = lapply(seq_along(Data.list), function(i,...){
     ith_RID.df = Data.list[[i]]

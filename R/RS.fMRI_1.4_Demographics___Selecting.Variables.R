@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics___Selecting.Variables = function(Data.list){
+RS.fMRI_1.4_Demographics___Selecting.Variables = function(Data.list){
   Selected_Variables = c("ADNIMERGE___COLPROT", "ADNIMERGE___ORIGPROT",
                          "PTDEMO___SITEID", "RID", "SUBJECT.ID", "Manufacturer_New",
                          "DAYS_TO_FIRST_AD",

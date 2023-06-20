@@ -1,8 +1,8 @@
-RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
+RS.fMRI_1.4_Demographics = function(Merged_Diagnosis.list){
   #=============================================================================
   # Handedness
   #=============================================================================
-  Handedness.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Handedness(Time_To_First_AD.list)
+  Handedness.list = RS.fMRI_1.4_Demographics___Handedness(Merged_Diagnosis.list)
 
 
 
@@ -10,7 +10,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Gender
   #=============================================================================
-  Gender.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Gender(Handedness.list)
+  Gender.list = RS.fMRI_1.4_Demographics___Gender(Handedness.list)
 
 
 
@@ -18,7 +18,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Retirement
   #=============================================================================
-  Retire.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Retirement(Gender.list)
+  Retire.list = RS.fMRI_1.4_Demographics___Retirement(Gender.list)
 
 
 
@@ -27,7 +27,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Education
   #=============================================================================
-  Education.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Education(Retire.list)
+  Education.list = RS.fMRI_1.4_Demographics___Education(Retire.list)
 
 
 
@@ -37,8 +37,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Marital status
   #=============================================================================
-  Marriage.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Marriage(Education.list)
-
+  Marriage.list = RS.fMRI_1.4_Demographics___Marriage(Education.list)
 
 
 
@@ -47,7 +46,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # APOE
   #=============================================================================
-  RS.fMRI_1.3_Diagnosis___Extract.Demographics___APOE = function(Data.list, path_APOE = "C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/APOE4/APOERES_19Jun2023.csv"){
+  RS.fMRI_1.4_Demographics___APOE = function(Data.list, path_APOE = "C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/APOE4/APOERES_19Jun2023.csv"){
     APOERES = read.csv(path_APOE)
 
 
@@ -109,11 +108,20 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
 
 
 
+  #=============================================================================
+  # ADAS cog
+  #=============================================================================
+
+
+
+
+
+
 
   #=============================================================================
   # demographic variable
   #=============================================================================
-  Demo.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Renaming.Demographics(Marriage.list)
+  Demo.list = RS.fMRI_1.4_Demographics___Renaming.Demographics(Marriage.list)
 
 
 
@@ -123,7 +131,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Extract Demo variables
   #=============================================================================
-  Selected.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Selecting.Variables(Demo.list)
+  Selected.list = RS.fMRI_1.4_Demographics___Selecting.Variables(Demo.list)
 
 
 
@@ -133,7 +141,7 @@ RS.fMRI_1.3_Diagnosis___Extract.Demographics = function(Time_To_First_AD.list){
   #=============================================================================
   # Binding
   #=============================================================================
-  Binded.list = RS.fMRI_1.3_Diagnosis___Extract.Demographics___Combining.Data(Selected.list)
+  Binded.list = RS.fMRI_1.4_Demographics___Combining.Data(Selected.list)
 
 
 
