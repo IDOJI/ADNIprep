@@ -14,6 +14,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                     ############################################
                                     Subjects_DX_Summary,
                                     Subjects_BLCHANGE,
+                                    Subjects_APOE,
                                     ############################################
                                     what.date            = 1,
                                     Include_RID        = NULL,
@@ -37,6 +38,9 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   path_Subjects_BLCHANGE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_BLCHANGE)
   path_Subjects_DX_Summary = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_DX_Summary)
   path_Subjects_PTDEMO = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_PTDEMO)
+  path_Subjects_APOE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_APOE)
+
+
 
 
 
@@ -60,10 +64,14 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
+
+
   #============================================================================
   # 2. Merging lists
   #============================================================================
   Merged_Lists.df = RS.fMRI_1.2_Merging.Lists(Subjects.list)
+
+
 
 
 
@@ -87,7 +95,9 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   #===============================================================================
   # Extracting Demographics & Data binding
   #===============================================================================
-  Binded.list = RS.fMRI_1.4_Demographics(Time_To_First_AD.list)
+  Binded.list = RS.fMRI_1.4_Demographics(Merged_Diagnosis.list, path_Subjects_APOE)
+
+
 
 
 
@@ -96,6 +106,9 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   # Adding numbering and Filenames by Manufacturer
   #=============================================================================
   Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
+
+
+
 
 
   #============================================================================
