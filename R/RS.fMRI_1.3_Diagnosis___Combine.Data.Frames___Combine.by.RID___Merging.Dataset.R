@@ -1,10 +1,11 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Merging.Dataset = function(EPB_Selected.df, New_BLCHANGE.list, New_DXSUM.list, New_PTDEMO.list, New_ADNIMERGE.list, New_CLIELG.list){
-  RID = EPB_Selected.df$RID %>% sort
+RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Merging.Dataset = function(Merged_Lists.df, New_BLCHANGE.list, New_DXSUM.list, New_PTDEMO.list, New_ADNIMERGE.list, New_CLIELG.list){
+  RID = Merged_Lists.df$RID %>% sort
 
+  Check = c()
   Combined_Data.list = lapply(seq_along(RID), function(i, ...){
     # i=626
     ith_RID = RID[i]
-    ith_EPB_Selected.df = EPB_Selected.df %>% filter(RID == ith_RID)
+    ith_Merged_Lists.df = Merged_Lists.df %>% filter(RID == ith_RID)
     #===========================================================================
     # BLCHANGE
     #===========================================================================
@@ -14,26 +15,26 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Merging.Dataset =
     # VISECODE2 : DXSUM
     ith_DXSUM.df = New_DXSUM.list[[i]]
 
-    if((is.na(ith_EPB_Selected.df$VISCODE) || is.na(ith_EPB_Selected.df$VISCODE2)) && !is.na(ith_BLCHANGE.df$BLCHANGE___EXAMDATE[1])){
-      which_date = difftime(ith_EPB_Selected.df$STUDY.DATE, ith_BLCHANGE.df$BLCHANGE___EXAMDATE, units = "days") %>% abs %>% which.min
+    if((is.na(ith_Merged_Lists.df$VISCODE) || is.na(ith_Merged_Lists.df$VISCODE2)) && !is.na(ith_BLCHANGE.df$BLCHANGE___EXAMDATE[1])){
+      which_date = difftime(ith_Merged_Lists.df$STUDY.DATE, ith_BLCHANGE.df$BLCHANGE___EXAMDATE, units = "days") %>% abs %>% which.min
 
-      ith_EPB_Selected.df$VISCODE =  ith_BLCHANGE.df$BLCHANGE___VISCODE[which_date]
-      ith_EPB_Selected.df$VISCODE2 =  ith_BLCHANGE.df$BLCHANGE___VISCODE2[which_date]
+      ith_Merged_Lists.df$VISCODE =  ith_BLCHANGE.df$BLCHANGE___VISCODE[which_date]
+      ith_Merged_Lists.df$VISCODE2 =  ith_BLCHANGE.df$BLCHANGE___VISCODE2[which_date]
 
-      ith_Merged.df = merge(ith_EPB_Selected.df, ith_BLCHANGE.df, by.x = "VISCODE2", by.y = "BLCHANGE___VISCODE2", all=T)
+      ith_Merged.df = merge(ith_Merged_Lists.df, ith_BLCHANGE.df, by.x = "VISCODE2", by.y = "BLCHANGE___VISCODE2", all=T)
       ith_Merged.df = merge(ith_Merged.df, ith_DXSUM.df, by.x = "VISCODE2", by.y = "DXSUM___VISCODE2", all=T)
 
-    }else if((is.na(ith_EPB_Selected.df$VISCODE) || is.na(ith_EPB_Selected.df$VISCODE2)) && !is.na(ith_DXSUM.df$DXSUM___VISCODE2[1])){
+    }else if((is.na(ith_Merged_Lists.df$VISCODE) || is.na(ith_Merged_Lists.df$VISCODE2)) && !is.na(ith_DXSUM.df$DXSUM___VISCODE2[1])){
       #===========================================================================
       # DXSUM
       #===========================================================================
-      which_date = difftime(ith_EPB_Selected.df$STUDY.DATE, ith_DXSUM.df$DXSUM___EXAMDATE, units = "days") %>% abs %>% which.min
-      ith_EPB_Selected.df$VISCODE =  ith_DXSUM.df$DXSUM___VISCODE[which_date]
-      ith_EPB_Selected.df$VISCODE2 =  ith_DXSUM.df$DXSUM___VISCODE2[which_date]
-      ith_Merged.df = merge(ith_EPB_Selected.df, ith_DXSUM.df, by.x = "VISCODE2", by.y = "DXSUM___VISCODE2", all=T)
+      which_date = difftime(ith_Merged_Lists.df$STUDY.DATE, ith_DXSUM.df$DXSUM___EXAMDATE, units = "days") %>% abs %>% which.min
+      ith_Merged_Lists.df$VISCODE =  ith_DXSUM.df$DXSUM___VISCODE[which_date]
+      ith_Merged_Lists.df$VISCODE2 =  ith_DXSUM.df$DXSUM___VISCODE2[which_date]
+      ith_Merged.df = merge(ith_Merged_Lists.df, ith_DXSUM.df, by.x = "VISCODE2", by.y = "DXSUM___VISCODE2", all=T)
       ith_Merged.df = merge(ith_Merged.df, ith_BLCHANGE.df, by.x = "VISCODE2", by.y = "BLCHANGE___VISCODE2", all=T)
     }else{
-      ith_Merged.df = merge(ith_EPB_Selected.df, ith_DXSUM.df, by.x = "VISCODE2", by.y = "DXSUM___VISCODE2", all=T)
+      ith_Merged.df = merge(ith_Merged_Lists.df, ith_DXSUM.df, by.x = "VISCODE2", by.y = "DXSUM___VISCODE2", all=T)
       ith_Merged.df = merge(ith_Merged.df, ith_BLCHANGE.df, by.x = "VISCODE2", by.y = "BLCHANGE___VISCODE2", all=T)
     }
 

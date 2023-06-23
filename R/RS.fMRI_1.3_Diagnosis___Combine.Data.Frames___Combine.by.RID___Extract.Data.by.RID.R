@@ -1,8 +1,8 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Extract.Data.by.RID = function(EPB_Selected.df, Data.list, Data_Name){
+RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Extract.Data.by.RID = function(Merged_Lists.df, Data.list, Data_Name){
   # Data.list =BLCHANGE.list
 
   # EPB RID
-  RID = EPB_Selected.df$RID %>% sort
+  RID = Merged_Lists.df$RID %>% sort
 
   # Data RID
   RID_Data = Data.list %>% names %>% as.numeric
@@ -12,7 +12,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Extract.Data.by.R
   New_Data.list = lapply(seq_along(RID), function(i, ...){
     tryCatch({
       ith_RID = RID[i]
-      ith_EPB_Selected.df = EPB_Selected.df %>% filter(RID == ith_RID)
+      ith_Merged_Lists.df = Merged_Lists.df %>% filter(RID == ith_RID)
 
 
       if(ith_RID %in% RID_Data){
@@ -28,14 +28,14 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___Combine.by.RID___Extract.Data.by.R
         # # ith_ind_Data_VISCODE = names(ith_Data.df) %>% filter_by("VISCODE", any_include = T, exact_include = F, exclude = "VISCODE2", any_exclude = T, exact_exclude = F, as.ind = T)
         # #
         # # if(length(ith_ind_Data_VISCODE)>0){
-        # #   ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_EPB_Selected.df[1, "VISCODE2"]
+        # #   ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_Merged_Lists.df[1, "VISCODE2"]
         # # }else{
-        # #   ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_EPB_Selected.df[1, grep("VISCODE2", names(ith_EPB_Selected.df))]
+        # #   ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_Merged_Lists.df[1, grep("VISCODE2", names(ith_Merged_Lists.df))]
         # # }
         #
         # # RID
         # colname = "RID"
-        # ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_EPB_Selected.df[1, grep(colname, names(ith_EPB_Selected.df))]
+        # ith_Data.df[1, grep(colname, names(ith_Data.df))] = ith_Merged_Lists.df[1, grep(colname, names(ith_Merged_Lists.df))]
       }
 
       return(ith_Data.df)

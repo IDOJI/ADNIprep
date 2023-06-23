@@ -10,7 +10,8 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                     Subjects_QC_ADNI2GO,
                                     Subjects_QC_ADNI3,
                                     Subjects_NFQ,
-                                    Subjects_search,
+                                    Subjects_Search_FMRI,
+                                    Subjects_Search_MRI,
                                     ############################################
                                     Subjects_DX_Summary,
                                     Subjects_BLCHANGE,
@@ -52,7 +53,8 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                                     Subjects_QC_ADNI2GO,
                                                     Subjects_QC_ADNI3,
                                                     Subjects_NFQ,
-                                                    Subjects_search,
+                                                    Subjects_Search_FMRI,
+                                                    Subjects_Search_MRI,
                                                     what.date,
                                                     Include_RID,
                                                     Include_ImageID,
@@ -61,10 +63,24 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                                     Exclude_Comments)
 
 
+  # RID만 추출한다
+  # Diagnosis 리스트는 새로 생성한다.
+  # VISCODE 정보는 가능한한 살린다.
 
+  Clipboard_to_path()
+  final.df = read.csv("C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Exported/Final/[Final_Selected]_Subjects_list_(Full_Variables).csv")
+  final.df %>% filter(RID == 5277) %>% View
 
+  clielg %>% filter(RID == 5277)
+ viscode = adnimerge$VISCODE %>% unique %>% sort
 
+ difftime(as.Date("2017-11-06"), as.Date("2015-11-23"))
+ if(y == "m108"){
+   bl.time = 30*108
+   (156-108)*30
 
+   difftime(as.Date("2019-11-04"), as.Date("2015-11-23"))
+ }
 
   #============================================================================
   # 2. Merging lists

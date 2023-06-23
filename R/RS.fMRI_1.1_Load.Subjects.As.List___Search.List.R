@@ -1,48 +1,43 @@
-RS.fMRI_1.1_Load.Subjects.As.List___Search.List = function(subjects_search,
-                                                           path_Subjects.Lists.Downloaded){
+RS.fMRI_1.1_Load.Subjects.As.List___Search.List = function(Subjects_Search_FMRI,
+                                                           Subjects_Search_MRI,
+                                                           path_Subjects.Lists_Downloaded){
   ### 1.Loading data ======================================================================
-  Search_1.df = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Loading.Data(subjects_search, path_Subjects.Lists.Downloaded)
+  Search_1.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Loading.Data(Subjects_Search_FMRI,
+                                                                                 Subjects_Search_MRI,
+                                                                                 path_Subjects.Lists_Downloaded)
   cat("\n", crayon::green("1.1.1 : Loading data is done."), "\n")
 
 
+
+
   ### 2.RID 생성, 제외, 정렬 ===================================================
-  Search_2.df = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Extract.Arrange.RID(Search_1.df)
+  Search_2.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Extract.Arrange.RID(Search_1.list)
   cat("\n", crayon::green("1.1.1 : Extracting & arranging RID is done."), "\n")
 
 
+
+
   ### 3.Date 정렬 =================================================================
-  Search_3.df = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Rearrange.Date(Search_2.df)
+  Search_3.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Rearrange.Date(Search_2.list)
   cat("\n", crayon::green("1.1.1 : Rerranging dates is done."), "\n")
 
 
+
   ### 4.image ID ==================================================================
-  Search_4.df = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___ImageID(Search_3.df)
+  Search_4.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___ImageID(Search_3.list)
   cat("\n", crayon::green("1.1.1 : Removing NA & Adding 'I' in ImageID is done."), "\n")
 
 
 
-  ### 5.changing & Exclude Phase ================================================================
-  Search_5.df = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Change.Exclude.Phase(Search_4.df)
+  ### 5.changing & Exclude ADNI1 Phase ================================================================
+  Search_5.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Change.Exclude.Phase(Search_4.list)
   cat("\n", crayon::green("1.1.1 : Changing & Excluding Phase is done."), "\n")
-
-
-
-  ### 6.Relocate Cols ================================================================
-  Search_6.df = Search_5.df
-  Search_6.df = Search_6.df %>% relocate(starts_with("IMAGE"))
-  cat("\n", crayon::green("1.1.1 : Relocating Cols is done."), "\n")
-
-
-
-  # ### 8.Selecting having both fMRI and MRI ===============================================================
-  # Search_8.list = RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Selecting.Data.Having.Both(Search_7.list)
-  # cat("\n", crayon::green("1.1.1 : Selecting having both fMRI and MRI"), "\n")
 
 
 
 
   ### Exporting ===============================================================
-  ADNI_Subjects_Search = Search_6.df
+  ADNI_Subjects_Search = Search_5.list
 
 
 

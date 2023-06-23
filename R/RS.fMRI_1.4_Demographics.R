@@ -109,7 +109,7 @@ RS.fMRI_1.4_Demographics = function(Merged_Diagnosis.list, path_Subjects_APOE){
       }
       return(ith_Merged.df)
     })
-##################################################################################
+# ##################################################################################
 
     Merged_ADAS_2.list = lapply(seq_along(Data.list), function(i, ...){
       ith_RID.df = Data.list[[i]]
@@ -214,13 +214,13 @@ RS.fMRI_1.4_Demographics = function(Merged_Diagnosis.list, path_Subjects_APOE){
      }
    }) %>% rm_list_null()
 
-
-
+View(combined_SB)
    combined_SB = do.call(rbind, test_ADAS)
 
 
     SB.df = combined_SB[index==1,]
-    SB.df$ADAS_11 %>% is.na
+    hist(SB.df$DATE.DIFF %>% as.numeric %>% abs)
+    dim(SB.df)
    is.na(combined_SB$)
 
 
@@ -234,137 +234,137 @@ RS.fMRI_1.4_Demographics = function(Merged_Diagnosis.list, path_Subjects_APOE){
    combined_SB
 
 
-#
-#
-# View(test.df )
-#
-#
-#
-# }
-#
-#
-#
-#
-#
-#
-#   RID = sapply(APOE.list, function(ith_RID.df){
-#     ith_RID.df$RID %>% na.omit %>% unique
-#   })
-# which(RID==751)
-#   APOE.list[[31]] %>% View
-#
-#
-#   length(test)
-#   test = sapply(APOE.list, function(ith_RID.df){
-#     y = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
-#     x = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
-#     if(length(y)>0 && x == "SB"){
-#       return(y)
-#     }
-#
-#   }) %>% unlist
-#
-#   RS.fMRI_0_Data.Dictionary("TOTSCORE")
-#   RS.fMRI_0_Data.Dictionary("COT3SCOR")
-#   RS.fMRI_0_Data.Dictionary("COT2SCOR")
-#   RS.fMRI_0_Data.Dictionary("COT1SCOR")
-#
-# Clipboard_to_path()
-#
-#
-# 날짜 단위로 다시 MMSE 찾아보기
-#
-# ADAS_2$USERDATE
-#
-# ADAS_1$COT4TOTL
-#
-# ith_RID.df$ADNIMERGE___MMSE
-#
-#
-# length(MMSE)
-#
-# MMSE.df =
-#
-# MMSE.df = read.csv("C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/MMSE_21Jun2023.csv")
-#
-#
-# # VISCODE2가 NA인 경우...?
-# MMSE = sapply(APOE.list, function(ith_RID.df, ...){
-#   ith_index = which(!is.na(ith_RID.df$STUDY.DATE))
-#   ith_VISCODE2 = ith_RID.df[ith_index,"VISCODE2"]
-#   ith_RID = ith_RID.df$RID %>% na.omit %>% unique
-#
-#   ith_APOE = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
-#   ith_Band.Type = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
-#
-#   # ith_MMSE = ith_RID.df$ADNIMERGE___MMSE[ith_index] %>% na.omit %>% as.numeric
-#
-#   ith_MMSE = MMSE.df %>% filter(RID == ith_RID & VISCODE2 == ith_VISCODE2)
-#   # z = ith_RID.df$ADNIMERGE___ADAS11[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
-#   # z = ith_RID.df$ADNIMERGE___ADAS13[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
-#   # ith_RID.df$ADNIMERGE___ADAS13
-#
-#   if(length(ith_APOE)>0 && ith_Band.Type == "SB" && length(ith_MMSE)>0){
-#     return(ith_MMSE)
-#   }
-#
-# }) %>% unlist
-#
-#
-#   ADAS = sapply(APOE.list, function(ith_RID.df, ...){
-#     ith_index = which(!is.na(ith_RID.df$STUDY.DATE))
-#     ith_VISCODE2 = ith_RID.df[ith_index,"VISCODE2"]
-#     ith_RID = ith_RID.df$RID %>% na.omit %>% unique
-#
-#
-#
-#     ith_APOE = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
-#     ith_Band.Type = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
-#
-#     ADAS_1$VISCODE
-#     ith_ADAS_2 = ADAS_2 %>% filter(RID == ith_RID & VISCODE2 == ith_VISCODE2) %>% select(TOTSCORE) %>% unlist %>% as.vector
-#
-#     # z = ith_RID.df$ADNIMERGE___ADAS11[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
-#     # z = ith_RID.df$ADNIMERGE___ADAS13[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
-#     # ith_RID.df$ADNIMERGE___ADAS13
-#
-#     if(length(ith_APOE)>0 && ith_Band.Type == "SB" && length(ith_ADAS_11)>0){
-#       return(ith_ADAS_11)
-#     }
-#
-#   }) %>% unlist
-#
-# length(test)
-#
-#
-#
-#
-#   #=============================================================================
-#   # ADAS cog
-#   #=============================================================================
-#   RS.fMRI_1.4_Demographics___ADAS.Cog = function(Data.list){
-#     # Data.list = APOE.list
-#     Results.list = lapply(Data.list, function(ith_RID.df){
-#       # ith_RID.df = Data.list[[1]]
-#       ith_RID.df$ADNIMERGE___ADAS11
-#       ith_RID.df$SUBJECT.ID
-#
-#       ith_RID.df$
-# adas %>% View
-#
-# ith_RID.df$ADNIMERGE___ADAS13
-# RS.fMRI_0_Data.Dictionary("ADAS13")
-#
-#
-#
-#
-#     })
-#
-#
-#
-#
-#
-#   }
+
+
+View(test.df )
+
+
+
+}
+
+
+
+
+
+
+  RID = sapply(APOE.list, function(ith_RID.df){
+    ith_RID.df$RID %>% na.omit %>% unique
+  })
+which(RID==751)
+  APOE.list[[31]] %>% View
+
+
+  length(test)
+  test = sapply(APOE.list, function(ith_RID.df){
+    y = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
+    x = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
+    if(length(y)>0 && x == "SB"){
+      return(y)
+    }
+
+  }) %>% unlist
+
+  RS.fMRI_0_Data.Dictionary("TOTSCORE")
+  RS.fMRI_0_Data.Dictionary("COT3SCOR")
+  RS.fMRI_0_Data.Dictionary("COT2SCOR")
+  RS.fMRI_0_Data.Dictionary("COT1SCOR")
+
+Clipboard_to_path()
+
+
+날짜 단위로 다시 MMSE 찾아보기
+
+ADAS_2$USERDATE
+
+ADAS_1$COT4TOTL
+
+ith_RID.df$ADNIMERGE___MMSE
+
+
+length(MMSE)
+
+MMSE.df =
+
+MMSE.df = read.csv("C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/MMSE_21Jun2023.csv")
+
+
+# VISCODE2가 NA인 경우...?
+MMSE = sapply(APOE.list, function(ith_RID.df, ...){
+  ith_index = which(!is.na(ith_RID.df$STUDY.DATE))
+  ith_VISCODE2 = ith_RID.df[ith_index,"VISCODE2"]
+  ith_RID = ith_RID.df$RID %>% na.omit %>% unique
+
+  ith_APOE = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
+  ith_Band.Type = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
+
+  # ith_MMSE = ith_RID.df$ADNIMERGE___MMSE[ith_index] %>% na.omit %>% as.numeric
+
+  ith_MMSE = MMSE.df %>% filter(RID == ith_RID & VISCODE2 == ith_VISCODE2)
+  # z = ith_RID.df$ADNIMERGE___ADAS11[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
+  # z = ith_RID.df$ADNIMERGE___ADAS13[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
+  # ith_RID.df$ADNIMERGE___ADAS13
+
+  if(length(ith_APOE)>0 && ith_Band.Type == "SB" && length(ith_MMSE)>0){
+    return(ith_MMSE)
+  }
+
+}) %>% unlist
+
+
+  ADAS = sapply(APOE.list, function(ith_RID.df, ...){
+    ith_index = which(!is.na(ith_RID.df$STUDY.DATE))
+    ith_VISCODE2 = ith_RID.df[ith_index,"VISCODE2"]
+    ith_RID = ith_RID.df$RID %>% na.omit %>% unique
+
+
+
+    ith_APOE = ith_RID.df$ADNIMERGE___APOE4 %>% na.omit %>% unique
+    ith_Band.Type = ith_RID.df$EPI___SLICE.BAND.TYPE %>% na.omit %>% unique
+
+    ADAS_1$VISCODE
+    ith_ADAS_2 = ADAS_2 %>% filter(RID == ith_RID & VISCODE2 == ith_VISCODE2) %>% select(TOTSCORE) %>% unlist %>% as.vector
+
+    # z = ith_RID.df$ADNIMERGE___ADAS11[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
+    # z = ith_RID.df$ADNIMERGE___ADAS13[which(ith_RID.df$EPI___SLICE.BAND.TYPE=="SB")]
+    # ith_RID.df$ADNIMERGE___ADAS13
+
+    if(length(ith_APOE)>0 && ith_Band.Type == "SB" && length(ith_ADAS_11)>0){
+      return(ith_ADAS_11)
+    }
+
+  }) %>% unlist
+
+length(test)
+
+
+
+
+  #=============================================================================
+  # ADAS cog
+  #=============================================================================
+  RS.fMRI_1.4_Demographics___ADAS.Cog = function(Data.list){
+    # Data.list = APOE.list
+    Results.list = lapply(Data.list, function(ith_RID.df){
+      # ith_RID.df = Data.list[[1]]
+      ith_RID.df$ADNIMERGE___ADAS11
+      ith_RID.df$SUBJECT.ID
+
+      ith_RID.df$
+adas %>% View
+
+ith_RID.df$ADNIMERGE___ADAS13
+RS.fMRI_0_Data.Dictionary("ADAS13")
+
+
+
+
+    })
+
+
+
+
+
+  }
 
 
 

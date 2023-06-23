@@ -2,7 +2,8 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists_Downloaded,
                                              Subjects_QC_ADNI2GO,
                                              Subjects_QC_ADNI3,
                                              Subjects_NFQ,
-                                             Subjects_search,
+                                             Subjects_Search_FMRI,
+                                             Subjects_Search_MRI,
                                              what.date,
                                              Include_RID=NULL,
                                              Include_ImageID =NULL,
@@ -28,7 +29,6 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists_Downloaded,
 
 
 
-
   # NFQ info ==========================================================================================
   subjects.list[[2]] = RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List(Subjects_NFQ,
                                                                     path_Subjects.Lists_Downloaded)
@@ -40,10 +40,9 @@ RS.fMRI_1.1_Load.Subjects.As.List = function(path_Subjects.Lists_Downloaded,
 
 
   # ida search ========================================================================================
-  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(Subjects_search,
+  subjects.list[[3]] = RS.fMRI_1.1_Load.Subjects.As.List___Search.List(Subjects_Search_FMRI,
+                                                                       Subjects_Search_MRI,
                                                                        path_Subjects.Lists_Downloaded)
-
-
 
 
   # Final ==========================================================================================

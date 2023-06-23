@@ -16,6 +16,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
 
 
 
+
   ##############################################################################
   # Selecting & Changing Series Type : MT1, T1, EPB, fMRI
   ##############################################################################
