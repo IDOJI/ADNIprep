@@ -1,12 +1,5 @@
-RS.fMRI_1.3_Adding.Numbering.By.Manufacturers = function(Merged_Diagnosis.list){
-  #=============================================================================
-  # Data
-  #=============================================================================
-  Merged_Diagnosis_New.list = Merged_Diagnosis.list
-  Merged.df = Merged_Diagnosis.list[[1]]
-
-
-
+RS.fMRI_1_Data.Selection___Demographics___Adding.Numbering.By.Manufacturers = function(Merged.df){
+  # Merged.df = Selected_Subjects.df
   #=============================================================================
   # Arranging by Manufacturer and RID
   #=============================================================================

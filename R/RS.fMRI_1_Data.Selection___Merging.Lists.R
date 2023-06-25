@@ -36,8 +36,12 @@ RS.fMRI_1_Data.Selection___Merging.Lists = function(Loaded_Data.list){
                                                                                      CV.list = Loaded_Data.list$CLIELG,
                                                                                      BLCHANGE.list = Loaded_Data.list$BLCHANGE,
                                                                                      ADAS.list = Loaded_Data.list$ADAS,
-                                                                                     MMSE.list = Loaded_Data.list$MMSE,
-                                                                                     APOE.list = Loaded_Data.list$APOE)
+                                                                                     MMSE.list = Loaded_Data.list$MMSE)
+
+
+
+
+
 
 
 

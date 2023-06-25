@@ -23,7 +23,6 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                     Subjects_BLCHANGE,
                                     Subjects_ADAS,
                                     Subjects_MMSE,
-                                    Subjects_APOE,
                                     ############################################
                                     what.date            = 1,
                                     Include_RID        = NULL,
@@ -34,6 +33,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   #=============================================================================
   # 1. Selecting Data by QC
   #=============================================================================
+  path_Subjects.Lists_Downloaded = path_Subjects.Lists_Downloaded %>% path_tail_slash()
   Selected_Subjects_by_QC.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC(Subjects_QC_ADNI2GO,
                                                                                    Subjects_QC_ADNI3,
                                                                                    path_Subjects.Lists_Downloaded,
@@ -61,8 +61,7 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                                               Subjects_BLCHANGE,
                                                               Subjects_DX_Summary,
                                                               Subjects_ADAS,
-                                                              Subjects_MMSE,
-                                                              Subjects_APOE)
+                                                              Subjects_MMSE)
 
 
 
@@ -76,48 +75,28 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
 
-
-
   #============================================================================
   # 4.Diagnosis
   #============================================================================
   Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis(Merged_Full.list)
 
+  Merged_Diagnosis.list[[316]]
 
-
-  ith_APOE_1 = c(as.numeric(na.omit(ith_Merged_6.df$APOE.A1)), as.numeric(na.omit(ith_Merged_6.df$APOE___APGEN1))) %>% unique
-  ith_APOE_2 = c(as.numeric(na.omit(ith_Merged_6.df$APOE.A2)), as.numeric(na.omit(ith_Merged_6.df$APOE___APGEN2))) %>% unique
-  if(length(ith_APOE_1)==1){
-    ith_Merged_6.df$APOE___APGEN1 = ith_APOE_1
-    ith_Merged_6.df$APOE.A1 = NULL
-  }
-  if(length(ith_APOE_2)==1){
-    ith_Merged_6.df$APOE___APGEN2 = ith_APOE_2
-    ith_Merged_6.df$APOE.A2 = NULL
-  }
-
-  #=======================================================================
-  # Data Exclusion
-  #=======================================================================
-  Excluded.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Data.Exclusion(Merged_Diagnosis.list)
 
 
   #===============================================================================
-  # Extracting Demographics & Data binding
+  # 5. Demographics
   #===============================================================================
-  path_Subjects_APOE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_APOE)
-  Binded.list = RS.fMRI_1.4_Demographics(Merged_Diagnosis.list, path_Subjects_APOE)
-  # • About EXAMDATE in Clinical data files
-  # – Clinical data acquired in ADNIGO/2 do not include ‘EXAMDATE’ (the date of the exam), although this
-  # information was included for ADNI1 visits.
-  # – The variable ’USERDATE’ is the data entry (or modification) date, and may be very different from EXAMDATE.
-  # – Use the variable ‘EXAMDATE’ in the registry table (REGISTRY.csv) as the date of exam for all clinical
-  # data (merge by RID and VISCODE or VISCODE2)
-  Clipboard_to_path()
-  registry.df = read.csv("C:/Users/lleii/Dropbox/Github/Rpkgs/Papers___Data/Data___ADNI___RS.fMRI___Subjects.Lists/Subjects_Lists_Downloaded/REGISTRY_23Jun2023.csv")
+  Demographics.df = RS.fMRI_1_Data.Selection___Demographics(Merged_Diagnosis.list, path_Subjects.Lists_Downloaded, Subjects_APOE)
 
-  dregistry.df %>% filter(RID==5277)
 
+
+
+
+
+  #===============================================================================
+  # 6.Splitting Data
+  #===============================================================================
 
 
 
@@ -129,6 +108,11 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
 
 
+
+  #=============================================================================
+  # Extract Demo variables
+  #=============================================================================
+  # Selected.list = RS.fMRI_1_Data.Selection___Demographics___Selecting.Variables(Demo.list)
 
 
 

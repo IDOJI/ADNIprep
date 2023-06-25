@@ -1,10 +1,9 @@
-RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis = function(Merged_Diagnosis.list){
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis = function(Data.list){
   # Data.list = Merged_Diagnosis.list
   #=======================================================================
   # Diagnosis conversion
   #=======================================================================
-  Diagnosis_New.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Conversion(Merged_Diagnosis.list)
-
+  Diagnosis_New.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Conversion(Data.list)
 
 
 

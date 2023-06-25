@@ -12,8 +12,7 @@ RS.fMRI_1_Data.Selection___Loading.Lists = function(Selected_Subjects_by_QC.list
                                                     Subjects_DX_Summary,
                                                     #
                                                     Subjects_ADAS,
-                                                    Subjects_MMSE,
-                                                    Subjects_APOE){
+                                                    Subjects_MMSE){
   #=============================================================================
   # 0.Selected RIDs
   #=============================================================================
@@ -128,8 +127,8 @@ RS.fMRI_1_Data.Selection___Loading.Lists = function(Selected_Subjects_by_QC.list
   #=============================================================================
   # Data Load : APOE
   #=============================================================================
-  APOE.list = RS.fMRI_1_Data.Selection___Loading.Lists___APOE(Selected_RID, Subjects_APOE, path_Subjects.Lists_Downloaded)
-  cat("\n", crayon::bgMagenta("Step 1.2"),crayon::green("Loading data is done :"), crayon::red("APOE"),"\n")
+  # APOE.list = RS.fMRI_1_Data.Selection___Loading.Lists___APOE(Selected_RID, Subjects_APOE, path_Subjects.Lists_Downloaded)
+  # cat("\n", crayon::bgMagenta("Step 1.2"),crayon::green("Loading data is done :"), crayon::red("APOE"),"\n")
 
 
 
@@ -145,8 +144,8 @@ RS.fMRI_1_Data.Selection___Loading.Lists = function(Selected_Subjects_by_QC.list
                           DXSUM = DXSUM.list,
                           PTDEMO = PTDEMO.list,
                           ADAS = ADAS.list,
-                          MMSE = MMSE.list,
-                          APOE = APOE.list)
+                          MMSE = MMSE.list)
+                          # APOE = APOE.list)
   cat("\n", crayon::bgMagenta("STEP 1.2"), crayon::blue("Loading data is done!"), "\n")
   return(Loaded_Data.list)
 

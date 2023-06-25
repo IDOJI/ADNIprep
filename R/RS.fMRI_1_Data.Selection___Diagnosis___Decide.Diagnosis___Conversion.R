@@ -1,7 +1,7 @@
 RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
-  # Data.list = Merged_Diagnosis.list
+  # Data.list = Dates_Added.list
+  Returned.list = lapply(seq_along(Data.list), function(i, ...){
 
-  Returned.list = lapply(seq_along(Data.list), function(i){
     ith_RID.df = Data.list[[i]]
     ith_RID.df = cbind(DIAGNOSIS_NEW = ith_RID.df$DIAGNOSIS, ith_RID.df)
 

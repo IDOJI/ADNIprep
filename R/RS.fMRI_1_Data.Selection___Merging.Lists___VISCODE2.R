@@ -1,9 +1,11 @@
 RS.fMRI_1_Data.Selection___Merging.Lists___VISCODE2 = function(Registry.list, PTDEMO.list, DXSUM.list){
-  Merged_VISCODE2.list = lapply(seq_along(QC_EPI.list), function(i, ...){
+  Selected_PHASE = c("ADNI1","ADNIGO", "ADNI2", "ADNI3")
+
+  Merged_VISCODE2.list = lapply(seq_along(Registry.list), function(i, ...){
     # i=482
     # i=469
     # Data
-    cat("\n", crayon::green("Merging Lists by VISCODE2 :"), crayon::red(paste0("RID_", names(QC_EPI.list)[i])), "\n")
+    cat("\n", crayon::green("Merging Lists by VISCODE2 :"), crayon::red(paste0("RID_", names(Registry.list)[i])), "\n")
     ith_Registry = Registry.list[[i]]
     ith_PTDEMO = PTDEMO.list[[i]]
     ith_DXSUM = DXSUM.list[[i]]

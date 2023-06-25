@@ -10,6 +10,7 @@ RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC = function(Subjects_QC_ADNI2GO
   ##############################################################################
   # Loading the datasets
   ##############################################################################
+  path_Subjects.Lists_Downloaded = path_Subjects.Lists_Downloaded %>% path_tail_slash()
   QC_1.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Loading.Data(Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, path_Subjects.Lists_Downloaded)
   text = "1.1 : Loading data is done."
   cat("\n", crayon::green(text), "\n")

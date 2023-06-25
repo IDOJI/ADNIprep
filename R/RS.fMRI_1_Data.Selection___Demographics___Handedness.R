@@ -1,4 +1,5 @@
-RS.fMRI_1.4_Demographics___Handedness = function(Data.list){
+RS.fMRI_1_Data.Selection___Demographics___Handedness = function(Data.list){
+  # Data.list = Merged_Diagnosis.list
   Handedness.list = lapply(seq_along(Data.list), function(i,...){
     ith_RID.df = Data.list[[i]]
 
@@ -9,8 +10,6 @@ RS.fMRI_1.4_Demographics___Handedness = function(Data.list){
     }else if(2 %in% ith_Hand | "Left" %in% ith_Hand){
       ith_RID.df$PTDEMO___PTHAND = rep("Left", nrow(ith_RID.df))
     }
-
-
     return(ith_RID.df)
   })
   cat("\n",crayon::green("Checking"), crayon::red("Handedness"), crayon::green("is done!"),"\n")

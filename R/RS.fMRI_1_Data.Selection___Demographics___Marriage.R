@@ -1,6 +1,8 @@
-RS.fMRI_1.4_Demographics___Marriage = function(Data.list){
-  Marriage.list = lapply(seq_along(Education.list), function(i){
-    ith_RID.df = Education.list[[i]]
+RS.fMRI_1_Data.Selection___Demographics___Marriage = function(Data.list){
+  # Data.list = Education.list
+  Marriage.list = lapply(seq_along(Data.list), function(i){
+    # print(i)
+    ith_RID.df = Data.list[[i]]
     ith_Marry_1 = ith_RID.df$PTDEMO___PTMARRY %>% as.character
     ith_Marry_2 = ith_RID.df$ADNIMERGE___PTMARRY
 
@@ -51,13 +53,13 @@ RS.fMRI_1.4_Demographics___Marriage = function(Data.list){
     for(m in seq_along(ith_Marry_2)){
       mth_1 = ith_Marry_1_New[m]
       mth_2 = ith_Marry_2[m]
-      if(!is.na(mth_1) && is.na(mth_2)){
+      if(is.na(mth_1) && is.na(mth_2)){
+        ith_Marry_Combined[m] = NA
+      }else if(!is.na(mth_1) && is.na(mth_2)){
         ith_Marry_Combined[m] = mth_1
       }else if(is.na(mth_1) && !is.na(mth_2)){
         ith_Marry_Combined[m] = mth_2
-      }else if(mth_1==mth_2){
-        ith_Marry_Combined[m] = mth_2
-      }else if(mth_1!=mth_2){
+      }else{
         ith_Marry_Combined[m] = mth_2
       }
     }

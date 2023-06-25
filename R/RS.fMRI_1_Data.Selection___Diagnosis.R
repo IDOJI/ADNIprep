@@ -20,10 +20,19 @@
 # ∗ ADNI3: DIAGNOSIS 1=CN; 2=MCI; 3=Dementia
 
 RS.fMRI_1_Data.Selection___Diagnosis = function(Merged_Full.list){
+  #=======================================================================
+  # Decide dates
+  #=======================================================================
+  Dates_Added.list = RS.fMRI_1_Data.Selection___Diagnosis___Add.Dates(Merged_Full.list)
+
+
+
+
   #===============================================================================
   # Merged Diagnosis
   #===============================================================================
-  Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis___Merging.Diagnosis(Merged_Full.list)
+  Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis___Merging.Diagnosis(Dates_Added.list)
+
 
 
 
@@ -31,6 +40,8 @@ RS.fMRI_1_Data.Selection___Diagnosis = function(Merged_Full.list){
   # Decide Diagnosis
   #===============================================================================
   Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis(Merged_Diagnosis.list)
+
+
 
 
 
