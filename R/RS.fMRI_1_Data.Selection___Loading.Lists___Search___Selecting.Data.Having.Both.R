@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Selecting.Data.Having.Both = function(data.list){
+RS.fMRI_1_Data.Selection___Loading.Lists___Search___Selecting.Data.Having.Both = function(data.list){
   # data.list = Search_7.list
 
   #=====================================================================================================

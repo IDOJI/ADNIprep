@@ -1,18 +1,19 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
-                                                       Subjects_QC_ADNI3,
-                                                       path_Subjects.Lists_Downloaded,
-                                                       what.date,
-                                                       Include_RID = NULL,
-                                                       Include_ImageID=NULL,
-                                                       Exclude_RID = NULL,
-                                                       Exclude_ImageID = NULL,
-                                                       Exclude_Comments = NULL){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC = function(Subjects_QC_ADNI2GO,
+                                                           Subjects_QC_ADNI3,
+                                                           path_Subjects.Lists_Downloaded,
+                                                           what.date,
+                                                           Include_RID = NULL,
+                                                           Include_ImageID=NULL,
+                                                           Exclude_RID = NULL,
+                                                           Exclude_ImageID = NULL,
+                                                           Exclude_Comments = NULL){
   ##############################################################################
   # Loading the datasets
   ##############################################################################
-  QC_1.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Loading.Data(Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, path_Subjects.Lists_Downloaded)
-  text = "1.1.1 : Loading data is done."
+  QC_1.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Loading.Data(Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, path_Subjects.Lists_Downloaded)
+  text = "1.1 : Loading data is done."
   cat("\n", crayon::green(text), "\n")
+
 
 
 
@@ -20,27 +21,34 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
   ##############################################################################
   # Selecting & Changing Series Type : MT1, T1, EPB, fMRI
   ##############################################################################
-  QC_2.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Selecting.Changing.Series.Type(QC_1.list)
-  text = "1.1.1 : Selecting Series Type is done."
+  QC_2.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Selecting.Changing.Series.Type(QC_1.list)
+  text = "1.1 : Selecting Series Type is done."
   cat("\n", crayon::green(text), "\n")
+
+
+
 
 
 
   ##############################################################################
   # Selecting and Changing colnames
   ##############################################################################
-  QC_3.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Selecting.Cols(QC_2.list)
-  text = "1.1.1 : Selecting columns is done."
+  QC_3.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Selecting.Cols(QC_2.list)
+  text = "1.1 : Selecting columns is done."
   cat("\n", crayon::green(text), "\n")
+
+
 
 
 
   ##############################################################################
   # Changing Each Descriptions
   ##############################################################################
-  QC_4.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Changing.Description(QC_3.list)
-  text = "1.1.1 : Changing Description is done."
+  QC_4.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Changing.Description(QC_3.list)
+  text = "1.1 : Changing Description is done."
   cat("\n", crayon::green(text), "\n")
+
+
 
 
 
@@ -48,8 +56,10 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
   # Binding ADNI2GO, ADNI3 QC
   ##############################################################################
   QC_5.df = dplyr::bind_rows(QC_4.list[[1]], QC_4.list[[2]])
-  text = "1.1.1 : Binding the datasets is done."
+  text = "1.1 : Binding the datasets is done."
   cat("\n", crayon::green(text), "\n")
+
+
 
 
 
@@ -70,7 +80,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
   if(length(Include_ImageID)>0){
     QC_6.df = QC_6.df %>% filter(IMAGE_ID %in% Include_ImageID)
   }
-  text = "1.1.1 : Excluding RID & ImageID is done."
+  text = "1.1 : Excluding RID & ImageID is done."
   cat("\n", crayon::green(text), "\n")
 
 
@@ -81,8 +91,8 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
   ##############################################################################
   # Filtering Data by QC & Excluding NA
   ##############################################################################
-  QC_7.df = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data(QC_6.df, Exclude_Comments)
-  text = "1.1.1 : Filtering good data is done."
+  QC_7.df = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Filtering.Data(QC_6.df, Exclude_Comments)
+  text = "1.1 : Filtering good data is done."
   cat("\n", crayon::green(text), "\n")
 
 
@@ -94,40 +104,39 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
   QC_8.df$RID = QC_8.df$RID %>% as.numeric
   QC_8.df = QC_8.df %>% arrange(RID, SERIES_DATE)
   QC_8.df$RID = QC_8.df$RID %>% as.character
-  text = "1.1.1 : Arraging by RID and SERIES_DATE is done."
+  text = "1.1 : Arraging by RID and SERIES_DATE is done."
   cat("\n", crayon::green(text), "\n")
 
 
+
+
+  ##############################################################################
+  # Changing names
+  ##############################################################################
+  selected_cols = c("LONI_STUDY", "LONI_SERIES", "FMRI_PHASE_DIRECTION", "SERIES_DESCRIPTION", "SERIES_TYPE", "FIELD_STRENGTH", "FMRI_MEAN_SNR", "T1_ACCELERATED")
+  names(QC_8.df)[which(names(QC_8.df) %in% selected_cols)] = paste0("IMAGING.PROTOCOL___", selected_cols)
+  QC_8.df = QC_8.df %>% relocate(starts_with("IMAGING.PROTOCOL"), .after=SERIES_DATE)
 
 
 
   ##############################################################################
   # Select RID having by dates having both EPB & MT1
   ##############################################################################
-  QC_9.list = RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types(QC_8.df, what.date)
-
-
-
+  QC_9.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Select.RID.Have.Both.Types(QC_8.df, what.date)
 
 
 
   #=============================================================================
-  # 5.Saving results
+  # final
   #=============================================================================
   ADNI_Subjects_QC = QC_9.list
-  # if(is.null(path_Rda)){
-  #   setwd(path_Rda)
-  #   usethis::use_data(ADNI_Subjects_QC, overwrite=T)
-  # }
-  # text = "1.1.1 : Saving rda is done."
-  # cat("\n", crayon::green(text), "\n")
 
 
 
   ##############################################################################
   # Returning reslts
   ##############################################################################
-  text = paste("\n","Step 1.1.1 is done !","\n")
+  text = paste("\n","Step 1.1 is done !","\n")
   cat(crayon::bgMagenta(text))
   return(ADNI_Subjects_QC)
 }
@@ -164,7 +173,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
 # ##############################################################################
 # # Exporting Description
 # ##############################################################################
-# RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Exporting.Description = function(QC.df, ...){
+# RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Exporting.Description = function(QC.df, ...){
 #   ### Export : RS-fMRI, MPRAGE
 #   ## path
 #   path_Subjects_Description = paste(path_Subjects, "Selected Description of EPB & MT1", sep="")
@@ -181,7 +190,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
 #               paste(path_Subjects_Description, "[Description] MT1.csv", sep = "/"),
 #               row.names=F,
 #               col.names=F);series_description_MT1=NULL
-#   text = "1.1.1 : Exporting 'Description' of EPB, MT1 as csv files is done."
+#   text = "1.1 : Exporting 'Description' of EPB, MT1 as csv files is done."
 #   cat("\n", crayon::green(text), "\n")
 # }
 #
@@ -194,7 +203,7 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List = function(Subjects_QC_ADNI2GO,
 # #=============================================================================
 # # Extract RID from PTID
 # data_RID.NA = RS.fMRI_1.1_Merging.Search.with.QC___Extract.RID(data_ImageID)
-# text = "1.1.1 : Removing NA in RID & PTID is done."
+# text = "1.1 : Removing NA in RID & PTID is done."
 # cat("\n", crayon::green(text), "\n")
 #
 #

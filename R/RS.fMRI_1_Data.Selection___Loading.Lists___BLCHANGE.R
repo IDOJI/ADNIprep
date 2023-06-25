@@ -1,12 +1,21 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___CLIELG = function(Merged_Lists.df){
+RS.fMRI_1_Data.Selection___Loading.Lists___BLCHANGE = function(Selected_RID, Subjects_BLCHANGE, path_Subjects.Lists_Downloaded){
+  #=============================================================================
+  # csv?
+  #=============================================================================
+  path_Subjects_BLCHANGE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_BLCHANGE)
+  if(grep("csv", path_Subjects_BLCHANGE) %>% length > 0){
+    BLCHANGE.df = read.csv(path_Subjects_BLCHANGE)
+  }else{
+    BLCHANGE.df = read.csv(paste0(path_Subjects_BLCHANGE, ".csv"))
+  }
+
+
+
+
   #=============================================================================
   # As date
   #=============================================================================
-  require(ADNIMERGE)
-  CLIELG.df = clielg
-  CLIELG.df$CDATE = CLIELG.df$CDATE %>% as.Date()
-  CLIELG.df$USERDATE = CLIELG.df$USERDATE %>% as.Date()
-  CLIELG.df$USERDATE2 = CLIELG.df$USERDATE2 %>% as.Date()
+  BLCHANGE.df$EXAMDATE = BLCHANGE.df$EXAMDATE %>% as.Date()
 
 
 
@@ -14,27 +23,31 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___CLIELG = funct
   #=============================================================================
   # Intersect RID
   #=============================================================================
-  RID_CLIELG = CLIELG.df$RID %>% unique %>% sort
-  RID_EPB = Merged_Lists.df$RID %>% sort
-  RID_Intersect = intersect(RID_CLIELG, RID_EPB) %>% sort
-  CLIELG_Intersect.df = CLIELG.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, USERDATE)
+  BLCHANGE_Intersect.df = BLCHANGE.df %>% filter(RID %in% Selected_RID)
+
+
 
 
 
   #=============================================================================
   # Selecting columns
   #=============================================================================
-  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("CRAND")
-  # cat(paste0('"',names(CLIELG_Intersect.df), '"'), sep=", ")
-  CLIELG_Intersect_Selected.df = CLIELG_Intersect.df %>% select(c("RID", "VISCODE", "USERDATE", "USERDATE2", "CCOMM", "CENROLL", "DIAGNOSIS", "INCLUSION", "EXCLUSION","CRAND", "CDATE"))
+  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCCORCOG")
+  BLCHANGE_Intersect_Selected.df = BLCHANGE_Intersect.df %>% select(c("RID", "VISCODE", "VISCODE2", "EXAMDATE", "BCPREDX", "BCEXTSP", "BCSUMM"))
+  names(BLCHANGE_Intersect_Selected.df) = paste0("BLCHANGE___", names(BLCHANGE_Intersect_Selected.df))
+
+
+
+
 
 
 
 
   #=============================================================================
-  # replace elements
+  # Change Description
   #=============================================================================
-  CLIELG_Intersect_Selected.df = replace_elements(CLIELG_Intersect_Selected.df, col_name = "DIAGNOSIS", from = c("Cognitively Normal", "Early MCI", "Late MCI", "Significant Memory Concern"), to = c("CN", "EMCI", "LMCI", "SMC"))
+  # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCPREDX")
+  BLCHANGE_Intersect_Selected.df = replace_elements(BLCHANGE_Intersect_Selected.df, col_name = "BLCHANGE___BCPREDX", from = c(1,2,3,-4, NA), to = c("CN", "MCI", "AD", "NA", "NA"))
 
 
 
@@ -42,16 +55,10 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___CLIELG = funct
   #=============================================================================
   # BL  as list by RID
   #=============================================================================
-  names(CLIELG_Intersect_Selected.df) = paste0("CLIELG___", names(CLIELG_Intersect_Selected.df))
-  CLIELG.list = as_list_by(CLIELG_Intersect_Selected.df, by =  "CLIELG___RID")
+  # BL.list = as_list_by(BLCHANGE_Intersect_Selected.df, by =  "BLCHANGE___RID")
+  BLCHANGE.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID, Data.df = BLCHANGE_Intersect_Selected.df)
 
-
-
-  cat("\n", crayon::bgMagenta("Step 1.3 "), crayon::green("Diagnosis subjects selection is done :"), crayon::blue("ADNIMERGE package"), crayon::red("CLIELG"),"\n")
-
-
-
-  return(CLIELG.list)
+  return(BLCHANGE.list)
 }
 
 

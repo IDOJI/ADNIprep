@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List___Slice.Timing = function(NFQ.df){
+RS.fMRI_1_Data.Selection___Loading.Lists___NFQ___Slice.Timing = function(NFQ.df){
   # NFQ.df = NFQ_3.df
   #=============================================================================
   # Extracting Raw Slice timing info

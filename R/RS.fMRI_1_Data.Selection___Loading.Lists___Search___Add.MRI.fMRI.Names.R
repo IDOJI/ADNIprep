@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___Search.List___Add.MRI.fMRI.Names = function(Search_2.list){
+RS.fMRI_1_Data.Selection___Loading.Lists___Search___Add.MRI.fMRI.Names = function(Search_2.list){
   fMRI.df = Search_2.list[[1]]
   MRI.df = Search_2.list[[2]]
 

@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Loading.Data = function(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects_Downloaded){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Loading.Data = function(subjects_QC_ADNI2GO, subjects_QC_ADNI3, path_Subjects_Downloaded){
   if(grep("csv", subjects_QC_ADNI2GO) %>% length  == 0){
     subjects_QC_ADNI2GO = paste(subjects_QC_ADNI2GO, ".csv", sep="")
   }

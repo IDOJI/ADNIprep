@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE = function(Merged_Lists.df){
+RS.fMRI_1_Data.Selection___Loading.Lists___ADNIMERGE = function(Selected_RID){
   #===============================================================================
   # ADNIMERGE 패키지 설치
   #===============================================================================
@@ -13,23 +13,18 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE = fu
   #=============================================================================
   # As date
   #=============================================================================
-  ADNIMERGE = adnimerge
-  ADNIMERGE$EXAMDATE = ADNIMERGE$EXAMDATE %>% as.Date()
-  ADNIMERGE$EXAMDATE.bl = ADNIMERGE$EXAMDATE.bl %>% as.Date()
+  ADNIMERGE.df = adnimerge
+  ADNIMERGE.df$EXAMDATE = ADNIMERGE.df$EXAMDATE %>% as.Date()
+  ADNIMERGE.df$EXAMDATE.bl = ADNIMERGE.df$EXAMDATE.bl %>% as.Date()
 
 
 
 
 
   #=============================================================================
-  # Intersect RID
+  # filter by RID
   #=============================================================================
-  RID_ADNIMERGE = ADNIMERGE$RID %>% unique %>% sort
-  RID_EPB = Merged_Lists.df$RID %>% sort
-  RID_Intersect = intersect(RID_ADNIMERGE, RID_EPB) %>% sort
-
-
-  ADNIMERGE_Intersect.df = ADNIMERGE %>% filter(RID %in% RID_Intersect) %>% arrange(RID, EXAMDATE)
+  ADNIMERGE_New.df = ADNIMERGE.df %>% filter(RID %in% Selected_RID) %>% arrange(RID, EXAMDATE)
 
 
 
@@ -39,15 +34,12 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE = fu
   # Selecting columns
   #=============================================================================
   # RS.fMRI_1.3_Diagnosis___Data.Dictionary("Years.bl")
-  ADNIMERGE_Intersect_2.df = ADNIMERGE_Intersect.df %>% select(c("RID", "COLPROT", "ORIGPROT",
-                                                               "VISCODE", "EXAMDATE", "DX.bl", "AGE", "PTGENDER", "PTEDUCAT", "PTETHCAT", "PTRACCAT", "PTMARRY",
-                                                               "APOE4", "ADAS11", "ADAS13", "ADASQ4", "MMSE",
-                                                               "DX", "EXAMDATE.bl", "Years.bl", "Month.bl", "Month", "M"))
-  # "Ventricles", "Hippocampus", "WholeBrain", "Entorhinal"
-
-
-  ADNIMERGE_Intersect_2.df$DX.bl = ADNIMERGE_Intersect_2.df$DX.bl %>% as.character()
-  ADNIMERGE_Intersect_2.df$DX = ADNIMERGE_Intersect_2.df$DX %>% as.character()
+  ADNIMERGE_New_2.df = ADNIMERGE_New.df %>% select(c("RID", "COLPROT", "ORIGPROT",
+                                                     "VISCODE", "EXAMDATE", "DX.bl", "AGE", "PTGENDER", "PTEDUCAT", "PTETHCAT", "PTRACCAT", "PTMARRY",
+                                                     "APOE4", "ADAS11", "ADAS13", "ADASQ4", "MMSE",
+                                                     "DX", "EXAMDATE.bl", "Years.bl", "Month.bl", "Month", "M"))
+  ADNIMERGE_New_2.df$DX.bl = ADNIMERGE_New_2.df$DX.bl %>% as.character()
+  ADNIMERGE_New_2.df$DX = ADNIMERGE_New_2.df$DX %>% as.character()
 
 
 
@@ -56,18 +48,15 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___ADNIMERGE.Package___ADNIMERGE = fu
   #=============================================================================
   # Replace Names
   #=============================================================================
-  names(ADNIMERGE_Intersect_2.df) = paste0("ADNIMERGE___", names(ADNIMERGE_Intersect_2.df))
+  names(ADNIMERGE_New_2.df) = paste0("ADNIMERGE___", names(ADNIMERGE_New_2.df))
+
 
 
 
   #=============================================================================
-  # DXSUM  as list by RID
+  # as list
   #=============================================================================
-  ADNIMERGE.list = as_list_by(ADNIMERGE_Intersect_2.df, by =  "ADNIMERGE___RID")
-
-
-  cat("\n", crayon::bgMagenta("Step 1.3 "),crayon::green("Diagnosis subjects selection is done : "), crayon::blue("ADNIMERGE package"), crayon::red("ADNIMERGE"),"\n")
-
+  ADNIMERGE.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID, Data.df = ADNIMERGE_New_2.df)
 
 
   return(ADNIMERGE.list)

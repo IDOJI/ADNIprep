@@ -1,19 +1,21 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types = function(QC.df, what.date){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Select.RID.Have.Both.Types = function(QC.df, what.date){
   # QC.df = QC_8.df
   #===========================================================================
   # 1) Remove RIDs which don't have either type
   #===========================================================================
   RID = QC.df$RID %>% unique()
   selected_RID = sapply(RID, FUN=function(ith_RID, ...){
-    if(QC.df %>% filter(RID ==ith_RID) %>% select(SERIES_TYPE) %>% unlist %>% unique %>% length == 2){
+    ith_Types = QC.df %>% filter(RID ==ith_RID) %>% select(IMAGING.PROTOCOL___SERIES_TYPE) %>% unlist %>% unique
+    ith_have_both = c("EPB", "MT1") %in% ith_Types
+    if(sum(ith_have_both)>1){
       return(ith_RID)
     }
-  }) %>% unlist
+  }) %>% unlist %>% unname %>% as.numeric
   if(length(selected_RID)==0){
     stop("There is no RID having both MT1 & EPB")
   }
-  QC_1.df = QC.df %>% filter(RID %in% selected_RID)
-
+  QC_New.df = QC.df %>% filter(RID %in% selected_RID)
+  QC.df %>% filter(RID==6956)
 
 
 
@@ -21,13 +23,23 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types = funct
   #===========================================================================
   # Select dates having EPB for each RID
   #===========================================================================
-  RID = QC_1.df$RID %>% unique
-  Having_Both_Type_QC.list = lapply(RID, FUN=function(ith_RID, ...){
-    ith_EPB_dates = QC_1.df %>% filter(RID == ith_RID & SERIES_TYPE == "EPB") %>% select(SERIES_DATE) %>% unlist
-    ith_MT1_dates = QC_1.df %>% filter(RID == ith_RID & SERIES_TYPE == "MT1" & SERIES_DATE %in% ith_EPB_dates) %>% select(SERIES_DATE) %>% unlist
+  RID = QC_New.df$RID %>% unique
+  Having_Both_Type_QC.list = lapply(seq_along(RID), FUN=function(i, ...){
+    ith_RID = RID[i]
+    ith_RID.df = QC_New.df %>% filter(RID == ith_RID)
+
+    ith_RID_EPI = ith_RID.df %>% filter(IMAGING.PROTOCOL___SERIES_TYPE == "EPB")
+    ith_RID_MT1 = ith_RID.df %>% filter(IMAGING.PROTOCOL___SERIES_TYPE == "MT1")
+
+
+    ith_EPB_Dates = ith_RID_EPI$SERIES_DATE
+    ith_MT1_Dates = ith_RID_MT1$SERIES_DATE
+    ith_Intersection_Date = intersect(ith_EPB_Dates, ith_MT1_Dates)[what.date]
+
     cat("\n", crayon::yellow("QC_RID :"), crayon::bgRed(ith_RID), crayon::yellow("is being selected by dates"),"\n")
-    if(!is.na(ith_MT1_dates[what.date])){
-      QC_1.df %>% filter(RID == ith_RID & SERIES_DATE %in% ith_MT1_dates[what.date])
+
+    if(!is.na(ith_Intersection_Date)){
+      ith_RID.df %>% filter(SERIES_DATE == ith_Intersection_Date)
     }
   }) %>% rm_list_null()
 
@@ -59,12 +71,33 @@ RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Select.RID.Have.Both.Types = funct
   #===========================================================================
   # Split by SERIES_TYPE
   #===========================================================================
-  EPB.list = lapply(Having_Both_Type_QC.list, FUN=function(ith_RID){
-    ith_RID %>% filter(SERIES_TYPE == "EPB")
+  EPB.list = lapply(Having_Both_Type_QC.list, FUN=function(ith_RID.df){
+    ith_RID.df %>% filter(IMAGING.PROTOCOL___SERIES_TYPE == "EPB")
   })
   MT1.list = lapply(Having_Both_Type_QC.list, FUN=function(ith_RID){
-    ith_RID %>% filter(SERIES_TYPE == "MT1")
+    ith_RID %>% filter(IMAGING.PROTOCOL___SERIES_TYPE == "MT1")
   })
+
+
+
 
   return(list(QC_EPB = EPB.list, QC_MT1 = MT1.list))
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

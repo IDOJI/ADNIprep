@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Filtering.Data = function(QC.df, Exclude_Comments){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Filtering.Data = function(QC.df, Exclude_Comments){
   # QC.df = QC_6.df
   #===========================================================================
   # filter each dataset by "Description" : Excluding "Mocoseries"

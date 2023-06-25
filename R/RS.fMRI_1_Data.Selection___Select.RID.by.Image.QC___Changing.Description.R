@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Changing.Description = function(QC.list, ...){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Changing.Description = function(QC.list, ...){
 
   QC_1 = QC.list[[1]]
   QC_2 = QC.list[[2]]

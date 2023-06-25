@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___QC.List___Selecting.Cols = function(QC.list, ...){
+RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Selecting.Cols = function(QC.list, ...){
   # QC.list = QC_2.list
   QC.list[[1]] = QC.list[[1]] %>% rename(IMAGE_ID=LONI_IMAGE)
   QC.list[[2]] = QC.list[[2]] %>% rename(IMAGE_ID=LONI_IMAGE)

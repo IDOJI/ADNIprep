@@ -1,4 +1,4 @@
-RS.fMRI_1.1_Load.Subjects.As.List___NFQ.List___Select.Rename.Data = function(NFQ.df){
+RS.fMRI_1_Data.Selection___Loading.Lists___NFQ___Select.Rename.Data = function(NFQ.df){
   # NFQ.df = NFQ_1.df
   ### selection
   df1 = NFQ.df %>% dplyr::select(-starts_with(c("WADDMN", "WVDMN", "WPDMN", "WAVDMN")))

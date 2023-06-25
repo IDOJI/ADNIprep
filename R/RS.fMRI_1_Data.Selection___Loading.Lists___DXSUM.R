@@ -1,11 +1,12 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___DX.Summary = function(Merged_Lists.df, path_Subjects_DX.Summary){
+RS.fMRI_1_Data.Selection___Loading.Lists___DXSUM = function(Selected_RID, Subjects_DX_Summary, path_Subjects.Lists_Downloaded){
   #=============================================================================
   # csv?
   #=============================================================================
-  if(grep("csv", path_Subjects_DX.Summary) %>% length > 0){
-    DXSUM.df = read.csv(path_Subjects_DX.Summary)
+  path_Subjects_DX_Summary = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_DX_Summary)
+  if(grep("csv", path_Subjects_DX_Summary) %>% length > 0){
+    DXSUM.df = read.csv(path_Subjects_DX_Summary)
   }else{
-    DXSUM.df = read.csv(paste0(path_Subjects_DX.Summary, ".csv"))
+    DXSUM.df = read.csv(paste0(path_Subjects_DX_Summary, ".csv"))
   }
 
 
@@ -19,16 +20,10 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___DX.Summary = function(Merged_Lists
 
 
 
-
   #=============================================================================
   # Intersect RID
   #=============================================================================
-  RID_BL = DXSUM.df$RID %>% unique %>% sort
-  RID_EPB = Merged_Lists.df$RID %>% sort
-  RID_Intersect = intersect(RID_BL, RID_EPB) %>% sort
-
-
-  DXSUM_Intersect.df = DXSUM.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, EXAMDATE)
+  DXSUM_Intersect.df = DXSUM.df %>% filter(RID %in% Selected_RID) %>% arrange(RID, EXAMDATE)
 
 
 
@@ -79,9 +74,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___DX.Summary = function(Merged_Lists
   #=============================================================================
   # DXSUM  as list by RID
   #=============================================================================
-  DXSUM.list = as_list_by(DXSUM_Intersect_Selected.df, by =  "DXSUM___RID")
-
-  cat("\n", crayon::bgMagenta("Step 1.3 "),crayon::green("Diagnosis subjects selection is done : "), crayon::red("DX Summary"),"\n")
+  DXSUM.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID, DXSUM_Intersect_Selected.df)
 
   return(DXSUM.list)
 }
