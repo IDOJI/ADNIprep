@@ -80,7 +80,8 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
   #============================================================================
   Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis(Merged_Full.list)
 
-  Merged_Diagnosis.list[[316]]
+
+
 
 
 
@@ -95,44 +96,26 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
   #===============================================================================
-  # 6.Splitting Data
+  # 6. Imaging protocol
   #===============================================================================
+  Protocol.df = RS.fMRI_1_Data.Selection___Imaging.Protocol(Demographics.df)
+  Final.list = list(Protocol.df, Demographics.df)
 
 
-
-
-
-  #=============================================================================
-  # Adding numbering and Filenames by Manufacturer
-  #=============================================================================
-  Added_Numbering.list = RS.fMRI_1.3_Adding.Numbering.By.Manufacturers(Binded.list)
-
-
-
-  #=============================================================================
-  # Extract Demo variables
-  #=============================================================================
-  # Selected.list = RS.fMRI_1_Data.Selection___Demographics___Selecting.Variables(Demo.list)
 
 
 
   #============================================================================
-  # 4.Exporting Results
+  # 7.Exporting Results
   #============================================================================
   if(is.null(path_Export_Subjects.Lists)){
     ### returning results
     text = paste("\n","Step 1 is all done !","\n")
     cat(crayon::bgRed(text))
-
-    if(Merged_Diagnosis.list[[1]] %>% length == 0){
-      cat("\n",crayon::red("There's no selected subjects"),"\n")
-    }
-    return(Merged_Diagnosis.list)
+    return(Final.list)
   }else{
-
-    Final.list = RS.fMRI_1.5_Exporting.Lists(Merged_Diagnosis.list,
-                                             path_Subjects.Lists_Downloaded,
-                                             path_Export_Subjects.Lists)
+    Final.list = RS.fMRI_1_Data.Selection___Exporting.Lists(Final.list,
+                                                            path_Export_Subjects.Lists)
 
 
     ### returning results

@@ -1,4 +1,4 @@
-RS.fMRI_1.2_Merging.Lists___Protocol.Split___Extracting.Data.Frame = function(ith_Protocol, suffix=NULL){
+RS.fMRI_1_Data.Selection___Imaging.Protocol___Protocol.Split___Extracting.Data.Frame = function(ith_Protocol, suffix=NULL){
   # ith_Protocol = ith_EPI_Protocol
   # Split the string by ";"
   ith_Protocol_Splitted = strsplit(ith_Protocol, ";")[[1]]

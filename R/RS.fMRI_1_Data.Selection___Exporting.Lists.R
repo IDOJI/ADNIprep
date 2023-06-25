@@ -1,40 +1,36 @@
-RS.fMRI_1.5_Exporting.Lists = function(data.list,
-                                       path_Subjects.Lists_Downloaded,
+RS.fMRI_1_Data.Selection___Exporting.Lists = function(data.list,
                                        path_Export_Subjects.Lists){
-  # data.list = Merged_Diagnosis.list
+  # data.list = Final.list
   #=============================================================================
   # Path
   #=============================================================================
-  path_Subjects.Lists_Downloaded = path_Subjects.Lists_Downloaded %>% path_tail_slash()
   path_Export_Subjects.Lists = path_Export_Subjects.Lists %>% path_tail_slash()
+  ### Creating directory =======================================================
+  dir.create(path_Export_Subjects.Lists, showWarnings = F)
 
 
 
   #=============================================================================
   # Export All Subjects Info
   #=============================================================================
-  ### Creating directory =======================================================
-  dir.create(path_Export_Subjects.Lists, showWarnings = F)
-
-
   ## Image ID ==================================================================
   All_ImageID = c(data.list[[1]]$MT1___IMAGE_ID, data.list[[1]]$EPI___IMAGE_ID)
-  RS.fMRI_1.5_Exporting.Lists___SUB_Exporting.Image.ID(All_ImageID, filename = paste0("[Final_Selected]_ImageID"), path_Export_Subjects.Lists)
+  RS.fMRI_1_Data.Selection___Exporting.Lists___SUB_Exporting.Image.ID(All_ImageID, filename = paste0("[Final_Selected]_ImageID"), path_Export_Subjects.Lists)
 
 
 
   ### csv file ==========================================================================
   # Selected
-  RS.fMRI_1.5_Exporting.Lists___SUB_Exporting.Subjects.List.CSV(data.list[[1]], path_Export_Subjects.Lists, paste0("[Final_Selected]_Subjects_list_(Selected_Variables)"))
+  RS.fMRI_1_Data.Selection___Exporting.Lists___SUB_Exporting.Subjects.List.CSV(data.list[[1]], path_Export_Subjects.Lists, paste0("[Final_Selected]_Subjects_list"))
   # Full
-  RS.fMRI_1.5_Exporting.Lists___SUB_Exporting.Subjects.List.CSV(data.list[[2]], path_Export_Subjects.Lists, paste0("[Final_Selected]_Subjects_list_(Full_Variables)"))
+  RS.fMRI_1_Data.Selection___Exporting.Lists___SUB_Exporting.Subjects.List.CSV(data.list[[2]], path_Export_Subjects.Lists, paste0("[Final_Selected]_Subjects_list_(Full_History)"))
 
-  text = "1.3 : Exporting All Subjects Info is done."
+  text = "Exporting All Subjects Info is done."
   cat("\n", crayon::green(text), "\n")
 
 
   ### returning results
-  text = paste("\n","Step 1.3 is done !","\n")
+  text = paste("\n","Step 1.7 is done !","\n")
   cat(crayon::bgMagenta(text))
   return(data.list)
 }
