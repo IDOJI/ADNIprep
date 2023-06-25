@@ -25,7 +25,10 @@ RS.fMRI_1_Data.Selection___Loading.Lists___CLIELG = function(Selected_RID, Subje
   #=============================================================================
   # names change
   #=============================================================================
-  names(CV.df) = paste0("CLIELG___", names(CV.df))
+  print_colnames(CV.df)
+  selected_cols = c("USERDATE", "USERDATE2", "CENROLL", "UPDATE_STAMP", "INCLUSION", "FAILINCLU", "EXCLUSION", "FAILEXCLU", "CONTINCLU", "CONTFAILI", "CONTEXCLU", "CONTFAILE", "CEMRI", "CRAND", "CDATE")
+  cols_index = which(names(CV.df) %in% selected_cols)
+  names(CV.df)[cols_index] = paste0("CLIELG___", selected_cols)
 
 
 

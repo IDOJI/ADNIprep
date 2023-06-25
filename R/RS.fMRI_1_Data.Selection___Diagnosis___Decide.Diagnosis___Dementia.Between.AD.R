@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Dementia.Between.AD = function(Data.list){
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Dementia.Between.AD = function(Data.list){
   # Data.list = Change_Diagnosis_by_Comments.list
 
 

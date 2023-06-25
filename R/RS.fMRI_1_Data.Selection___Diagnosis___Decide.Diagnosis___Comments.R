@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Comments = function(Data.list){
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Comments = function(Data.list){
   # Data.list = AD_Likelihood.list
   Returned.list = lapply(Data.list, function(ith_RID.df){
     # ith_RID.df = Data.list[[8]]

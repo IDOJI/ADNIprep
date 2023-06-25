@@ -33,7 +33,7 @@ RS.fMRI_1_Data.Selection___Loading.Lists___DXSUM = function(Selected_RID, Subjec
   # Selecting columns
   #=============================================================================
   # RS.fMRI_1.3_Diagnosis___Data.Dictionary("DIAGNOSIS")
-  DXSUM_Intersect_Selected.df = DXSUM_Intersect.df %>% select(c("RID", "VISCODE", "VISCODE2", "EXAMDATE",
+  DXSUM_Intersect_Selected.df = DXSUM_Intersect.df %>% select(c("Phase", "RID", "VISCODE", "VISCODE2", "EXAMDATE",
                                                                 "DXCHANGE", "DXCURREN", "DXCONV", "DXCONTYP", "DXREV",
                                                                 "DXNORM", "DXMCI", "DXAD","DXADES", "DXAPP", "DXOTHDEM", "DIAGNOSIS"))
 
@@ -64,10 +64,16 @@ RS.fMRI_1_Data.Selection___Loading.Lists___DXSUM = function(Selected_RID, Subjec
 
   DXSUM_Intersect_Selected.df$DXCURREN = DXSUM_Intersect_Selected.df$DXCURREN %>% as.character()
 
+
+
   #=============================================================================
   # Replace Names
   #=============================================================================
-  names(DXSUM_Intersect_Selected.df) = paste0("DXSUM___", names(DXSUM_Intersect_Selected.df))
+  selected_cols = c("EXAMDATE", "DXCHANGE", "DXCURREN", "DXCONV", "DXCONTYP", "DXREV", "DXNORM", "DXMCI", "DXAD", "DXADES", "DXAPP", "DXOTHDEM", "DIAGNOSIS")
+  cols_index = which(names(DXSUM_Intersect_Selected.df) %in% selected_cols)
+  # print_colnames(DXSUM_Intersect_Selected.df)
+  names(DXSUM_Intersect_Selected.df)[cols_index] = paste0("DXSUM___", selected_cols)
+  names(DXSUM_Intersect_Selected.df) = DXSUM_Intersect_Selected.df %>% names %>% toupper
 
 
 

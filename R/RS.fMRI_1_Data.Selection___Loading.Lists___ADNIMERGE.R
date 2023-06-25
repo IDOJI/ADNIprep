@@ -48,8 +48,12 @@ RS.fMRI_1_Data.Selection___Loading.Lists___ADNIMERGE = function(Selected_RID){
   #=============================================================================
   # Replace Names
   #=============================================================================
-  names(ADNIMERGE_New_2.df) = paste0("ADNIMERGE___", names(ADNIMERGE_New_2.df))
-
+  # print_colnames(ADNIMERGE_New_2.df)
+  selected_cols = c("EXAMDATE", "DX.bl", "AGE", "PTGENDER", "PTEDUCAT", "PTETHCAT", "PTRACCAT", "PTMARRY", "APOE4", "ADAS11", "ADAS13", "ADASQ4", "MMSE", "DX", "EXAMDATE.bl", "Years.bl", "Month.bl", "Month", "M")
+  names(ADNIMERGE_New_2.df)[which(names(ADNIMERGE_New_2.df) %in% selected_cols)] = paste0("ADNIMERGE___", selected_cols)
+  ADNIMERGE_New_2.df = ADNIMERGE_New_2.df %>% relocate(starts_with("ADNIMERGE___"), .after = last_col())
+  ADNIMERGE_New_2.df = ADNIMERGE_New_2.df %>% rename(VISCODE2 = VISCODE)
+  ADNIMERGE_New_2.df = ADNIMERGE_New_2.df %>% rename(PHASE = COLPROT)
 
 
 

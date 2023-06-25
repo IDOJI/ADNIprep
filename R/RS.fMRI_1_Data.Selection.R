@@ -15,11 +15,14 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
                                     ############################################
                                     Subjects_NFQ,
                                     Subjects_Search,
+                                    # Subjects_Study_Visits,
                                     Subjects_Registry,
                                     ############################################
                                     Subjects_PTDEMO,
                                     Subjects_DX_Summary,
                                     Subjects_BLCHANGE,
+                                    Subjects_ADAS,
+                                    Subjects_MMSE,
                                     Subjects_APOE,
                                     ############################################
                                     what.date            = 1,
@@ -46,79 +49,63 @@ RS.fMRI_1_Data.Selection = function(path_Subjects.Lists_Downloaded,
 
 
   #============================================================================
-  # 2. Merging Subjects lists
+  # 2. Loading Subjects lists
   #============================================================================
-  Merged_Lists.list = RS.fMRI_1_Data.Selection___Loading.Lists()
+  Loaded_Data.list = RS.fMRI_1_Data.Selection___Loading.Lists(Selected_Subjects_by_QC.list,
+                                                              path_Subjects.Lists_Downloaded,
+                                                              Subjects_NFQ,
+                                                              Subjects_Search,
+                                                              Subjects_Registry,
+                                                              Subjects_CV_ADNI2GO,
+                                                              Subjects_CV_ADNI3,
+                                                              Subjects_BLCHANGE,
+                                                              Subjects_DX_Summary,
+                                                              Subjects_ADAS,
+                                                              Subjects_MMSE,
+                                                              Subjects_APOE)
 
 
-  Subjects_PTDEMO
-
-  PHASE가 동일하고, 날짜가 가장 가까운 경우
-  ADNIMERGE의 bl을 기준으로 날짜 계산해서 VISCODE를 부여
 
 
-  path_Subjects.Lists_Downloaded = path_tail_slash(path_Subjects.Lists_Downloaded)
-  dir.create(path_Subjects.Lists_Downloaded, showWarnings = F)
-  if(!is.null(path_Export_Subjects.Lists)){
-    path_Export_Subjects.Lists = path_tail_slash(path_Export_Subjects.Lists)
-    dir.create(path_Export_Subjects.Lists, showWarnings = F)
+
+  #=============================================================================
+  # 3. Merging Subjects lists
+  #=============================================================================
+  Merged_Full.list = RS.fMRI_1_Data.Selection___Merging.Lists(Loaded_Data.list)
+
+
+
+
+
+
+  #============================================================================
+  # 4.Diagnosis
+  #============================================================================
+  Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis(Merged_Full.list)
+
+
+
+  ith_APOE_1 = c(as.numeric(na.omit(ith_Merged_6.df$APOE.A1)), as.numeric(na.omit(ith_Merged_6.df$APOE___APGEN1))) %>% unique
+  ith_APOE_2 = c(as.numeric(na.omit(ith_Merged_6.df$APOE.A2)), as.numeric(na.omit(ith_Merged_6.df$APOE___APGEN2))) %>% unique
+  if(length(ith_APOE_1)==1){
+    ith_Merged_6.df$APOE___APGEN1 = ith_APOE_1
+    ith_Merged_6.df$APOE.A1 = NULL
   }
-  path_Subjects_BLCHANGE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_BLCHANGE)
-  path_Subjects_DX_Summary = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_DX_Summary)
-  path_Subjects_PTDEMO = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_PTDEMO)
-  path_Subjects_APOE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_APOE)
+  if(length(ith_APOE_2)==1){
+    ith_Merged_6.df$APOE___APGEN2 = ith_APOE_2
+    ith_Merged_6.df$APOE.A2 = NULL
+  }
 
-
-  #============================================================================
-  # 1.Loading Subjects
-  #============================================================================
-  Subjects.list = RS.fMRI_1.1_Load.Subjects.As.List(path_Subjects.Lists_Downloaded,
-                                                    # QC
-                                                    Subjects_QC_ADNI2GO,
-                                                    Subjects_QC_ADNI3,
-                                                    # NFQ
-                                                    Subjects_NFQ,
-                                                    # Search
-                                                    Subjects_Search,
-                                                    # Registry
-                                                    Subjects_Registry,
-                                                    # Others
-                                                    what.date,
-                                                    Include_RID,
-                                                    Include_ImageID,
-                                                    Exclude_RID,
-                                                    Exclude_ImageID,
-                                                    Exclude_Comments)
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #============================================================================
-  # 3.Diagnosis
-  #============================================================================
-  Merged_Diagnosis.list = RS.fMRI_1.3_Diagnosis(Merged_Lists.df,
-                                                path_Subjects_BLCHANGE,
-                                                path_Subjects_DX_Summary)
-
-
-
-
-
-
+  #=======================================================================
+  # Data Exclusion
+  #=======================================================================
+  Excluded.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Data.Exclusion(Merged_Diagnosis.list)
 
 
   #===============================================================================
   # Extracting Demographics & Data binding
   #===============================================================================
+  path_Subjects_APOE = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_APOE)
   Binded.list = RS.fMRI_1.4_Demographics(Merged_Diagnosis.list, path_Subjects_APOE)
   # • About EXAMDATE in Clinical data files
   # – Clinical data acquired in ADNIGO/2 do not include ‘EXAMDATE’ (the date of the exam), although this

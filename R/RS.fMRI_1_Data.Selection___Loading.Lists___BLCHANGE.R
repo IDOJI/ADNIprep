@@ -24,8 +24,7 @@ RS.fMRI_1_Data.Selection___Loading.Lists___BLCHANGE = function(Selected_RID, Sub
   # Intersect RID
   #=============================================================================
   BLCHANGE_Intersect.df = BLCHANGE.df %>% filter(RID %in% Selected_RID)
-
-
+  names(BLCHANGE_Intersect.df) = names(BLCHANGE_Intersect.df) %>% toupper
 
 
 
@@ -33,8 +32,10 @@ RS.fMRI_1_Data.Selection___Loading.Lists___BLCHANGE = function(Selected_RID, Sub
   # Selecting columns
   #=============================================================================
   # RS.fMRI_1.3_Diagnosis___Data.Dictionary("BCCORCOG")
-  BLCHANGE_Intersect_Selected.df = BLCHANGE_Intersect.df %>% select(c("RID", "VISCODE", "VISCODE2", "EXAMDATE", "BCPREDX", "BCEXTSP", "BCSUMM"))
-  names(BLCHANGE_Intersect_Selected.df) = paste0("BLCHANGE___", names(BLCHANGE_Intersect_Selected.df))
+  BLCHANGE_Intersect_Selected.df = BLCHANGE_Intersect.df %>% select(c("PHASE", "RID", "VISCODE", "VISCODE2", "EXAMDATE", "BCPREDX", "BCEXTSP", "BCSUMM"))
+  selected_cols =  c("EXAMDATE", "BCPREDX", "BCEXTSP", "BCSUMM")
+  cols_index = which(names(BLCHANGE_Intersect_Selected.df)%in% selected_cols )
+  names(BLCHANGE_Intersect_Selected.df)[cols_index] = paste0("BLCHANGE___", selected_cols)
 
 
 

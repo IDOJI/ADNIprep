@@ -39,10 +39,10 @@ RS.fMRI_1_Data.Selection___Loading.Lists___NFQ = function(Selected_RID, Subjects
   #=============================================================================
   NFQ_5.df = NFQ_4.df
   names(NFQ_5.df) = names(NFQ_5.df) %>% toupper
-  names(NFQ_5.df) = paste0("NFQ___", names(NFQ_5.df))
+  # names(NFQ_5.df) = paste0("NFQ___", names(NFQ_5.df))
   # print_colnames(NFQ_5.df)
-  # selected_cols = c("SERIESTIME", "MANUFACTURER", "MANUFACTURERSMODELNAME", "REPETITIONTIME", "SOFTWAREVERSIONS", "PATIENTSAGE", "NFQ", "OVERALLQC", "SLICE.TIMING", "SLICE.ORDER", "SLICE.ORDER.TYPE", "BAND.TYPE")
-  # names(NFQ_5.df)[which(names(NFQ_5.df) %in% selected_cols)] = paste0("NFQ___", selected_cols)
+  selected_cols = c("SERIESTIME", "MANUFACTURER", "MANUFACTURERSMODELNAME", "REPETITIONTIME", "SOFTWAREVERSIONS", "PATIENTSAGE", "NFQ", "OVERALLQC", "SLICE.TIMING", "SLICE.ORDER", "SLICE.ORDER.TYPE", "BAND.TYPE")
+  names(NFQ_5.df)[which(names(NFQ_5.df) %in% selected_cols)] = paste0("NFQ___", selected_cols)
 
 
 
@@ -53,7 +53,7 @@ RS.fMRI_1_Data.Selection___Loading.Lists___NFQ = function(Selected_RID, Subjects
   #=============================================================================
   NFQ_6.df = NFQ_5.df
   NFQ_6.df$RID = NFQ_6.df$RID %>% as.numeric
-  NFQ_6.df = NFQ_6.df %>% arrange(NFQ___RID, NFQ___SCANDATE)
+  NFQ_6.df = NFQ_6.df %>% arrange(RID, SCANDATE)
 
 
 

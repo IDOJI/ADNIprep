@@ -1,7 +1,8 @@
-RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___PTDEMO = function(Merged_Lists.df, path_Subjects_PTDEMO){
+RS.fMRI_1_Data.Selection___Loading.Lists___PTDEMO = function(Selected_RID, Subjects_PTDEMO, path_Subjects.Lists_Downloaded){
   #=============================================================================
   # csv?
   #=============================================================================
+  path_Subjects_PTDEMO = paste0(path_tail_slash(path_Subjects.Lists_Downloaded), Subjects_PTDEMO)
   if(grep("csv", path_Subjects_PTDEMO) %>% length > 0){
     Data.df = read.csv(path_Subjects_PTDEMO)
   }else{
@@ -21,12 +22,7 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___PTDEMO = function(Merged_Lists.df,
   #=============================================================================
   # Intersect RID
   #=============================================================================
-  RID_BL = Data.df$RID %>% unique %>% sort
-  RID_EPB = Merged_Lists.df$RID %>% sort
-  RID_Intersect = intersect(RID_BL, RID_EPB) %>% sort
-
-
-  Data_Intersect.df = Data.df %>% filter(RID %in% RID_Intersect) %>% arrange(RID, USERDATE)
+  Data_Intersect.df = Data.df %>% filter(RID %in% Selected_RID) %>% arrange(RID, USERDATE)
   Data_Intersect_Selected.df = Data_Intersect.df
 
 
@@ -42,16 +38,20 @@ RS.fMRI_1.3_Diagnosis___Combine.Data.Frames___PTDEMO = function(Merged_Lists.df,
   #=============================================================================
   # Replace Names
   #=============================================================================
-  names(Data_Intersect_Selected.df) = paste0("PTDEMO___", names(Data_Intersect_Selected.df))
+  # print_colnames(Data_Intersect_Selected.df)
+  names(Data_Intersect_Selected.df) = names(Data_Intersect_Selected.df) %>% toupper
+  selected_cols = c("ID", "SITEID","USERDATE", "USERDATE2", "PTSOURCE", "PTGENDER", "PTDOBMM", "PTDOBYY", "PTHAND", "PTMARRY", "PTEDUCAT", "PTWORKHS", "PTWORK", "PTWRECNT", "PTNOTRT", "PTRTYR", "PTHOME", "PTOTHOME", "PTTLANG", "PTPLANG", "PTPSPEC", "PTCOGBEG", "PTMCIBEG", "PTADBEG", "PTADDX", "PTETHCAT", "PTRACCAT", "UPDATE_STAMP")
+  cols_index = which(names(Data_Intersect_Selected.df)%in% selected_cols )
+  names(Data_Intersect_Selected.df)[cols_index] = paste0("PTDEMO___", selected_cols)
+  #names(Data_Intersect_Selected.df) = paste0("PTDEMO___", names(Data_Intersect_Selected.df))
 
 
 
   #=============================================================================
   # Data  as list by RID
   #=============================================================================
-  Data.list = as_list_by(Data_Intersect_Selected.df, by =  "PTDEMO___RID")
+  Data.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID,Data.df = Data_Intersect_Selected.df)
 
-  cat("\n", crayon::bgMagenta("Step 1.3 "),crayon::green("Diagnosis subjects selection is done : "), crayon::red("PTDEMO"),"\n")
 
   return(Data.list)
 }

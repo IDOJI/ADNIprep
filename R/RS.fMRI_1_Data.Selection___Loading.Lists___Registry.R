@@ -9,7 +9,11 @@ RS.fMRI_1_Data.Selection___Loading.Lists___Registry = function(Selected_RID, Sub
   #=============================================================================
   # names change
   #=============================================================================
-  names(Registry.df) = paste0("REGISTRY___", names(Registry.df) %>% toupper)
+  # print_colnames(Registry.df)
+  selected_cols = c("ID", "SITEID","USERDATE", "USERDATE2", "PTSTATUS", "RGSTATUS", "VISTYPE", "EXAMDATE", "RGCONDCT", "RGREASON", "RGOTHSPE", "RGSOURCE", "RGRESCRN", "RGPREVID", "CHANGTR", "CGTRACK", "CGTRACK2", "update_stamp")
+  cols_index = which(names(Registry.df)  %in% selected_cols)
+  names(Registry.df)[cols_index] = paste0("REGISTRY___", selected_cols)
+  names(Registry.df) = names(Registry.df) %>% toupper
 
 
   #=============================================================================

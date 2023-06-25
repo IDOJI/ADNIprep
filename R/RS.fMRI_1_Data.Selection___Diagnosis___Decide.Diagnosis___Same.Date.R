@@ -1,4 +1,5 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Same.Date = function(Data.list){
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Same.Date = function(Data.list){
+
   Returned.list = lapply(seq_along(Data.list), function(i){
     ith_RID.df = Data.list[[i]]
     ith_Dates = ith_RID.df$NEW_EXAMDATE

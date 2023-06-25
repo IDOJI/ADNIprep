@@ -1,4 +1,4 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___AD.Likelihood = function(Data.list){
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___AD.Likelihood = function(Data.list){
   # Data.list = Diagnosis_New.list
   #=======================================================================
   # AD likelihood

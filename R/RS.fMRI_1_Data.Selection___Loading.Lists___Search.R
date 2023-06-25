@@ -30,13 +30,31 @@ RS.fMRI_1_Data.Selection___Loading.Lists___Search = function(  Selected_RID ,
 
   ### 5.changing & Exclude ADNI1 Phase ================================================================
   Search_5.df = RS.fMRI_1_Data.Selection___Loading.Lists___Search___Change.Exclude.Phase(Search_4.df)
-  names(Search_5.df) = paste0("SEARCH___", names(Search_5.df))
   cat("\n", crayon::green("1.1.1 : Changing & Excluding Phase is done."), "\n")
 
 
 
+  ### 6.Colnames ===============================================================
+  Search_6.df = Search_5.df
+  selected_cols = c("VISIT", "MODALITY", "DESCRIPTION", "IMAGING.PROTOCOL")
+  cols_index = which(names(Search_6.df) %in% selected_cols)
+  names(Search_6.df)[cols_index] = paste0("SEARCH___", selected_cols)
+
+
+
+
+  ### 7. VISCODE ===============================================================
+  Search.df = Search_6.df
+  Search_7.df = RS.fMRI_1_Data.Selection___Loading.Lists___Search___VISCODE(Search.df)
+
+
+
+
+
+
+
   ### 6. as list ===============================================================
-  Search.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID, Data.df = Search_5.df)
+  Search.list = RS.fMRI_1_Data.Selection___Loading.Lists___SUB___Making.List(Selected_RID, Data.df = Search_7.df)
 
 
 

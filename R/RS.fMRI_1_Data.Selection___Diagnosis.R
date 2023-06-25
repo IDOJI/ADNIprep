@@ -18,28 +18,27 @@
 # ∗ ADNIGO/2: DXCHANGE 1=Stable: NL to NL; 2=Stable: MCI to MCI; 3=Stable: Dementia to Dementia; 4=Conversion: NL to MCI; 5=Conversion: MCI to Dementia; 6=Conversion: NL to Dementia;
 # 7=Reversion: MCI to NL; 8=Reversion: Dementia to MCI; 9=Reversion: Dementia to NL
 # ∗ ADNI3: DIAGNOSIS 1=CN; 2=MCI; 3=Dementia
-RS.fMRI_1.3_Diagnosis = function(Merged_Lists.df,
-                                 path_Subjects_BLCHANGE,
-                                 path_Subjects_DX_Summary){
+
+RS.fMRI_1_Data.Selection___Diagnosis = function(Merged_Full.list){
   #===============================================================================
-  # Combining Data
+  # Merged Diagnosis
   #===============================================================================
-  Combined.list = RS.fMRI_1.3_Diagnosis___Combine.Data.Frames(Merged_Lists.df, path_Subjects_BLCHANGE, path_Subjects_DX_Summary)
+  Merged_Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis___Merging.Diagnosis(Merged_Full.list)
 
 
 
   #===============================================================================
   # Decide Diagnosis
   #===============================================================================
-  Diagnosis.list = RS.fMRI_1.3_Diagnosis___Decide.Diagnosis(Combined.list)
+  Diagnosis.list = RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis(Merged_Diagnosis.list)
 
 
 
 
   #===============================================================================
-  # Calculating times till AD
+  # Calculating times till Dementia
   #===============================================================================
-  Time_To_First_AD.list = RS.fMRI_1.3_Diagnosis___Time.To.First.AD(Diagnosis.list)
+  Time_To_First_AD.list = RS.fMRI_1_Data.Selection___Diagnosis___Time.To.First.Dementia(Diagnosis.list)
 
 
 

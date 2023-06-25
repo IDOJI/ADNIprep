@@ -1,12 +1,12 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
-  # Data.list = Merged_Data.list
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
+  # Data.list = Merged_Diagnosis.list
 
   Returned.list = lapply(seq_along(Data.list), function(i){
     ith_RID.df = Data.list[[i]]
     ith_RID.df = cbind(DIAGNOSIS_NEW = ith_RID.df$DIAGNOSIS, ith_RID.df)
 
 
-    cat("\n", crayon::yellow(i),"\n")
+
 
     ith_DXMCI = ith_RID.df$DXSUM___DXMCI
     ith_DXNORM = ith_RID.df$DXSUM___DXNORM
@@ -19,7 +19,7 @@ RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
     # Decision
     #===========================================================================
     for(k in seq_along(ith_DXMCI)){
-      cat("\n", crayon::red(k),"\n")
+      # cat("\n", crayon::red(k),"\n")
       kth_dx = ith_Diagnosis[k]
 
       kth_MCI = ith_DXMCI[k] %>% as.numeric
@@ -84,7 +84,7 @@ RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Conversion = function(Data.list){
     for(k in seq_along(ith_DXCHANGE)[-1]){
 
 
-      cat("\n", crayon::bgMagenta(k) ,"\n")
+      # cat("\n", crayon::bgMagenta(k) ,"\n")
 
       kth_DX = ith_DXCHANGE[k]
 

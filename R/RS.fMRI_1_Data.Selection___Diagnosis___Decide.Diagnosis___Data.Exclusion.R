@@ -1,10 +1,8 @@
-RS.fMRI_1.3_Diagnosis___Decide.Diagnosis___Data.Exclusion = function(Data.list){
-  # Data.list  = Merged_Data.list
+RS.fMRI_1_Data.Selection___Diagnosis___Decide.Diagnosis___Data.Exclusion = function(Data.list){
+  # Data.list  = Merged_Diagnosis.list
   Excluded.list = lapply(seq_along(Data.list), function(i){
     # which(names(Merged_Data.list)=="6576")
     # ith_RID.df = Data.list[[588]]
-
-
     ith_RID.df = Data.list[[i]]
     ith_CENROLL = ith_RID.df$CLIELG___CENROLL %>% as.character
 
