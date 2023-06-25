@@ -9,14 +9,13 @@ RS.fMRI_1_Data.Selection___Demographics___APOE = function(Data.list, path_Subejc
 
 
 
-  # Data.list = Marriage.list
+
   Returned.list = lapply(seq_along(Data.list), function(i,...){
     # print(i)
     # i=297
     ith_RID.df = Data.list[[i]]
     ith_RID = ith_RID.df$RID %>% na.omit %>% unique
-    ith_RID.df$APOE4 = NA
-    ith_RID.df = ith_RID.df %>% relocate(APOE4)
+    APOE4 = rep(NA, nrow(ith_RID.df))
 
     # Extract APOE
     ith_APOE_1 = ith_RID.df$APOE.A1 %>% na.omit() %>% as.numeric() %>% unique()
@@ -39,15 +38,14 @@ RS.fMRI_1_Data.Selection___Demographics___APOE = function(Data.list, path_Subejc
                          ifelse(ith_APOE_1 == 4 && ith_APOE_2 == 4, 2, 1))
 
       if(unique(ith_RID.df$ADNIMERGE___APOE4 %>% na.omit)==ith_APOE4){
-        ith_RID.df$APOE4 = ith_APOE4
-        ith_RID.df$ADNIMERGE___APOE4 = NULL
+        ith_RID.df$ADNIMERGE___APOE4 = ith_APOE4
       }else{
         stop("Check APOE4")
       }
     }else{
       ith_RID.df$APOE.A1 = NA
       ith_RID.df$APOE.A2 = NA
-      ith_RID.df$ADNIMERGE___APOE4 = NULL
+      ith_RID.df$ADNIMERGE___APOE4 = NA
     }
     return(ith_RID.df)
   })

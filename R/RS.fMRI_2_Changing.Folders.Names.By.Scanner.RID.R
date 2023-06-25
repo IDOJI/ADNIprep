@@ -16,12 +16,15 @@ RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB
   #===========================================================================================
   # Extract RID from folders' name
   #===========================================================================================
-  RID = sapply(Unzipped.Folders, FUN=function(ith_Folder){
-    # ith_Folder = Unzipped.Folders[100]
+  RID = sapply(Unzipped.Folders, FUN=function(ith_Folder, ...){
+    # ith_Folder = Unzipped.Folders[1]
     ith_RID = str_extract(ith_Folder, "RID_\\d+")
-    gsub("[^0-9]", "", ith_RID) %>% as.numeric
+    if(!is.na(ith_RID)){
+      gsub("[^0-9]", "", ith_RID) %>% as.numeric() %>% return()
+    }else{
+      substr(ith_Folder, nchar(ith_Folder)-3, nchar(ith_Folder)) %>% as.numeric %>% return
+    }
   }) %>% unname
-
 
 
 

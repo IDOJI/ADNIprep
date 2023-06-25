@@ -20,7 +20,7 @@ RS.fMRI_2_Changing.Raw.Folders.Names.by.Sub.Numbering.for.DPABI = function(path_
   # Change folders names to FunRaw & T1Raw
   #===========================================================================================
   Results = sapply(seq_along(path_Unzipped.Folders), FUN=function(i, ...){
-    # ith_path = path_Unzipped.Folders[100]
+    # ith_path = path_Unzipped.Folders[1]
     ith_path = path_Unzipped.Folders[i]
     ith_folders = list.files(ith_path)
 
@@ -45,8 +45,8 @@ RS.fMRI_2_Changing.Raw.Folders.Names.by.Sub.Numbering.for.DPABI = function(path_
       # Changing folders Names
       dir.create(paste0(ith_path, "/", "FunRaw"), T)
       dir.create(paste0(ith_path, "/", "T1Raw"), T)
-      file.rename(from = ith_EPI_Image_path, to = paste0(ith_path, "/", "FunRaw", "/", Sub_Num[ind])) %>% invisible
-      file.rename(from = ith_MT1_Image_path, to = paste0(ith_path, "/", "T1Raw", "/", Sub_Num[ind])) %>% invisible
+      file.rename(from = ith_EPI_Image_path, to = paste0(ith_path, "/", "FunRaw", "/", Sub_Num[i])) %>% invisible
+      file.rename(from = ith_MT1_Image_path, to = paste0(ith_path, "/", "T1Raw", "/", Sub_Num[i])) %>% invisible
 
 
       # deleting the former folders
@@ -54,7 +54,7 @@ RS.fMRI_2_Changing.Raw.Folders.Names.by.Sub.Numbering.for.DPABI = function(path_
       unlink(ith_MT1_folder_path, recursive = T)
     }
 
-    cat("\n", crayon::green("Renaming FunRaw and T1Raw is done : "), crayon::bgRed(Unzipped.Folders[ind]), "\n")
+    cat("\n", crayon::green("Renaming FunRaw and T1Raw is done : "), crayon::bgRed(Unzipped.Folders[i]), "\n")
   })
 
 

@@ -1,5 +1,5 @@
 RS.fMRI_1_Data.Selection___Demographics___Demographic.Variables = function(Binded.df){
-  Demo_Variables = c("APOE4", "WEIGHT", "DIAGNOSIS_NEW", "SEX", "AGE",
+  Demo_Variables = c("WEIGHT", "DIAGNOSIS_NEW", "SEX", "AGE",
                      "ADNIMERGE___AGE", "ADNIMERGE___PTGENDER", "ADNIMERGE___PTEDUCAT",
                      "ADNIMERGE___PTETHCAT", "ADNIMERGE___PTRACCAT",
                      "ADNIMERGE___PTMARRY", "ADNIMERGE___APOE4",
