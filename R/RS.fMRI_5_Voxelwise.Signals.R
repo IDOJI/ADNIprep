@@ -26,7 +26,8 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
   # 여러 개의 SUb 폴더들이 있는 경우
   }else if(!is.null(path_Preprocessing.Completed)){
     path_Sub_Folders = fs::dir_ls(path_Preprocessing.Completed, type="dir")
-    Error_path = sapply(path_Sub_Folders, function(y){
+
+    Error_path = sapply(path_Sub_Folders, function(y, ...){
       tryCatch({
         RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = y,
                                                      result.folder.name,
@@ -44,7 +45,7 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
   cat("\n", crayon::bgMagenta("Step 5"),crayon::blue("Extracting and Saving Voxel-wise BOLD signals is done!"), "\n")
 
 
-
+  Error_path = Error_path %>% rm_list_null()
   if(length(Error_path)>0){
     Results = sapply(Error_path, function(y){
       cat("\n",  y, "\n")
