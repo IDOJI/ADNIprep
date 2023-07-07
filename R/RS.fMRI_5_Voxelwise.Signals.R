@@ -54,7 +54,7 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
       cat("\n",  y, "\n")
     })
 
-    cat("\n", crayon::bgRed("These are error path!"), "\n")
+    cat("\n", crayon::bgRed("These are error path! (Maybe discrepancy of ROI BOLD Signals from DPABI Results)"), "\n")
     Error_path %>% unlist %>% unname %>% return
   }
 }

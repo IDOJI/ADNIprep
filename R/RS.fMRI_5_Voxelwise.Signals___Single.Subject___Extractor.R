@@ -70,7 +70,7 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   tictoc::tic()
   # Raw
   if(Include.Raw){
-    RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data(RID, MNI, filename_suffix=NULL, save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
+    RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data(RID, MNI, filename_suffix="Raw", save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
   }
   # Standardized
   if(!is.null(Standardization.Method)){
@@ -88,7 +88,12 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   #===========================================================================
   # ith_n_Voxels = lapply(ith_Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, nrow)
   Voxels_Coordinates = lapply(Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, rownames)
-  saveRDS(Voxels_Coordinates, file = paste0(path_save, "/RID_", fit_length(RID, 4), "___Voxelwise.BOLD.Signals___Voxel.Coordinates.rds"))
+  if(MNI){
+    saveRDS(Voxels_Coordinates, file = paste0(path_save, "/RID_", fit_length(RID, 4), "___MNI___Voxelwise.BOLD.Signals___Voxel.Coordinates.rds"))
+  }else{
+    saveRDS(Voxels_Coordinates, file = paste0(path_save, "/RID_", fit_length(RID, 4), "___Original___Voxelwise.BOLD.Signals___Voxel.Coordinates.rds"))
+  }
+
   cat("\n", crayon::yellow("Exporting RDS data of Voxels Coordinates :"), crayon::red(paste0("RID_", RID)),"\n")
 
 
