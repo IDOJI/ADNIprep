@@ -1,10 +1,10 @@
-RS.fMRI_5_Voxelwise.Signals___Check.Subjects.Lists = function(path_Extracted.Voxelwise.BOLD.Signals.Folder,
-                                                              path_Subjects.List,
-                                                              Band.Type = NULL){
+RS.fMRI_5_Check.Results___Not.Extracted.Subjects.Lists = function(path_Extracted.Results.Folder,
+                                                                  path_Subjects.List,
+                                                                  Band.Type = NULL){
   #=============================================================================
   # RDS list
   #=============================================================================
-  Extracted_RID = list.files(path_Extracted.Voxelwise.BOLD.Signals.Folder) %>% str_extract("(?<=RID_)\\d+") %>% as.numeric()
+  Extracted_RID = list.files(path_Extracted.Results.Folder) %>% str_extract("(?<=RID_)\\d+") %>% as.numeric()
 
 
 
@@ -17,7 +17,8 @@ RS.fMRI_5_Voxelwise.Signals___Check.Subjects.Lists = function(path_Extracted.Vox
   }else{
     Subjects_List_RID = Subjects_List.df %>% select(RID) %>% unlist() %>% unname() %>% sort()
   }
-
+  # sum(Subjects_List_RID %in% Extracted_RID)
+  # sum(Extracted_RID %in% Subjects_List_RID)
 
   #=============================================================================
   # Find RID not yet included
