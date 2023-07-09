@@ -1,18 +1,14 @@
-RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data = function(RID, MNI, filename_suffix=NULL, save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list){
+RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data = function(RID, result.folder.name, filename_suffix=NULL, save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list){
   if(!fs::dir_exists(path_save)) {
     fs::dir_create(path_save)
-    print("The directory did not exist. Created it now.")
+    cat(crayon::green("The directory did not exist. Created it now."))
   }
   # dir.create(path_save, showWarnings = F)
 
 
   tictoc::tic()
-  # MNI ========================================================================
-  if(MNI){
-    filename_Voxelwise = paste0("MNI", "___", "Voxelwise.BOLD.Signals")
-  }else{
-    filename_Voxelwise = paste0("Original", "___", "Voxelwise.BOLD.Signals")
-  }
+  # Pipeline ========================================================================
+  filename_Voxelwise = paste0(result.folder.name, "___", "Voxelwise.BOLD.Signals")
 
 
 

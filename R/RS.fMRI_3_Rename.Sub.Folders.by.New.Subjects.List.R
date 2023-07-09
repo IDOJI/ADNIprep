@@ -1,11 +1,11 @@
-RS.fMRI_3_Rename.Sub.Folders.by.New.Subjects.List = function(path_New.EPI.Subjects.Lists,
+RS.fMRI_3_Rename.Sub.Folders.by.New.Subjects.List = function(path_New.Subjects.Lists,
                                                              path_Sub.Folders,
                                                              filename_col_name){
   # path_Sub.Folders = "E:/ADNI/ADNI_RS.fMRI___SB/Error/_완전제외"
   #=============================================================================
   # Changing Sub folders' names
   #=============================================================================
-  RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID(path_All.Subjects.EPB.List.File = path_New.EPI.Subjects.Lists,
+  RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID(path_Subjects.List = path_New.Subjects.Lists,
                                                   path_ADNI.Unzipped.Folders = path_Sub.Folders,
                                                   filename_col_name)
 

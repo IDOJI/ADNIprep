@@ -1,4 +1,4 @@
-RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB.List.File,
+RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_Subjects.List,
                                                            path_ADNI.Unzipped.Folders,
                                                            filename_col_name = "File_Names"){
   # path_New.EPI.Subjects.Lists = "C:/Users/lleii/Dropbox/Github/Rpkgs/ADNIprep/Subjects_Lists_Exported_New/[Final_Selected]_Subjects_list_EPB_All_New.csv"
@@ -32,7 +32,7 @@ RS.fMRI_2_Changing.Folders.Names.By.Scanner.RID = function(path_All.Subjects.EPB
   #===========================================================================================
   # Loading subjects lists
   #===========================================================================================
-  All_Subjects_EPB.df = read.csv(path_All.Subjects.EPB.List.File) %>% as_tibble
+  All_Subjects_EPB.df = read.csv(path_Subjects.List) %>% as_tibble
 
 
 

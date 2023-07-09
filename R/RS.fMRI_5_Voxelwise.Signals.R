@@ -1,6 +1,5 @@
 RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
                                        path_Preprocessing.Completed=NULL,
-                                       MNI = T,
                                        result.folder.name = "FunImgARCWSF",
                                        Atlas = c("AAL1", "AAL3"),
                                        Standardization.Method=c("NULL", "Z.standardization"),
@@ -16,7 +15,6 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
   if(!is.null(path_Sub.Single)){
     Error_path = tryCatch({
       RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = path_Sub.Single,
-                                                   MNI = MNI,
                                                    result.folder.name,
                                                    Atlas,
                                                    Standardization.Method,
@@ -32,7 +30,6 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
     Error_path = sapply(path_Sub_Folders, function(y, ...){
       tryCatch({
         RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = y,
-                                                     MNI = MNI,
                                                      result.folder.name,
                                                      Atlas,
                                                      Standardization.Method,
