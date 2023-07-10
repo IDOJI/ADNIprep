@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Grouping.by.ROI = function(Volume.mat, FC_Mask.vec, BOLD_Signals=NULL){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Grouping.by.ROI = function(Volume.mat, FC_Mask.vec, BOLD_Signals=NULL){
   ### Label
   FC_Mask_Label = FC_Mask.vec %>% table %>% names %>% as.numeric %>% sort
   FC_Mask_Label = FC_Mask_Label[FC_Mask_Label!=0]

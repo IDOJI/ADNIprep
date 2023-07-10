@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Vectorize.FC.ROI.Mask = function(path_Mask){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Vectorize.FC.ROI.Mask = function(path_Mask){
   # path_Mask = "E:/ADNI/ADNI_RS.fMRI___SB/Completed___AutoMask___O/Philips/Philips_SB___Sub_015___RID_4021/Masks/FCROI_1_Sub_015.nii"
   #=============================================================================
   # Load the data

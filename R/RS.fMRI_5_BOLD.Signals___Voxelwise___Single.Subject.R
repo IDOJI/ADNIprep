@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Single.Subject = function(path_Preprocessed,
+RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject = function(path_Preprocessed,
                                                         result.folder.name,
                                                         Atlas,
                                                         Standardization.Method,
@@ -41,7 +41,7 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject = function(path_Preprocessed,
   #=============================================================================
   # Extracting volumes & Exporting
   #=============================================================================
-  Voxels_Coordinates.list = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor(RID,
+  Voxels_Coordinates.list = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor(RID,
                                                                                      Atlas,
                                                                                      result.folder.name,
                                                                                      Standardization.Method,

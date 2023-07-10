@@ -1,9 +1,9 @@
-RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, result.folder.name, Standardization.Method=NULL, path_Volume, path_FCROI, path_BOLD_Signals, path_ROI_Order_Keys, path_save, Include.Raw = T){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor = function(RID, Atlas, result.folder.name, Standardization.Method=NULL, path_Volume, path_FCROI, path_BOLD_Signals, path_ROI_Order_Keys, path_save, Include.Raw = T){
   #===========================================================================
   # 4D Volume
   #===========================================================================
   tictoc::tic()
-  Volume.mat = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Matrix.From.4DVolume(path_4DVolume.nii = path_Volume)
+  Volume.mat = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Matrix.From.4DVolume(path_4DVolume.nii = path_Volume)
   tictoc::toc()
   cat("\n", crayon::yellow("Make 4DVolume.nii A Matrix :"), crayon::red(paste0("RID_", RID)),"\n")
 
@@ -13,7 +13,7 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   # FC ROI
   #===========================================================================
   tictoc::tic()
-  FC_Mask.vec = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Vectorize.FC.ROI.Mask(path_Mask = path_FCROI)
+  FC_Mask.vec = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Vectorize.FC.ROI.Mask(path_Mask = path_FCROI)
   tictoc::toc()
   cat("\n", crayon::yellow("Vectorize FCROI.nii :"), crayon::red(paste0("RID_", RID)),"\n")
 
@@ -26,7 +26,7 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   #===========================================================================
   tictoc::tic()
   if(!is.null(Standardization.Method)){
-    Volume_Standardized.mat = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Standardization(Volume.mat, FC_Mask.vec, Standardization.Method)
+    Volume_Standardized.mat = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Standardization(Volume.mat, FC_Mask.vec, Standardization.Method)
     cat("\n", crayon::yellow("Standardization 4DVolume.nii :"), crayon::red(paste0("RID_", RID)),"\n")
   }
   tictoc::toc()
@@ -40,9 +40,9 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   #===========================================================================
   tictoc::tic()
   BOLD_Signals = read.table(path_BOLD_Signals)
-  Voxelwise_BOLD_Signals_Grouped_by_ROIs.list = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Grouping.by.ROI(Volume.mat, FC_Mask.vec, BOLD_Signals)
+  Voxelwise_BOLD_Signals_Grouped_by_ROIs.list = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Grouping.by.ROI(Volume.mat, FC_Mask.vec, BOLD_Signals)
   if(!is.null(Standardization.Method)){
-    Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Grouping.by.ROI(Volume_Standardized.mat, FC_Mask.vec)
+    Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Grouping.by.ROI(Volume_Standardized.mat, FC_Mask.vec)
   }
   tictoc::toc()
   cat("\n", crayon::yellow("Grouping Voxelwise BOLD signals by ROI :"), crayon::red(paste0("RID_", RID)),"\n")
@@ -54,9 +54,9 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   # Labeling Brain Region by ROI order keys
   #===========================================================================
   tictoc::tic()
-  Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___ROI.Labeling(Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, path_ROI_Order_Keys, Atlas)
+  Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___ROI.Labeling(Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, path_ROI_Order_Keys, Atlas)
   if(!is.null(Standardization.Method)){
-    Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list = RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___ROI.Labeling(Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list, path_ROI_Order_Keys, Atlas)
+    Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list = RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___ROI.Labeling(Voxelwise_BOLD_Signals_Grouped_by_ROIs_Standardized.list, path_ROI_Order_Keys, Atlas)
   }
   tictoc::toc()
   cat("\n", crayon::yellow("Labeling Grouped Voxelwise BOLD signals by ROI :"), crayon::red(paste0("RID_", RID)),"\n")
@@ -70,11 +70,11 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   tictoc::tic()
   # Raw
   if(Include.Raw){
-    RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data(RID, result.folder.name, filename_suffix="Raw", save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
+    RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Saving.RDS.Data(RID, result.folder.name, filename_suffix="Raw", save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
   }
   # Standardized
   if(!is.null(Standardization.Method)){
-    RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor___Saving.RDS.Data(RID, result.folder.name, filename_suffix=Standardization.Method, save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
+    RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Saving.RDS.Data(RID, result.folder.name, filename_suffix=Standardization.Method, save_path, Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list)
   }
   tictoc::toc()
   cat("\n", crayon::yellow("Exporting RDS data of Voxelwise signals :"), crayon::red(paste0("RID_", RID)),"\n")
@@ -88,8 +88,7 @@ RS.fMRI_5_Voxelwise.Signals___Single.Subject___Extractor = function(RID, Atlas, 
   #===========================================================================
   # ith_n_Voxels = lapply(ith_Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, nrow)
   Voxels_Coordinates = lapply(Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, rownames)
-  saveRDS(Voxels_Coordinates, file = paste0(path_save, "/RID_", fit_length(RID, 4), "___", result.folder.name, "___Voxelwise.BOLD.Signals___Voxel.Coordinates.rds"))
-
+  saveRDS(Voxels_Coordinates, file = paste0(path_save, "/RID_", fit_length(RID, 4), "___", result.folder.name, "___Voxelwise.BOLD.Signals___Coordinates.rds"))
   cat("\n", crayon::yellow("Exporting RDS data of Voxels Coordinates :"), crayon::red(paste0("RID_", RID)),"\n")
 
 

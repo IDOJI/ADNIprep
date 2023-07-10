@@ -1,8 +1,8 @@
-RS.fMRI_5_Voxelwise.Signals___Check.Coordinates.Results = function(path_Extracted_Results){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Check.Coordinates.Results = function(path_Extracted_Results){
   #===============================================================================
   # Reading Coordinates files
   #===============================================================================
-  path_Coordinates_Files = list.files(path_Extracted_Results, pattern = "Voxel.Coordinates", full.names = T)
+  path_Coordinates_Files = list.files(path_Extracted_Results, pattern = "Coordinates", full.names = T)
   Coordinates.list = lapply(path_Coordinates_Files, readRDS)
 
 

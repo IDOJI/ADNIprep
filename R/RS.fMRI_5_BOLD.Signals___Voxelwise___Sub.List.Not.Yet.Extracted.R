@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Sub.List.Not.Yet.Extracted = function(path_Extracted.Results, path_Lists){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Sub.List.Not.Yet.Extracted = function(path_Extracted.Results, path_Lists){
   #===============================================================================
   # list RDS files
   #===============================================================================

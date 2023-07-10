@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals___Check.Zero.Signals = function(path_Extracted.Voxel.Wise.BOLD.Signals, file.name.pattern = "Voxelwise.BOLD.Signals.rds"){
+RS.fMRI_5_BOLD.Signals___Voxelwise___Check.Zero.Signals = function(path_Extracted.Voxel.Wise.BOLD.Signals, file.name.pattern = "Voxelwise.BOLD.Signals.rds"){
   #=============================================================================
   # path for each data
   #=============================================================================
