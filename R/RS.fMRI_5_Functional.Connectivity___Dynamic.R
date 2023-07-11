@@ -84,7 +84,7 @@ RS.fMRI_5_Functional.Connectivity___Dynamic = function(path_BOLD.Signals=NULL, V
       saveRDS(ith_Corr_Mat.list, paste0(ith_path_Export_New_1, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___FisherZ___", "window.", window.size, ".rds"))
       saveRDS(ith_Corr_Timeseries.df, paste0(ith_path_Export_New_2, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___FisherZ___Timeseries___", "window.", window.size, ".rds"))
 
-    }else if(methd == "Spearman"){
+    }else if(method == "Spearman"){
 
       ith_path_Export_New = paste0(ith_path_Export, "ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Spearman")
       ith_path_Export_New_1 = paste0(ith_path_Export_New, "___Matrices")
