@@ -9,13 +9,14 @@ RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat = function(BOLD.
 
 
 
+
   #===========================================================================
   # Extracting Rows' sequence by window.size
   #===========================================================================
   n_row = nrow(BOLD.df)
-  end_point = window_size-1
+  end_point = window.size-1
   seq_by_window.list = lapply(1:(n_row-end_point), function(i, ...){
-    i:(i+window_size - 1)
+    i:(i+window.size - 1)
   })
 
 
@@ -26,17 +27,25 @@ RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat = function(BOLD.
   # calculate Functional Connectivity
   #===========================================================================
   Cor_Mat.list = lapply(seq_by_window.list, function(ith_seq, ...){
+
     if(method == "Pearson" | method == "FisherZ"){
-      cor.mat = cor(BOLD.df[ith_seq, ], use = "everything", method = "pearson")
+      cor.mat = cor(BOLD.df[ith_seq, ], method = "pearson")
+
+
       if(method == "FisherZ"){
         cor.mat = 0.5 * log((1 + cor.mat) / (1 - cor.mat))
       }
+
+
     }else if(method == "Spearman"){
       cor.mat = cor(BOLD.df[ith_seq, ], use = "everything", method = "spearman")
     }
+
     colnames(cor.mat) = rownames(cor.mat) = colnames(BOLD.df)
+
     return(cor.mat)
   })
+
   return(Cor_Mat.list)
 
 }
