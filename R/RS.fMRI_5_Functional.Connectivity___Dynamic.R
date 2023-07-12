@@ -1,4 +1,4 @@
-RS.fMRI_5_Functional.Connectivity___Dynamic = function(path_BOLD.Signals=NULL, Voxelwise=F, path_Export, brain.region.direction="col", window.size, method = c("Pearson", "Spearman", "FisherZ"), Atlas="AAL3"){
+RS.fMRI_5_Functional.Connectivity___Dynamic = function(path_BOLD.Signals=NULL, Voxelwise=F, path_Export, brain.region.by.row=F, window.size, method = c("Pearson", "Spearman", "FisherZ"), Atlas="AAL3"){
   #=============================================================================
   # rds files list
   #=============================================================================
@@ -37,16 +37,18 @@ RS.fMRI_5_Functional.Connectivity___Dynamic = function(path_BOLD.Signals=NULL, V
       ith_BOLD.list = readRDS(ith_path_BOLD)
       ith_BOLD.df = do.call(rbind, ith_BOLD.list)
       colnames(ith_BOLD.df) = names(ith_BOLD.list)
-      brain.region.direction = "col"
+      brain.region.by.row = "col"
     }else{
       ith_BOLD.df = readRDS(ith_path_BOLD)
     }
 
+
+
+
     tictoc::tic()
     # Calculate Corr mat
-    ith_Corr_Mat.list = RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat(BOLD.df = ith_BOLD.df, brain.region.direction, window.size, method)
+    ith_Corr_Mat.list = RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat(BOLD.df = ith_BOLD.df, brain.region.by.row, window.size, method)
     cat("\n", crayon::yellow("Calculating FC by window.size is done :"), crayon::red(ith_RID),"\n")
-
 
 
     # Extracting Timeseries
@@ -54,50 +56,31 @@ RS.fMRI_5_Functional.Connectivity___Dynamic = function(path_BOLD.Signals=NULL, V
     cat("\n", crayon::yellow("Extracting timeseries of FC is done :"), crayon::red(ith_RID),"\n")
 
 
-    #Saving files
 
+    # Export Folder names
     if(method == "Pearson"){
-
-      ith_path_Export_New = paste0(ith_path_Export, "ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Pearson___Raw")
-      ith_path_Export_New_1 = paste0(ith_path_Export_New, "___Matrices")
-      ith_path_Export_New_2 = paste0(ith_path_Export_New, "___Timeseries")
-      dir.create(ith_path_Export_New_1, showWarnings = F)
-      dir.create(ith_path_Export_New_2, showWarnings = F)
-
-      saveRDS(ith_Corr_Mat.list, paste0(ith_path_Export_New_1, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___Raw___", "window.", window.size, ".rds"))
-      saveRDS(ith_Corr_Timeseries.df, paste0(ith_path_Export_New_2, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___Raw___Timeseries___", "window.", window.size, ".rds"))
-
+      ith_path_Export_New = paste0(ith_path_Export, "/ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Pearson___Raw")
     }else if(method == "FisherZ"){
-
-
-
-
-
-      ith_path_Export_New = paste0(ith_path_Export, "ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Pearson___FisherZ")
-      ith_path_Export_New_1 = paste0(ith_path_Export_New, "___Matrices")
-      ith_path_Export_New_2 = paste0(ith_path_Export_New, "___Timeseries")
-      dir.create(ith_path_Export_New_1, showWarnings = F)
-      dir.create(ith_path_Export_New_2, showWarnings = F)
-
-
-
-      saveRDS(ith_Corr_Mat.list, paste0(ith_path_Export_New_1, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___FisherZ___", "window.", window.size, ".rds"))
-      saveRDS(ith_Corr_Timeseries.df, paste0(ith_path_Export_New_2, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___FisherZ___Timeseries___", "window.", window.size, ".rds"))
-
+      ith_path_Export_New = paste0(ith_path_Export, "/ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Pearson___FisherZ")
     }else if(method == "Spearman"){
-
-      ith_path_Export_New = paste0(ith_path_Export, "ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Spearman")
-      ith_path_Export_New_1 = paste0(ith_path_Export_New, "___Matrices")
-      ith_path_Export_New_2 = paste0(ith_path_Export_New, "___Timeseries")
-      dir.create(ith_path_Export_New_1, showWarnings = F)
-      dir.create(ith_path_Export_New_2, showWarnings = F)
-
-
-
-      saveRDS(ith_Corr_Mat.list, paste0(ith_path_Export_New_1, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Speraman___Raw___", "window.", window.size, ".rds"))
-      saveRDS(ith_Corr_Timeseries.df, paste0(ith_path_Export_New_2, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Speraman___Raw___Timeseries___", "window.", window.size, ".rds"))
-
+      ith_path_Export_New = paste0(ith_path_Export, "/ROI___", Atlas, "___", ith_Pipeline, "___Dynamic___Spearman")
     }
+
+
+
+    # create Export path
+    ith_path_Export_New_1 = paste0(ith_path_Export_New, "___Matrices___Window.Size.", window.size)
+    ith_path_Export_New_2 = paste0(ith_path_Export_New, "___Timeseries___Window.Size.", window.size)
+    dir.create(ith_path_Export_New_1, showWarnings = F)
+    dir.create(ith_path_Export_New_2, showWarnings = F)
+
+
+    # saving
+    saveRDS(ith_Corr_Mat.list, paste0(ith_path_Export_New_1, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___Raw___", "Window.Size.", window.size, ".rds"))
+    saveRDS(ith_Corr_Timeseries.df, paste0(ith_path_Export_New_2, "/", ith_RID, "___FC___ROI___AAL3___", ith_Pipeline, "___Dynamic___Pearson___Raw___Timeseries___", "Window.Size.", window.size, ".rds"))
+
+
+
     cat("\n", crayon::yellow("Saving dynamic FC is done :"), crayon::red(ith_RID),"\n")
     tictoc::toc()
 

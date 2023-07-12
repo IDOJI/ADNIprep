@@ -1,9 +1,9 @@
-RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat = function(BOLD.df, brain.region.direction = "row", window.size, method = c("Pearson", "Spearman", "FisherZ")){
+RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat = function(BOLD.df, brain.region.by.row = F, window.size, method = c("Pearson", "Spearman", "FisherZ")){
   # BOLD.df = ith_BOLD.df
   #===========================================================================
   # Columns must be brain regions
   #===========================================================================
-  if(brain.region.direction == "row"){
+  if(brain.region.by.row){
     BOLD.df = t(BOLD.df)
   }
 
@@ -47,5 +47,4 @@ RS.fMRI_5_Functional.Connectivity___Dynamic___Calculate.Cor.Mat = function(BOLD.
   })
 
   return(Cor_Mat.list)
-
 }
