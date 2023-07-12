@@ -51,7 +51,7 @@ RS.fMRI_5_BOLD.Signals___FDA___Cutting.Data.by.Min.Timepoints = function(path_Im
   })
 
 
-  names(Cut_Data.list) = RID_Selected
+  names(Cut_Data.list) = paste0("RID_", fit_length(RID_Selected, 4))
 
   return(Cut_Data.list)
 }
