@@ -1,4 +1,4 @@
-RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
+RS.fMRI_5_BOLD.Signals___Voxelwise = function(path_Sub.Single=NULL,
                                        path_Preprocessing.Completed=NULL,
                                        result.folder.name = "FunImgARCWSF",
                                        Atlas = c("AAL1", "AAL3"),
@@ -14,12 +14,12 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
   # 하나의 sub 폴더에 대해서
   if(!is.null(path_Sub.Single)){
     Error_path = tryCatch({
-      RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = path_Sub.Single,
-                                                   result.folder.name,
-                                                   Atlas,
-                                                   Standardization.Method,
-                                                   path_save,
-                                                   Include.Raw)
+      RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject(path_Preprocessed = path_Sub.Single,
+                                                          result.folder.name,
+                                                          Atlas,
+                                                          Standardization.Method,
+                                                          path_save,
+                                                          Include.Raw)
     }, error = function(e) {
       return(path_Sub.Single)
     })
@@ -29,12 +29,12 @@ RS.fMRI_5_Voxelwise.Signals = function(path_Sub.Single=NULL,
 
     Error_path = sapply(path_Sub_Folders, function(y, ...){
       tryCatch({
-        RS.fMRI_5_Voxelwise.Signals___Single.Subject(path_Preprocessed = y,
-                                                     result.folder.name,
-                                                     Atlas,
-                                                     Standardization.Method,
-                                                     path_save,
-                                                     Include.Raw)
+        RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject(path_Preprocessed = y,
+                                                            result.folder.name,
+                                                            Atlas,
+                                                            Standardization.Method,
+                                                            path_save,
+                                                            Include.Raw)
       }, error = function(e) {
         return(y)
       })# tryCatch
