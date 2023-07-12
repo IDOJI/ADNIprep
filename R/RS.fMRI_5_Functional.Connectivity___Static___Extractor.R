@@ -1,4 +1,4 @@
-RS.fMRI_5_BOLD.Signals___ROI___Extractor = function(path_Sub, Pipeline = "FunImgARCWSF", Atlas = "AAL3", path_Export){
+RS.fMRI_5_Functional.Connectivity___Static___Extractor = function(path_Sub, Pipeline = "FunImgARCWSF", Atlas = "AAL3", path_Export){
   #=============================================================================
   # Select atlas : cat(paste0('"', AAL3[,1], '"'), sep=", ")
   #=============================================================================
@@ -20,7 +20,6 @@ RS.fMRI_5_BOLD.Signals___ROI___Extractor = function(path_Sub, Pipeline = "FunImg
 
   Results = sapply(seq_along(path_Sub_List), function(i, ...){
     # i=126
-    # Finding Results folders & ROISignals File
     y = path_Sub_List[i]
     path_Results = list.files(y, full.names=T, pattern = "Results")
     path_ROISignals_Folder = list.files(path_Results, full.names=T, pattern="ROISignals") %>% filter_by(Pipeline)
@@ -29,6 +28,8 @@ RS.fMRI_5_BOLD.Signals___ROI___Extractor = function(path_Sub, Pipeline = "FunImg
     # path files
     path_ROI_OrderKey = list.files(path_ROISignals_Folder, pattern  ="ROI_OrderKey", full.names = T) %>% filter_by("\\.tsv$")
     path_ROI_Signals = list.files(path_ROISignals_Folder, pattern = "ROISignals_", full.names=T) %>% filter_by("\\.txt$")
+    path_ROI_Correlation = list.files(path_ROISignals_Folder, pattern  ="ROICorrelation", full.names = T) %>% filter_by(include = "\\.txt$", any_include = T, exact_include = F, exclude = "Fisher")
+    path_ROI_FisherZ = list.files(path_ROISignals_Folder, pattern  ="FisherZ", full.names = T) %>% filter_by("\\.txt$")
 
 
     # ROI labels
@@ -42,54 +43,39 @@ RS.fMRI_5_BOLD.Signals___ROI___Extractor = function(path_Sub, Pipeline = "FunImg
 
     # read files
     ith_ROI_Signals = read.table(path_ROI_Signals)
-
+    ith_Correlation = read.table(path_ROI_Correlation)
+    ith_FisherZ = read.table(path_ROI_FisherZ)
 
     # renaming
     colnames(ith_ROI_Signals) = ith_Atlas_ROI_Labels
+    colnames(ith_Correlation) = colnames(ith_FisherZ) = ith_Atlas_ROI_Labels
+    rownames(ith_Correlation) = rownames(ith_FisherZ) = ith_Atlas_ROI_Labels
 
 
 
     # Filenames
     ith_RID = basename(y) %>% str_extract("RID_\\d+")
     filename_ROI_Signals = paste(ith_RID, "BOLD.Signals", "ROI", Atlas, Pipeline, "Raw.rds", sep = "___")
+    filename_Correlation = paste(ith_RID, "Functional.Connectivity", "ROI", Atlas, Pipeline, "Pearson", "Raw.rds", sep = "___")
+    filename_FisherZ = paste(ith_RID, "Functional.Connectivity", "ROI", Atlas, Pipeline, "Pearson", "Fisher.Z.Transformed.rds", sep = "___")
+
+
 
 
     # creating Exporting path
-    path_Export_New = paste0(path_Export, "/ROI___", Atlas, "___", Pipeline, "___Raw")
-    dir.create(path_Export_New, showWarnings = F)
+    path_Export_Correlation = paste0(path_Export, "/ROI___", Atlas, "___", Pipeline, "___Static___Pearson___Raw")
+    dir.create(path_Export_Correlation, showWarnings = F)
+    path_Export_FisherZ = paste0(path_Export, "/ROI___", Atlas, "___", Pipeline, "___Static___Pearson___FisherZ")
+    dir.create(path_Export_FisherZ, showWarnings = F)
 
 
     # Exporting
-    saveRDS(object = ith_ROI_Signals, file = paste(path_Export_New, filename_ROI_Signals, sep="/"))
-    cat("\n",crayon::yellow("Exporting ROI BOLD Signals is done :"), crayon::red(ith_RID),"\n")
+    saveRDS(object = ith_Correlation, file = paste(path_Export_Correlation, filename_Correlation, sep="/"))
+    cat("\n",crayon::yellow("Exporting ROI Correlation is done :"), crayon::red(ith_RID),"\n")
 
+    saveRDS(object = ith_FisherZ, file = paste(path_Export_FisherZ, filename_FisherZ, sep="/"))
+    cat("\n",crayon::yellow("Exporting ROI FisherZ Correlation is done :"), crayon::red(ith_RID),"\n")
 
   })
   cat("\n",crayon::blue("Extracting ROI Signals and FC is done!"),"\n")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

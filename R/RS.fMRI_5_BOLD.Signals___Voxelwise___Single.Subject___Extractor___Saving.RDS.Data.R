@@ -8,63 +8,31 @@ RS.fMRI_5_BOLD.Signals___Voxelwise___Single.Subject___Extractor___Saving.RDS.Dat
 
   tictoc::tic()
   # Pipeline ========================================================================
-  filename_Voxelwise = paste0(result.folder.name, "___", "Voxelwise.BOLD.Signals")
-
+  filename_Voxelwise = paste0("BOLD.Signals___Voxelwise___", Atlas, "___", result.folder.name)
 
 
 
   # Suffix =====================================================================
   if(is.null(filename_suffix)){
-    filename = paste0(fit_length(RID, 4), "___", filename_Voxelwise)
+    filename = paste0("RID_", fit_length(RID, 4), "___", filename_Voxelwise)
+
+    path_save_New = paste0(path_save, "/",  filename_Voxelwise)
+    dir.create(path_save_New, showWarnings = F)
+
   }else{
-    filename = paste0(fit_length(RID, 4), "___", filename_Voxelwise, "___", filename_suffix)
+    filename = paste0("RID_", fit_length(RID, 4), "___", filename_Voxelwise, "___", filename_suffix)
+
+    path_save_New = paste0(path_save, "/",  filename_Voxelwise, "___", filename_suffix)
+    dir.create(path_save_New, showWarnings = F)
   }
 
 
   # Saving =====================================================================
-  saveRDS(object = Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, file = paste0(path_save, "/RID_", filename, ".rds"))
+
+  saveRDS(object = Labeled_Voxelwise_BOLD_Signals_Grouped_by_ROIs.list, file = paste0(path_save_New, "/", filename, ".rds"))
   tictoc::toc()
   # cat("\n", crayon::green("Saving Voxel-wise BOLD signals is done :"), paste0("RID_", crayon::red(RID)),"\n")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
