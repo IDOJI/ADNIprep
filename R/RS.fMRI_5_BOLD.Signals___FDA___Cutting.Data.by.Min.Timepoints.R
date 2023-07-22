@@ -1,4 +1,4 @@
-RS.fMRI_5_BOLD.Signals___FDA___Cutting.Data.by.Min.Timepoints = function(path_Import, path_Subjects_List, path_Export=NULL, BAND.TYPE = "SB"){
+RS.fMRI_5_BOLD.Signals___FDA___Cutting.Data.by.Min.Timepoints = function(path_Import, path_Subjects_List, path_Export=NULL, BAND.TYPE = "SB", Manufacturer = NULL){
   #=============================================================================
   # Export path
   #=============================================================================
@@ -13,37 +13,41 @@ RS.fMRI_5_BOLD.Signals___FDA___Cutting.Data.by.Min.Timepoints = function(path_Im
   # Select RID
   #=============================================================================
   Subjects_List.df = read.csv(path_Subjects_List)
-  RID_Selected = Subjects_List.df %>% filter(NFQ___BAND.TYPE == BAND.TYPE) %>% dplyr::select(RID) %>% unlist %>% unname %>% sort
+  if(!is.null(Manufacturer)){
+    RID_Selected = Subjects_List.df %>% filter(MANUFACTURER_NEW == paste(Manufacturer, BAND.TYPE, sep="_")) %>% dplyr::select(RID) %>% unlist %>% unname %>% sort
+  }else{
+    RID_Selected = Subjects_List.df %>% filter(NFQ___BAND.TYPE == BAND.TYPE) %>% dplyr::select(RID) %>% unlist %>% unname %>% sort
+  }
+
+
+
 
 
   #=============================================================================
-  # Loading RDS files
+  # Loading RDS files & check the number of timepoints
   #=============================================================================
   Files_RID = list.files(path_Import) %>% str_extract("(?<=RID_)\\d+") %>% as.numeric
   path_Files = list.files(path_Import, full.names=T)
   path_Selected_Files = path_Files[which(Files_RID %in% RID_Selected)]
+  min_timepoint = sapply(path_Selected_Files, function(y){
+    readRDS(y) %>% nrow
+  }) %>% min
 
-  Data.list = lapply(path_Selected_Files, function(y){
-    readRDS(y)
-  })
+
 
 
 
   #===============================================================================
   # Cutting timepoints by the smallest one
   #===============================================================================
-  # finding min
-  n_timepoints = sapply(Data.list, nrow)
-  min_n_timepoint = min(n_timepoints)
-
-
   # cutting
-  Cut_Data.list = lapply(seq_along(Data.list), function(i, ...){
-    ith_Cut_ith_Data = Data.list[[i]][1:min_n_timepoint, ]
-    # Export data
+  Cut_Data.list = lapply(seq_along(path_Selected_Files), function(i, ...){
+    # Loading Data
+    ith_Cut_ith_Data = readRDS(path_Selected_Files[i])[1:min_timepoint, ]
+
+    # Exporting Data
     if(!is.null(path_Export)){
       ith_File_Name = basename(path_Selected_Files[i]) %>% tools:::file_path_sans_ext()
-
       saveRDS(ith_Cut_ith_Data, paste0(path_Export, "/", ith_File_Name, "___", "Cut.for.FDA.rds"))
       cat("\n",crayon::yellow("The Cut for FDA file is done :"), crayon::red(paste0("RID_", Files_RID[i])),"\n")
     }
