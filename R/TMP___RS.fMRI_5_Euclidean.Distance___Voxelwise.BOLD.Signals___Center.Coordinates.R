@@ -1,4 +1,4 @@
-RS.fMRI_5_Euclidean.Distance___Voxelwise.BOLD.Signals___Extract.Median.Voxel.Coordinates = function(ith_VoxelwiseBoldSignals){
+RS.fMRI_5_Euclidean.Distance___Voxelwise.BOLD.Signals___Center.Coordinates = function(ith_VoxelwiseBoldSignals){
   #===========================================================================
   # Brain regions & Numbering
   #===========================================================================
@@ -11,7 +11,7 @@ RS.fMRI_5_Euclidean.Distance___Voxelwise.BOLD.Signals___Extract.Median.Voxel.Coo
   # Extracting Coordinates
   #===========================================================================
   tictoc::tic()
-  Median_Voxel_Coordiantes = lapply(Numbers_vector, function(j){
+  Center_Voxel_Coordiantes = lapply(Numbers_vector, function(j){
     jth_Coordiantes.list = lapply(Numbers_vector, function(k){
       if(k>j){
         #=========================================================================
