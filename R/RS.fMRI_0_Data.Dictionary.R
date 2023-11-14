@@ -1,4 +1,3 @@
-# Clipboard_to_path()
 RS.fMRI_0_Data.Dictionary = function(colname, path_Data.Dic =  "C:/Users/lleii/Dropbox/Github/Papers___Data/Papers___Data___ADNI___RS.fMRI___Subjects.Lists/___Subjects_Lists_Downloaded/ADNI_data_dictionary.csv"){
 
   # install_package("Hmisc")
@@ -16,3 +15,4 @@ RS.fMRI_0_Data.Dictionary = function(colname, path_Data.Dic =  "C:/Users/lleii/D
     cat("\n", crayon::red("There is no such colname!"),"\n")
   }
 }
+
