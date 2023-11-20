@@ -1,10 +1,29 @@
-RS.fMRI_0_Data.Dictionary = function(colname, path_Data.Dic =  "C:/Users/lleii/Dropbox/Github/Papers___Data/Papers___Data___ADNI___RS.fMRI___Subjects.Lists/___Subjects_Lists_Downloaded/ADNI_data_dictionary.csv"){
-
+RS.fMRI_0_Data.Dictionary = function(colname, path_Dic = NULL, which.OS = c("Windows", "Mac")){
   # install_package("Hmisc")
   # install.packages("C:/Users/lleii/Dropbox/Github/Rpkgs/ADNIprep/ADNIMERGE/ADNIMERGE_0.0.1.tar.gz", repose = NULL, type="source")
   # install.packages("/Users/Ido/Library/CloudStorage/Dropbox/Github/Rpkgs/ADNIprep/ADNIMERGE/ADNIMERGE_0.0.1.tar.gz")
   # require(ADNIMERGE)
-  dic = read.csv(path_Data.Dic)
+  #=============================================================================
+  # path Setting
+  #=============================================================================
+  if(is.null(path_Dic)){
+    which.OS = match.arg(which.OS, which.OS)
+    if(which.OS == "Windows"){
+      path_OS = "C:/Users/lleii/"
+    }else{
+      path_OS = "/Users/Ido/"
+    }
+    path_Dic = paste0(path_OS, "Dropbox/Github/Rpkgs/ADNIprep/Data") %>% list.files(full.names = T, pattern = "dictionary")
+  }
+
+
+
+
+
+  #=============================================================================
+  # Read data
+  #=============================================================================
+  dic = read.csv(path_Dic)
 
   colname = toupper(colname)
 

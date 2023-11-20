@@ -1,31 +1,30 @@
-RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC = function(Subjects_QC_ADNI2GO,
-                                                           Subjects_QC_ADNI3,
-                                                           path_Subjects.Lists_Downloaded,
-                                                           what.date,
-                                                           Include_RID = NULL,
-                                                           Include_ImageID=NULL,
-                                                           Exclude_RID = NULL,
-                                                           Exclude_ImageID = NULL,
-                                                           Exclude_Comments = NULL){
-  ##############################################################################
-  # Loading the datasets
-  ##############################################################################
-  path_Subjects.Lists_Downloaded = path_Subjects.Lists_Downloaded %>% path_tail_slash()
-  QC_1.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Loading.Data(Subjects_QC_ADNI2GO, Subjects_QC_ADNI3, path_Subjects.Lists_Downloaded)
-  text = "1.1 : Loading data is done."
-  cat("\n", crayon::green(text), "\n")
-
-
-
-
-
-  ##############################################################################
+# RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC
+RS.fMRI_1_Data.Selection___Tidy.Up___QC = function(input){
+  #=============================================================================
   # Selecting & Changing Series Type : MT1, T1, EPB, fMRI
-  ##############################################################################
-  QC_2.list = RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Selecting.Changing.Series.Type(QC_1.list)
-  text = "1.1 : Selecting Series Type is done."
-  cat("\n", crayon::green(text), "\n")
+  #=============================================================================
+  QC = input$List_QC
+  QC$QC_ADNI1 %>%
+  QC$QC_ADNI2GO %>% dim
+  QC$QC_ADNI3 %>% dim
 
+
+  QC$QC_ADNI1$SERIESDESC %>% table
+
+  RS.fMRI_1_Data.Selection___Select.RID.by.Image.QC___Selecting.Changing.Series.Type = function(QC.list, ...){
+    # QC.list = QC_1.list
+    QC_1 = QC.list[[1]]
+    QC_2 = QC.list[[2]]
+
+    QC_1 = QC_1[union(which(QC_1$SERIES_TYPE == "fMRI"), which(QC_1$SERIES_TYPE == "T1")), ]
+    QC_2 = QC_2[union(which(QC_2$SERIES_TYPE == "EPB"), which(QC_2$SERIES_TYPE == "MT1")), ]
+
+    ### 통일
+    QC_1 = replace_elements(QC_1, col_name = "SERIES_TYPE", from = "fMRI", to = "EPB")
+    QC_1 = replace_elements(QC_1, col_name = "SERIES_TYPE", from = "T1", to = "MT1")
+
+    return(list(QC_1, QC_2))
+  }
 
 
 
