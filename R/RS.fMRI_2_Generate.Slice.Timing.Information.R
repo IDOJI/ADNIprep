@@ -1,4 +1,4 @@
-RS.fMRI_2_Generate.Slice.Timing.Information = function(path_ADNI.Unzipped.Folders="E:/ADNI/ADNI_RS.fMRI___SB/Error/ADNI"){
+Generate.Slice.Timing.Information = function(path_ADNI.Unzipped.Folders="E:/ADNI/ADNI_RS.fMRI___SB/Error/ADNI"){
   #=============================================================================
   # sub folders path
   #=============================================================================
